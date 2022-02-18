@@ -1,0 +1,135 @@
+{
+	"app_bar": {
+		"title": "مرحباً بك في الصفحة الرئيسية",
+		"detail_title": "تفاصيل"
+	},
+
+	"button": {
+		"cancel": "إلغاء",
+		"change_language": "تغيير اللغة"
+	},
+	"language": {
+		"name": {
+			"en": "English",
+			"es": "español",
+			"ur": "اردو",
+			"ar": "العربية"
+		},
+        "selected_message": "اللغة المختارة حالياً هي  {language}",
+		"selection": {
+			"message": "برجاء إختيار لغة من القائمة",
+			"title": "إختيار اللغة"
+		}
+	},
+	"plural": {
+		"demo": {
+			"0": "برجاء البدء في الضغط على زر الإضافة",
+            "1": "لقد ضغطت الزر مرة",
+            "2": "لقد ضغطت الزر مرتين",
+			"else": "لقد ضغطت الزر {{value}} مرة"
+		}
+	},
+
+	"buttons": {
+		"signIn": "تسجيل الدخول",
+		"signUp": "إشترك",
+		"forgetpassword": "هل نسيت كلمة المرور؟",
+		"submit": "إرسال",
+		"save": "حفظ",
+		"add_to_cart": "أضف إلى السلة",
+		"checkout": "الدفع",
+		"get_direction": "احصل على اتجاه",
+		"cancel": "Cancel"
+	},
+	"SignIn_screen": {
+		"welcom_title": "أهلا بك",
+		"title2": "تسجيل الدخول للمتابعة",
+		"emailTitle": "البريد الإلكتروني",
+		"passwordTitle": "كلمه السر"
+	},
+	"SignUp_screen": {
+		"title1": "الاشتراك",
+		"title2": "قم بالتسجيل للمتابعة",
+		"nameTitle": "الاسم الاول",
+		"lastName": "الكنية",
+		"emailTitle": "البريد الإلكتروني",
+		"passwordTitle": "كلمه السر",
+		"address": "عنوان",
+		"postcode": "الرمز البريدي",
+		"cellno": "خلية لا#",
+		"country": "بلد",
+		"city": "مدينة"
+
+	},
+	"Forgot_screen": {
+		"title1": "نسيت كلمة المرور",
+		"title2": "رجاءا أدخل بريدك الإلكتروني",
+		"emailTitle": "البريد الإلكتروني"
+	},
+	"Home_screen": {
+		"trendingTitle": "تتجه الأطعمة",
+		"categoryTitle": "الاقسام",
+		"bottomTitle1": "الصفحة الرئيسية",
+		"bottomTitle2": "عربة التسوق",
+		"bottomTitle3": "طلباتي",
+		"bottomTitle4": "معلومات عنا",
+		"bottomTitle5": "الإعدادات"
+	},
+	"mycart_screen": {
+		"appbar_title": "طلباتي",
+		"price": "السعر",
+		"deliveryCharges": "رسوم التوصيل",
+		"voucher_code_hint": "رمز القسيمة",
+		"applyVoucher": "تطبيق القسيمة",
+		"additionalNotesTitle": "ملاحظات إضافية"
+	},
+	"About_screen": {
+		"title1": "Welcome",
+		"title2": "إلى تطبيق الجوال لطلب الوجبات السريعة في بحر قزوين",
+		"description": "يقع قزوين في قلب مدينة كيركالدي ، ويقدم مجموعة واسعة من الأطعمة الكونتيننتال لإسعاد العديد من العملاء ، سواء كانت وجبة محددة أو مزيجًا من العديد من المنتجات. تقديم الطعام للأطراف يمكن توصيل المنتجات إلى رموز بريدية متعددة ، بما في ذلك:",
+		"text1": "KY1 ديسارت",
+		"text2": "KY2 كيركالدي",
+		"text3": "KY3 بيرنتيسلاند",
+		"text4": "KY4 اوكتيديران",
+		"text5": "KY5 ليزلي",
+		"text6": "KY6 جلينروثس",
+		"desription2": "اعتمادًا على الموقع ، قد يتم تطبيق رسوم إضافية"
+	},
+	"location_screen": {
+		"info_window_title": "طعام بحر قزوين",
+		"snippet_title": "5 تصنيف بالنجوم",
+		"location_appbar_title": "موقعك",
+		"address_title": "212 دنيرن درايف كيركالدي KY2 6 جنيه",
+		"detail_title": "تفاصيل",
+		"quantity": "كمية"
+
+	},
+	"change_language_badge": {
+		"badge_title": "تغيير اللغة"
+	},
+	"settings_page": {
+		"appbar_title": "الإعدادات",
+		"title1": "تغيير اللغة",
+		"title2": "تسجيل خروج"
+	},
+	"details_page": {
+		"appbar_title": "صفحة التفاصيل",
+		"details_title": "التفاصيل"
+	},
+	"add_to_cart_screen": {
+		"quantity": "كمية",
+		"sauce": "صلصة",
+		"base": "أساس",
+		"size": "بحجم",
+		"select_hint": "تحديد",
+		"multiselect_field_title": "أضف الإضافات",
+		"multiselect_hint": "على سبيل المثال: الفطر"
+	},
+	"new_main_screen_client": {
+		"special_offers": "عروض خاصة",
+		"best_deals": "افضل العروض",
+		"top_trending": "الأكثر شيوعًا",
+		"categories": "التصنيفات",
+		"see_all": "اظهار الكل"
+	}
+}

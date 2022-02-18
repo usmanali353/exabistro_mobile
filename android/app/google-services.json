@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "28629083967",
+    "firebase_url": "https://genial-retina-288506.firebaseio.com",
+    "project_id": "genial-retina-288506",
+    "storage_bucket": "genial-retina-288506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28629083967:android:b1e6a340b71912cb64958a",
+        "android_client_info": {
+          "package_name": "com.example.capsianfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "28629083967-ldenplsh328utk0s2qiji10pcmq56ise.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHjpTe4Syardc3Api5BPXB_F_egH2RNFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "28629083967-ldenplsh328utk0s2qiji10pcmq56ise.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,133 @@
+{
+  "app_bar": {
+    "title": "خوش آمدید",
+    "detail_title": "تفصیلات"
+  },
+  "button": {
+    "cancel": "منسوخ",
+    "change_language": "زبان تبدیل کریں"
+  },
+  "language": {
+    "name": {
+      "en": "English",
+      "es": "español",
+      "ur": "اردو",
+      "ar": "العربية"
+    },
+    "selected_message": "فی الحال منتخب کردہ زبان {language} ہے",
+    "selection": {
+      "message": "براہ کرم فہرست میں سے کسی زبان کا انتخاب کریں",
+      "title": "زبان کا انتخاب"
+    }
+  },
+  "plural": {
+    "demo": {
+      "0": "برجاء البدء في الضغط على زر الإضافة",
+      "1": "لقد ضغطت الزر مرة",
+      "2": "لقد ضغطت الزر مرتين",
+      "else": "لقد ضغطت الزر {{value}} مرة"
+    }
+  },
+  "buttons": {
+    "signIn": "سائن ان",
+    "signUp": "سائن اپ",
+    "forgetpassword": "پاسورڈ بھول گے؟",
+    "submit": "ارسال کریں",
+    "save": "محفوظ کریں",
+    "add_to_cart": "ٹوکری میں شامل کریں",
+    "checkout": "چیک آؤٹ",
+    "get_direction": "سمت حاصل کریں",
+    "cancel": "Cancel"
+  },
+  "SignIn_screen": {
+    "welcom_title": "خوش آمدید",
+    "title2": "جاری رکھنے کے لئے سائن ان کریں",
+    "emailTitle": "ای میل",
+    "passwordTitle": "پاس ورڈ"
+  },
+  "SignUp_screen": {
+    "title1": "سائن اپ",
+    "title2": "جاری رکھنے کے لئے سائن اپ کریں",
+    "nameTitle": "پہلا نام",
+    "lastName": "آخری نام",
+    "emailTitle": "ای میل",
+    "passwordTitle": "پاس ورڈ",
+    "address": "پتہ",
+    "postcode": "پوسٹ کوڈ",
+    "cellno": "موبائل نمبر#",
+    "country": "ملک",
+    "city": "شہر"
+
+  },
+  "Forgot_screen": {
+    "title1": "پاسورڈ بھول گے",
+    "title2": "برائے مہربانی اپنا ای میل درج کریں",
+    "emailTitle": "ای میل"
+  },
+  "Home_screen": {
+    "trendingTitle": "ٹرینڈنگ فوڈ",
+    "categoryTitle": "اقسام",
+    "bottomTitle1": "ہوم پیج",
+    "bottomTitle2": "ٹوکری",
+    "bottomTitle3": "میرے آرڈرز",
+    "bottomTitle4": "ہمارے متعلق",
+    "bottomTitle5": "ترتیبات"
+  },
+  "mycart_screen": {
+    "appbar_title": "میرے آرڈرز",
+    "price": "قیمت",
+    "deliveryCharges": "ڈلیوری چارجز",
+    "voucher_code_hint": "واؤچر کوڈ",
+    "applyVoucher": "واؤچر لگائیں",
+    "additionalNotesTitle": "اضافی نوٹ"
+  },
+  "About_screen": {
+    "title1": "خوش آمدید",
+    "title2": "کیسپیین فاسٹ فوڈ آرڈر کرنے والا موبائل ایپ",
+    "description": "کرکالڈی کے وسط میں واقع ، کیسپین فاسٹ فوڈ میں بہت سارے گاہکوں کو خوش کرنے کے لئے براعظم کھانے کی ایک وسیع ذخیرہ ہے ، چاہے یہ طے شدہ کھانا ہو یا بہت ساری مصنوعات کا مجموعہ۔ پارٹیوں کو کیٹرنگ کی مصنوعات کو متعدد پوسٹ کوڈز تک پہنچایا جاسکتا ہے ، بشمول:",
+    "text1": "KY1 ڈیسارٹ",
+    "text2": "KY2 کرکلکڈی",
+    "text3": "KY3 برنٹس لینڈ",
+    "text4": "KY4 اچٹڈرڈرن",
+    "text5": "KY5 لیسلی",
+    "text6": "KY6 گلینروتھیس",
+    "desription2": "مقام پر منحصر ہے ، ایک اضافی معاوضہ لاگو ہوسکتا ہے"
+  },
+  "location_screen": {
+    "info_window_title": "کیسپین فوڈ ٹیک آوے",
+    "snippet_title": "5 اسٹار کی درجہ بندی",
+    "location_appbar_title": "مقام",
+    "address_title": "212 ڈنرن ڈرائیو ، کرکلکڈی ، KY2 6LE",
+    "detail_title": "تفصیلات",
+    "quantity": "مقدار"
+
+  },
+  "change_language_badge": {
+    "badge_title": "زبان تبدیل کریں"
+  },
+  "settings_page": {
+    "appbar_title": "ترتیبات",
+    "title1": "زبان تبدیل کریں",
+    "title2": "لاگ آؤٹ کریں"
+  },
+  "details_page": {
+    "appbar_title": "تفصیلات",
+    "details_title": "تفصیلات"
+  },
+  "add_to_cart_screen": {
+    "quantity": "مقدار",
+    "sauce": "چٹنی",
+    "base": "پیندا",
+    "size": "سائز",
+    "select_hint": "منتخب کریں",
+    "multiselect_field_title": "ٹاپنگز شامل کریں",
+    "multiselect_hint": "جیسے: مشروم"
+  },
+  "new_main_screen_client": {
+    "special_offers": "خصوصی پیشکش",
+    "best_deals": "بہترین ڈیلز",
+    "top_trending": "ٹاپ ٹرینڈنگ",
+    "categories": "اقسام",
+    "see_all": "تمام دیکھیں"
+  }
+}

@@ -1,0 +1,131 @@
+{
+	"app_bar": {
+		"title": "Welcome to the home page"
+	},
+	"button": {
+		"cancel": "Cancel",
+		"change_language": "Change Language"
+	},
+	"language": {
+		"name": {
+			"en": "English",
+			"es": "español",
+			"ur": "اردو",
+			"ar": "العربية"
+		},
+		"selected_message": "Currently selected language is {language}",
+		"selection": {
+			"message": "Please select a language from the list",
+			"title": "Language Selection"
+		}
+	},
+	"plural": {
+		"demo": {
+			"0": "Please start pushing the 'plus' button.",
+			"1": "You have pushed the button one time.",
+			"else": "You have pushed the button {{value}} times."
+		}
+	},
+	"buttons": {
+		"signIn": "Sign In",
+		"signUp": "Sign Up",
+		"forgetpassword": "Forgot Password?",
+		"submit": "Submit",
+		"save": "Save",
+		"add_to_cart": "Add To Cart",
+		"checkout": "Check Out",
+		"get_direction": "Get Direction",
+		"cancel": "Cancel"
+	},
+	"SignIn_screen": {
+			"welcom_title": "Welcome",
+			"title2": "Sign In to Continue",
+			"emailTitle": "Email",
+			"passwordTitle": "Password"
+	},
+	"SignUp_screen": {
+		"title1": "Sign Up",
+		"title2": "Sign up To Continue",
+		"nameTitle": "First Name",
+		"lastName": "Last Name",
+		"emailTitle": "Email",
+		"passwordTitle": "Password",
+		"address": "Address",
+		"postcode": "Postcode",
+		"cellno": "Cell No#",
+		"country": "Country",
+		"city": "City"
+
+	},
+	"Forgot_screen": {
+		"title1": "Forgot Password",
+		"title2": "Please Enter Your Email",
+		"emailTitle": "Email"
+	},
+	"Home_screen": {
+		"trendingTitle": "Trending Food",
+		"categoryTitle": "Categories",
+		"bottomTitle1": "Home",
+		"bottomTitle2": "My Cart",
+		"bottomTitle3": "My Orders",
+		"bottomTitle4": "About Us",
+		"bottomTitle5": "Settings"
+	},
+	"mycart_screen": {
+		"appbar_title": "My Orders",
+		"price": "Price",
+		"deliveryCharges": "Delivery Charges",
+		"voucher_code_hint": "Voucher Code",
+		"applyVoucher": "Apply Voucher",
+		"additionalNotesTitle": "Additional Notes"
+	},
+	"About_screen": {
+		"title1": "Welcome",
+		"title2": "To the Caspian Fast Food Ordering Application",
+		"description": "Located in the heart of Kirkcaldy, Caspian Fast Food has a wide selection of continental food to delight many customers, whether it is a set meal or a combination of many products. Catering for parties the products can be delivered to multiple postcodes, including:",
+		"text1": "KY1 Dysart",
+		"text2": "KY2 Kirkcaldy",
+		"text3": "KY3 Burntisland",
+		"text4": "KY4 Auchterderran",
+		"text5": "KY5 Leslie",
+		"text6": "KY6 Glenrothes",
+		"desription2": "Depending on location, an additional charge may apply"
+	},
+	"location_screen": {
+		"info_window_title": "Caspian Food TakeAway",
+		"snippet_title": "5 Star Rating",
+		"location_appbar_title": "Location",
+		"address_title": "212 Dunearn Drive, Kirkcaldy, KY2 6LE",
+		"detail_title": "Details",
+		"quantity": "Quantity"
+
+	},
+	"change_language_badge": {
+		"badge_title": "Change Language"
+	},
+	"settings_page": {
+		"appbar_title": "Settings",
+		"title1": "Change Language",
+		"title2": "Logout"
+	},
+	"details_page": {
+		"appbar_title": "Details Page",
+		"details_title": "Details"
+	},
+	"add_to_cart_screen": {
+		"quantity": "Quantity",
+		"sauce": "Sauce",
+		"base": "Base",
+		"size": "Size",
+		"select_hint": "Select",
+		"multiselect_field_title": "Add Toppings",
+		"multiselect_hint": "e.g: Mushrooms"
+	},
+	"new_main_screen_client": {
+		"special_offers": "Special Offers",
+		"best_deals": "Best Deals",
+		"top_trending": "Top Trending",
+		"categories": "Categories",
+		"see_all": "See All"
+	}
+}

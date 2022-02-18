@@ -1,0 +1,132 @@
+{
+	"app_bar": {
+		"title": "Bienvenido a la página de inicio",
+		"detail_title": "Detalles"
+	},
+	"button": {
+		"cancel": "Cancelar",
+		"change_language": "Cambiar idioma"
+	},
+	"language": {
+		"name": {
+			"en": "English",
+			"es": "español",
+			"ur": "اردو",
+			"ar": "العربية"
+		},
+		"selected_message": "El idioma seleccionado actualmente es {language}",
+		"selection": {
+			"message": "Por favor seleccione un idioma de la lista",
+			"title": "Selección de idioma"
+		}
+	},
+	"plural": {
+		"demo": {
+			"0": "Por favor, comience a presionar el botón 'más'.",
+			"1": "Has presionado el botón una vez.",
+			"else": "Ha presionado el botón {{value}} veces."
+		}
+	},
+	"buttons": {
+		"signIn": "Registrarse",
+		"signUp": "Regístrate",
+		"forgetpassword": "¿Se te olvidó tu contraseña?",
+		"submit": "Enviar",
+		"save": "Salvar",
+		"add_to_cart": "Añadir al carrito",
+		"checkout": "Revisa",
+		"get_direction": "Obtener dirección",
+		"cancel": "Cancel"
+	},
+	"SignIn_screen": {
+		"welcom_title": "¡Bienvenido",
+		"title2": "Iniciar sesión para continuar",
+		"emailTitle": "Correo electrónico",
+		"passwordTitle": "Contraseña"
+	},
+	"SignUp_screen": {
+		"title1": "Regístrate",
+		"title2": "Regístrate para continuar",
+		"nameTitle": "Nombre de pila",
+		"lastName": "Apellido",
+		"emailTitle": "Correo electrónico",
+		"passwordTitle": "Contraseña",
+		"address": "Habla a",
+		"postcode": "Código postal",
+		"cellno": "Número de celda #",
+		"country": "País",
+		"city": "Ciudad"
+
+	},
+	"Forgot_screen": {
+		"title1": "Se te olvidó tu contraseña",
+		"title2": "Por favor introduzca su correo electrónico",
+		"emailTitle": "Correo electrónico"
+	},
+	"Home_screen": {
+		"trendingTitle": "Comida de tendencia",
+		"categoryTitle": "Categorías",
+		"bottomTitle1": "Hogar",
+		"bottomTitle2": "Carro",
+		"bottomTitle3": "Mis ordenes",
+		"bottomTitle4": "Sobre nosotros",
+		"bottomTitle5": "Configuraciones"
+	},
+	"mycart_screen": {
+		"appbar_title": "Mis ordenes",
+		"price": "Precio",
+		"deliveryCharges": "Los gastos de envío",
+		"voucher_code_hint": "Código de cupón",
+		"applyVoucher": "Aplicar vale",
+		"additionalNotesTitle": "Notas adicionales"
+	},
+	"About_screen": {
+		"title1": "¡Bienvenido",
+		"title2": "A la aplicación móvil de pedidos de comida rápida del Caspio",
+		"description": "Ubicado en el corazón de Kirkcaldy, Caspian Fast Food tiene una amplia selección de comida continental para deleitar a muchos clientes, ya sea un menú fijo o una combinación de muchos productos. Catering para fiestas, los productos se pueden enviar a varios códigos postales, que incluyen::",
+		"text1": "KY1 Dysart",
+		"text2": "KY2 Kirkcaldy",
+		"text3": "KY3 Burntisland",
+		"text4": "KY4 Auchterderran",
+		"text5": "KY5 Leslie",
+		"text6": "KY6 Glenrothes",
+		"desription2": "Dependiendo de la ubicación, se puede aplicar un cargo adicional"
+	},
+	"location_screen": {
+		"info_window_title": "Comida para llevar del Caspio",
+		"snippet_title": "Calificación de 5 estrellas",
+		"location_appbar_title": "Ubicación",
+		"address_title": "212 Dunearn Drive, Kirkcaldy, KY2 6LE",
+		"detail_title": "Detalles",
+		"quantity": "Cantidad"
+
+	},
+	"change_language_badge": {
+		"badge_title": "Cambiar idioma"
+	},
+	"settings_page": {
+		"appbar_title": "Configuraciones",
+		"title1": "Cambiar idioma",
+		"title2": "Cerrar sesión"
+	},
+	"details_page": {
+		"appbar_title": "Página de detalles",
+		"details_title": "Detalles"
+	},
+	"add_to_cart_screen": {
+		"quantity": "Cantidad",
+		"sauce": "Salsa",
+		"base": "la Base",
+		"size": "Talla",
+		"select_hint": "Seleccione",
+		"multiselect_field_title": "Agregar ingredientes",
+		"multiselect_hint": "por ejemplo: Hongos"
+	},
+	"new_main_screen_client": {
+		"special_offers": "Ofertas especiales",
+		"best_deals": "Mejores tratos",
+		"top_trending": "Tendencias principales",
+		"categories": "Categorías",
+		"see_all": "Ver todo"
+	}
+}
