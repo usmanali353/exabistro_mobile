@@ -265,8 +265,12 @@ class _categoryListPageState extends ResumableState<productListPage>{
                 );
               }),
             ):isListVisible==false?Center(
-            child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
-          ):isListVisible==true&&productList.length==0?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&productList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

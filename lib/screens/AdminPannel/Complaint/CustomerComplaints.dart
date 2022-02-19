@@ -5,6 +5,7 @@ import 'package:capsianfood/model/ComplaintTypes.dart';
 import 'package:capsianfood/model/Complaints.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AssigningVouchers/CustomerVoucherByComplaintId.dart';
 import 'AddComplaint.dart';
@@ -24,6 +25,8 @@ class _ComplaintTypeListState extends State<CustomerComplaintList>{
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<Complaint> ComplaintList = [];
   List<ComplaintType> ComplaintTypeList = [];
+  bool isListVisible = false;
+
 
   @override
   void initState() {
@@ -97,11 +100,13 @@ class _ComplaintTypeListState extends State<CustomerComplaintList>{
               if(result){
                 networksOperation.getComplainListByCustomer(context, token).then((value) {
                   setState(() {
+                    isListVisible=true;
                     ComplaintList = value;
                   });
                 });
                 networksOperation.getComplainTypeListByStoreId(context, token,1).then((value) {
                   setState(() {
+                    isListVisible=true;
                     ComplaintTypeList = value;
                     print(ComplaintList.toString() + "jndkjfdk");
                   });
@@ -122,7 +127,7 @@ class _ComplaintTypeListState extends State<CustomerComplaintList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&ComplaintList.length>0?   new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:ComplaintList == null ? 0:ComplaintList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -162,7 +167,35 @@ class _ComplaintTypeListState extends State<CustomerComplaintList>{
                 );
               }),
 
+            ):isListVisible==false?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&ComplaintList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
+
           ),
         )
 

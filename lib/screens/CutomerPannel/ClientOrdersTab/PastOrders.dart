@@ -8,6 +8,7 @@ import 'package:capsianfood/model/OrderById.dart';
 import 'package:capsianfood/screens/AdminPannel/Home/OrderDetail.dart';
 import 'package:capsianfood/screens/CutomerPannel/Home/Screens/CheckedoutDetails.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
@@ -58,6 +59,7 @@ class _PastOrdersState extends State<PastOrders> {
             if(result){
               networksOperation.getOrdersByCustomer(context, token).then((value) {
                 setState(() {
+                  isListVisible=true;
                   orderList.clear();
                   if(value!=null) {
                     for (int i = 0; i < value.length; i++) {
@@ -85,7 +87,7 @@ class _PastOrdersState extends State<PastOrders> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&orderList.length>0? new Container(
               child: ListView.builder(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 itemCount: orderList!=null?orderList.length:0,
@@ -316,6 +318,33 @@ class _PastOrdersState extends State<PastOrders> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&orderList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),

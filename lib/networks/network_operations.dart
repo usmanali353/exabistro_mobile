@@ -828,13 +828,12 @@ class networksOperation{
     return null;
   }
   static Future<List<Products>> getTrendingByCustomer(BuildContext context,int userId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
+
       var response=await http.get(Utils.baseUrl()+"Products/GetAllForCustomers?trendingDays=365&userId=$userId",);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
+        ;
         List<Products> list=List();
         list.clear();
         for(int i=0;i<data.length;i++){
@@ -845,11 +844,11 @@ class networksOperation{
         return list;
       }
       else{
-        pd.hide();
+
         Utils.showError(context, response.body);
       }
     }catch(e){
-      pd.hide();
+
       Utils.showError(context, e.toString());
     }
     return null;
@@ -4111,26 +4110,26 @@ class networksOperation{
     return null;
   }
   static Future<dynamic> getReservationByCustomerId(BuildContext context,String token,int customerId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+
     try{
-      pd.show();
+
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"reservation/GetByCustomerId/$customerId",headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
+
         List list=[];
         if(data!=[])
           list=List.from(data.reversed);
         return list;
       }
       else{
-        pd.hide();
+
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
-      pd.hide();
+
       Utils.showError(context, "Data Not Found Or Error Found");
     }
     return null;

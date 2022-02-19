@@ -7,6 +7,7 @@ import 'package:capsianfood/model/Vouchers.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,7 +29,11 @@ class _TaxListState extends State<GetAllCouponforCustomer>{
   String token;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<CustomerVoucher> voucherList = [];
-var userId;
+  var userId;
+  bool isListVisible = false;
+
+
+
   @override
   void initState() {
     WidgetsBinding.instance
@@ -76,6 +81,7 @@ var userId;
               if(result){
                 networksOperation.getCustomerVoucherByCustomerId(context,token,int.parse(userId)).then((value) {
                   setState(() {
+                    isListVisible=true;
                     voucherList = value;
                   });
                 });
@@ -94,7 +100,7 @@ var userId;
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child:  isListVisible==true&&voucherList.length>0?  new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:voucherList == null ? 0:voucherList.length, itemBuilder: (context,int index){
                 return Column(
@@ -373,6 +379,33 @@ var userId;
                 );
               }),
 
+            ):isListVisible==false?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&voucherList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
           ),
         )

@@ -9,6 +9,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Toppings/updateTopping.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:need_resume/need_resume.dart';
 import 'AddAdditional.dart';
@@ -103,11 +104,13 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
               if(result){
                 networksOperation.getAdditionalsByProductId(context,token,widget.productDetails.id).then((value) {
                   setState(() {
+                    bool isListVisible = true;
                     additionals = value;
                   });
                 });
                 networksOperation.getSizes(context,widget.productDetails.storeId).then((value){
                   setState(() {
+                    bool isListVisible = true;
                     sizes = value;
                     for(int i=0;i<sizes.length;i++) {
                     }
@@ -117,6 +120,7 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
                   if(value!=null)
                   {
                     setState(() {
+                      bool isListVisible = true;
                       allUnitList.clear();
                       allUnitList = value;
                     });
@@ -127,7 +131,7 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
               }
             });
           },
-          child: additionals!=null?additionals.length>0?Container(
+          child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
@@ -137,7 +141,7 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&additionals.length>0?  new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:additionals == null ? 0:additionals.length, itemBuilder: (context,int index){
                 return Slidable(
@@ -279,6 +283,33 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
 //              );
 //    }),
 //                )
+            ):isListVisible==false?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&additionals.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
 //          child: Scrollbar(
 //            // ignore: missing_return
@@ -309,8 +340,7 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
 //              })
 //          ),
 
-          ):Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)):
-          Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)),
+          )
         )
 
 

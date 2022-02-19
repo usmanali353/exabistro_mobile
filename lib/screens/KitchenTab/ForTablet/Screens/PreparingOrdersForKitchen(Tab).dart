@@ -1,13 +1,12 @@
 import 'dart:ui';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Product/productList.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';

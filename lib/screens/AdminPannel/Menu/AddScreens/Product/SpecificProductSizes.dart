@@ -4,6 +4,7 @@ import 'package:capsianfood/model/Products.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Product/OldAddProductIngredients.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'AddSemiInProduct.dart';
@@ -23,6 +24,7 @@ class _categoryListPageState extends State<SpecificSizesPage>{
   String token;
   Products productDetails;
   List sizes=[],sizeDetails=[];
+  bool isListVisible = false;
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _categoryListPageState extends State<SpecificSizesPage>{
       }
       SharedPreferences.getInstance().then((value) {
         setState(() {
+          isListVisible=true;
           this.token = value.getString("token");
         });
       });
@@ -64,7 +67,7 @@ class _categoryListPageState extends State<SpecificSizesPage>{
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&sizes.length>0? new Container(
             child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:sizes.length ==0 ? 0:sizes.length, itemBuilder: (context,int index){
               return InkWell(
                 onTap: () {
@@ -147,6 +150,33 @@ class _categoryListPageState extends State<SpecificSizesPage>{
                 ),
               );
             }),
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&sizes.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
 
         )

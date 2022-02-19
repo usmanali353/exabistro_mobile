@@ -6,6 +6,7 @@ import 'package:capsianfood/helpers/sqlite_helper.dart';
 import 'package:capsianfood/model/Products.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +28,7 @@ class _TrendingsListState extends State<TrendingsList>{
   List<Products> productlist=[];
   var token,userId;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-
+  bool isListVisible = false;
 
 
 
@@ -121,6 +122,7 @@ class _TrendingsListState extends State<TrendingsList>{
               SharedPreferences.getInstance().then((value) {
                 networksOperation.getTrending1(context, widget.storeId, 365).then((value) {
                   setState(() {
+                    isListVisible=true;
                     productlist.clear();
                     this.productlist = value;
                   });
@@ -141,7 +143,7 @@ class _TrendingsListState extends State<TrendingsList>{
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&productlist.length>0? new Container(
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:productlist == null ? 0:productlist.length, itemBuilder: (context,int index){
                 return Padding(
@@ -243,6 +245,33 @@ class _TrendingsListState extends State<TrendingsList>{
                   ),
                 );
               })
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&productlist.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
 
         )

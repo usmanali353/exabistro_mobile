@@ -10,6 +10,7 @@ import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/SubCategory/addS
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/SubCategory/updateSubCategory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:need_resume/need_resume.dart';
@@ -224,7 +225,11 @@ class _categoryListPageState extends ResumableState<subCategoryList>{
                   ),
                 );
               }):isListVisible==false?Center(
-                child: CircularProgressIndicator(),
+                child: SpinKitSpinningLines(
+                  lineWidth: 5,
+                  color: yellowColor,
+                  size: 100.0,
+                ),
               ):isListVisible==true&&subCategoryList.length==0?Center(
                 child: Container(
                   width: 300,

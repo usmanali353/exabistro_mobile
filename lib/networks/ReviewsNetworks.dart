@@ -308,22 +308,16 @@ class ReviewNetworks{
 
   @override
   Future<List<BusinessViewModel>> getBusinessForCustomer(BusinessByCustomerViewModel businessByCustomerViewModel, BuildContext context)async {
-    ProgressDialog progressDialog = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      progressDialog.show();
       var response= await http.post(Utils. ReviewBaseUrl()+"Business/getBusinessForCustomer",body:BusinessByCustomerViewModel.BusinessByCustomerViewModelToJson(businessByCustomerViewModel),headers: {"Content-Type":"application/json","Authorization":"Bearer  "});
       if(response.statusCode==200){
         return BusinessViewModel.BusinessListFromJson(response.body);
       }else if(response.body!=null&&response.body.isNotEmpty){
-        progressDialog.hide();
         // Utils.showError(context,response.body);
       }else
-        progressDialog.hide();
       Utils.showError(context,response.statusCode.toString());
     }catch(e){
-      progressDialog.hide();
     }finally{
-      progressDialog.hide();
     }
     return null;
   }

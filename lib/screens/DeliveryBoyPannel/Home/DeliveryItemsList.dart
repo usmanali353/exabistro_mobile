@@ -4,6 +4,7 @@ import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Categories.dart';
 import 'package:capsianfood/screens/AdminPannel/Home/PayCashWithDelivery.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:geolocator/geolocator.dart';
@@ -372,8 +373,12 @@ class _PastOrdersState extends State<DeliveryOrdersList> {
                 },
               )
           ):isListVisible==false?Center(
-            child: CircularProgressIndicator(),
-          ):isListVisible==true&&orderList.length==0?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&categoryList.length==0?Center(
             child: Container(
               width: 300,
               height: 300,

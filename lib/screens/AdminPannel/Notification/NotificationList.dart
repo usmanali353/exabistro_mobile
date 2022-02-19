@@ -7,6 +7,7 @@ import 'package:capsianfood/model/Stores.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationList extends StatefulWidget {
@@ -102,11 +103,13 @@ class _NotificationListState extends State<NotificationList>{
               if(result){
                 networksOperation.getStoreById(context, token,widget.storeId).then((value) {
                   setState(() {
+                    isListVisible=true;
                     _store = value;
                   });
                 });
                 networksOperation.getNotificationByStoreId(context, token,widget.storeId).then((value) {
                   setState(() {
+                    isListVisible=true;
                     if(notificationList!=null)
                       notificationList.clear();
                     notificationList = value;
@@ -137,7 +140,7 @@ class _NotificationListState extends State<NotificationList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&notificationList.length>0?   new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:notificationList == null ? 0:notificationList.length, itemBuilder: (context,int index){
                 return Column(
@@ -172,6 +175,33 @@ class _NotificationListState extends State<NotificationList>{
               }),
 
 
+            ):isListVisible==false?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&notificationList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
 
           ),

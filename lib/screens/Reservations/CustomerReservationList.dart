@@ -7,6 +7,7 @@ import 'package:capsianfood/screens/Reservations/UpdateReservations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +26,7 @@ class _CustomerReservationsState extends State<CustomerReservations> {
   String token,userId;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List reservationList=[];
+  bool isListVisible = false;
 
   @override
   void initState() {
@@ -104,6 +106,7 @@ class _CustomerReservationsState extends State<CustomerReservations> {
             if(result){
               networksOperation.getReservationByCustomerId(context, token,int.parse(userId)).then((value) {
                 setState(() {
+                  isListVisible=true;
                   reservationList.clear();
                   this.reservationList = value;
                  // print(reservationList[5]);
@@ -124,7 +127,7 @@ class _CustomerReservationsState extends State<CustomerReservations> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&reservationList.length>0?  new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
                 itemCount: reservationList.length,
@@ -375,7 +378,35 @@ class _CustomerReservationsState extends State<CustomerReservations> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&reservationList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
+
         ),
       ),
     );

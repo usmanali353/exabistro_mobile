@@ -7,6 +7,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,7 @@ class _DiscountItemsListState extends State<TrendingDeals> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   // // bool isVisible=false;
   List dealsList=[]; List trendingDeal=[];
+  bool isListVisible = false;
   // bool isListVisible = false;
 
   @override
@@ -92,6 +94,7 @@ class _DiscountItemsListState extends State<TrendingDeals> {
               // });
               networksOperation.getDealsTrending(context, token,widget.storeId).then((value) {
                 setState(() {
+                  isListVisible=true;
                   this.dealsList = value;
                   print("qwertyfdx"+dealsList.toString());
                 });
@@ -110,7 +113,7 @@ class _DiscountItemsListState extends State<TrendingDeals> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&dealsList.length>0? new Container(
               child: ListView.builder(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 itemCount: dealsList==null?0:dealsList.length,
@@ -260,6 +263,33 @@ class _DiscountItemsListState extends State<TrendingDeals> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&dealsList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),

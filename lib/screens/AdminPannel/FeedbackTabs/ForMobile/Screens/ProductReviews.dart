@@ -3,6 +3,7 @@ import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Categories.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 
@@ -24,6 +25,7 @@ class _PastOrdersState extends State<ProductReviewsList> {
   List feedBackList = [];
   var userDetail;
   String userid;
+  bool isListVisible = false;
 
   @override
   void initState() {
@@ -39,6 +41,7 @@ class _PastOrdersState extends State<ProductReviewsList> {
       if(result){
         networksOperation.getAllProductReviewsbyCustomer(context, token,widget.storeId).then((value) {
           setState(() {
+            isListVisible=true;
             feedBackList.clear();
             if(value!=null) {
               for (int i = 0; i < value.length; i++) {
@@ -51,8 +54,7 @@ class _PastOrdersState extends State<ProductReviewsList> {
         });
         networksOperation.getCustomerById(context, token,int.parse(userid)).then((value){
           setState(() {
-
-
+            isListVisible=true;
             userDetail = value;
           });
         });
@@ -79,7 +81,7 @@ class _PastOrdersState extends State<ProductReviewsList> {
         ),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: new Container(
+        child: isListVisible==true&&feedBackList.length>0?  new Container(
             child: ListView.builder(
               padding: EdgeInsets.only(top: 10, bottom: 10),
               itemCount: feedBackList!=null?feedBackList.length:0,
@@ -215,6 +217,33 @@ class _PastOrdersState extends State<ProductReviewsList> {
                 );
               },
             )
+        ):isListVisible==false?Center(
+          child: SpinKitSpinningLines(
+            lineWidth: 5,
+            color: yellowColor,
+            size: 100.0,
+          ),
+        ):isListVisible==true&&feedBackList.length==0?Center(
+          child: Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
+          ),
+        ):
+        Container(
+          width: 300,
+          height: 300,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/noDataFound.png")
+              )
+          ),
         ),
       ),
     );

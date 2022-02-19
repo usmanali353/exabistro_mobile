@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +34,8 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
   String searchQuery = "";
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime start_date ,end_date;
+  bool isListVisible = false;
+
 
   @override
   void initState() {
@@ -215,6 +218,7 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
             if (result) {
               networksOperation.getReservationList(context, token, widget.storeId,null,null,null).then((value) {
                 setState(() {
+                  isListVisible=true;
                   if(reservationList!=null)
                   reservationList.clear();
                   this.reservationList = value;
@@ -235,7 +239,7 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&reservationList.length>0?  new Container(
             decoration: BoxDecoration(),
             child: ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -527,6 +531,33 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
                     ),
                   );
                 }),
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&reservationList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),
