@@ -5961,32 +5961,30 @@ class networksOperation{
     return false;
   }
   static Future<List<PurchaseOrder>> getPurchaseOrderListByStoreId(BuildContext context,String token,int storeId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
+
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"PurchaseOrder/GetPurchaseOrdersByStoreId?StoreId="+storeId.toString(),headers: headers);
       var data= jsonDecode(response.body);
       print(data);
       if(response.statusCode==200){
-        pd.hide();
+
         return PurchaseOrder.purchaseOrderListFromJson(response.body);
 
       }
       else{
-        pd.hide();
+
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
       print(e);
-      pd.hide();
+
       Utils.showError(context, "Error Found:");
     }
     return null;
   }
   static Future<List<PurchaseOrder>> getPurchaseOrderListByStoreId1(BuildContext context,String token,int storeId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       // pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
@@ -5994,44 +5992,43 @@ class networksOperation{
       var data= jsonDecode(response.body);
       print(data);
       if(response.statusCode==200){
-        pd.hide();
+
         return PurchaseOrder.purchaseOrderListFromJson(response.body);
 
       }
       else{
-        pd.hide();
+
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
       print(e);
-      pd.hide();
+
       Utils.showError(context, "Error Found:");
     }
     return null;
   }
 
   static Future<List<PurchaseOrder>> getPurchaseOrderListByStoreIdWithFilter(BuildContext context,String token,int storeId ,int vendorId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);//DateTime startDate,DateTime endDate,
     try{
-      pd.show();
+
       Map<String,String> headers = {'Authorization':'Bearer '+token};//&startDate=$startDate&endDate=$endDate
       var response=await http.get(Utils.baseUrl()+"PurchaseOrder/GetPurchaseOrdersByStoreId?StoreId="+storeId.toString()+"&vendor=$vendorId",headers: headers);
       var data= jsonDecode(response.body);
       print(data);
       if(response.statusCode==200){
-        pd.hide();
+
         return PurchaseOrder.purchaseOrderListFromJson(response.body);
 
       }
       else{
-        pd.hide();
+
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
       print(e);
-      pd.hide();
+
       Utils.showError(context, "Error Found:");
     }
     return null;
