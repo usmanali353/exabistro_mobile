@@ -1886,17 +1886,16 @@ class networksOperation{
     return null;
   }
   static Future<List<Products>> getAllPreviousOrdersAnonymous(BuildContext context,String contact,String email)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
 
     try{
-      pd.show();
+
       List list=[];
       // Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"orders/GetAllPreviousOrdersForAnonymousCustomer?email=$email&phoneNo=$contact");
       var data1= jsonDecode(response.body);
       if(response.statusCode==200){
         var data = data1['products'];
-        pd.hide();
+
         List<Products> list=List();
         list.clear();
         for(int i=0;i<data.length;i++){
@@ -1908,45 +1907,44 @@ class networksOperation{
 
       }
       else{
-        pd.hide();
+
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
-      pd.hide();
+
       Utils.showError(context, "Error Found: $e");
       return null;
     }finally{
-      pd.hide();
+
     }
 
   }
   static Future<List<dynamic>> getAllPreviousTablesAnonymous(BuildContext context,String contact,String email)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
 
     try{
-      pd.show();
+
       List list=[];
       // Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"orders/GetAllPreviousOrdersForAnonymousCustomer?email=$email&phoneNo=$contact");
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
+
 
         return data['tables'];
 
       }
       else{
-        pd.hide();
+
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
-      pd.hide();
+
       Utils.showError(context, "Error Found: $e");
       return null;
     }finally{
-      pd.hide();
+
     }
 
   }

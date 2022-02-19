@@ -9,6 +9,7 @@ import 'package:capsianfood/screens/Tables/UpdateTables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,7 +36,7 @@ class _TablesListState extends ResumableState<TableUseAnonymous> {
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   var selectedPreference;
-
+  bool isListVisible = false;
   bool isProduct;
 
   @override
@@ -102,6 +103,7 @@ class _TablesListState extends ResumableState<TableUseAnonymous> {
               networksOperation.getAllPreviousTablesAnonymous(context,"","").then((
                   value) {
                 setState(() {
+                  isListVisible=true;
                   tablesList = value;
                 });
               });
@@ -120,7 +122,7 @@ class _TablesListState extends ResumableState<TableUseAnonymous> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child:isListVisible==true&&tablesList.length>0? new Container(
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -191,6 +193,33 @@ class _TablesListState extends ResumableState<TableUseAnonymous> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&tablesList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),

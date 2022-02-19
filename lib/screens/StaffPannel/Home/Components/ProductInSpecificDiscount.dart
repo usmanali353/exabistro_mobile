@@ -9,6 +9,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/StaffPannel/Home/Screens/Details/addToCartItems.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GetProductDiscountListForStaff extends StatefulWidget {
@@ -34,7 +35,7 @@ class _DiscountItemsListState extends State<GetProductDiscountListForStaff> {
   List cart=[];
   List<int> _counter = List();
   StreamController _event = StreamController<int>.broadcast();
-
+  bool isListVisible = false;
   var selectedSize;
   // bool isListVisible = false;
   void ItemCount(int qty, int index) {
@@ -126,6 +127,7 @@ class _DiscountItemsListState extends State<GetProductDiscountListForStaff> {
                   .getDiscountById(context, token, widget.discountId)
                   .then((value) {
                 setState(() {
+                  isListVisible=true;
                   this.productList = value;
                   print(productList);
                 });
@@ -150,7 +152,7 @@ class _DiscountItemsListState extends State<GetProductDiscountListForStaff> {
               )),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&productList.length>0?  new Container(
               //decoration:
               //new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
@@ -350,7 +352,34 @@ class _DiscountItemsListState extends State<GetProductDiscountListForStaff> {
                         ),
                       ));
                 },
-              )),
+              )):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&productList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
+          ),
         ),
       ),
     );
