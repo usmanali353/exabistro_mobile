@@ -7,6 +7,7 @@ import 'package:capsianfood/screens/AdminPannel/SemiFinishItems/AddSemiFinish.da
 import 'package:capsianfood/screens/AdminPannel/SemiFinishItems/UpdateSemiFinish.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'OrderMakingSemiFinish/Adding.dart';
@@ -40,6 +41,8 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
   String searchQuery = "";
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   List allUnitList=[];
+
+
 
   @override
   void initState() {
@@ -143,6 +146,7 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
               //if(result){
                 networksOperation.getAllSemiFinishItems(context,token,widget.storeId).then((value){
                   setState(() {
+                    isListVisible=true;
                     print(value);
                     semiFinishList = value;
                     print(semiFinishList);
@@ -174,7 +178,7 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                new Container(
+                isListVisible==true&&semiFinishList.length>0?   new Container(
                   height: MediaQuery.of(context).size.height-180,
                   child: _isSearching==false?ListView.builder(scrollDirection: Axis.vertical, itemCount:semiFinishList == null ? 0:semiFinishList.length, itemBuilder: (context,int index){
                     return Column(
@@ -616,6 +620,33 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
                       ],
                     );
                   }),
+                ):isListVisible==false?Center(
+                  child: SpinKitSpinningLines(
+                    lineWidth: 5,
+                    color: yellowColor,
+                    size: 100.0,
+                  ),
+                ):isListVisible==true&&semiFinishList.length==0?Center(
+                  child: Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/noDataFound.png")
+                        )
+                    ),
+                  ),
+                ):
+                Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/noDataFound.png")
+                      )
+                  ),
                 ),
                 // InkWell(
                 //

@@ -12,6 +12,7 @@ import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Product/AddSemiI
 import 'package:capsianfood/screens/AdminPannel/StockManagement/AddStock.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'AddSemiFinishIngredient.dart';
@@ -33,6 +34,7 @@ class _StocksListPageState extends State<SemiIngredientsList>{
   List allUnitList=[];
   List<Sizes> allSizes=[];
   List<SemiFinishedItemIngredient> semiItemIngredient=[];
+  bool isListVisible = false;
 
   String getUnitName(int id){
     String size="";
@@ -114,6 +116,7 @@ class _StocksListPageState extends State<SemiIngredientsList>{
               if(result){
                 networksOperation.getAllSemiFinishIngredientsByItemId(context,token,widget.semiItemObj.id).then((value) {
                   setState(() {
+                    isListVisible=true;
                     if(semiItemIngredient!=null)
                       semiItemIngredient.clear();
                     semiItemIngredient = value;
@@ -152,7 +155,7 @@ class _StocksListPageState extends State<SemiIngredientsList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&semiItemIngredient.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount: semiItemIngredient ==null? 0:semiItemIngredient.length, itemBuilder: (context,int index){
                 return Slidable(
@@ -229,7 +232,35 @@ class _StocksListPageState extends State<SemiIngredientsList>{
               }),
 
 
+            ):isListVisible==false?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&semiItemIngredient.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
+
 
           ),
         )

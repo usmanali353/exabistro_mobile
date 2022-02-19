@@ -6,6 +6,7 @@ import 'package:capsianfood/model/SemiFinishItems.dart';
 import 'package:capsianfood/model/Sizes.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddSingleEntry.dart';
 import 'UpdateSingle.dart';
@@ -29,6 +30,7 @@ class _StocksListPageState extends State<SemiMakingOrder>{
   List allUnitList=[];
   List<Sizes> allSizes=[];
   List<SemiFinishedDetail> semiItemDetailsList=[];
+  bool isListVisible = false;
 
   String getUnitName(int id){
     String size="";
@@ -110,6 +112,7 @@ class _StocksListPageState extends State<SemiMakingOrder>{
               if(result){
                 networksOperation.getAllSemiFinishDetailsBySFId(context,token,widget.semiItemObj.id).then((value) {
                   setState(() {
+                    isListVisible=true;
                     if(semiItemDetailsList!=null)
                       semiItemDetailsList.clear();
                     semiItemDetailsList = value;
@@ -148,7 +151,7 @@ class _StocksListPageState extends State<SemiMakingOrder>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&semiItemDetailsList.length>0?  new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount: semiItemDetailsList ==null? 0:semiItemDetailsList.length, itemBuilder: (context,int index){
                 return Slidable(
@@ -212,6 +215,33 @@ class _StocksListPageState extends State<SemiMakingOrder>{
               }),
 
 
+            ):isListVisible==false?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&semiItemDetailsList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
 
           ),

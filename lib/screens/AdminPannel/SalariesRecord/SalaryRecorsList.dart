@@ -6,6 +6,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddSalary.dart';
@@ -33,7 +34,7 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
   static final List<int> chartDropdownValue = [0,7,30,365];
   String actualDropdown ;//= chartDropdownItems[0];
   int selectedDays=0;
-
+  bool isListVisible = false;
   List employeesList=[];
 
   @override
@@ -91,6 +92,7 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
                   selectedDays = chartDropdownItems.indexOf(value); // Refresh the chart
                   networksOperation.getAllSalaryExpense(context, token,widget.storeId,chartDropdownValue[selectedDays]).then((value) {
                     setState(() {
+                      isListVisible=true;
                       if(salaryExpenseList!=null)
                       salaryExpenseList.clear();
                       this.salaryExpenseList = value;
@@ -138,6 +140,7 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
               networksOperation.getAllSalaryExpense(context, token,widget.storeId,chartDropdownValue[selectedDays])
                   .then((value) {
                 setState(() {
+                  isListVisible=true;
                   this.salaryExpenseList = value;
                 });
               });
@@ -156,7 +159,7 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&salaryExpenseList.length>0? new Container(
 
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
@@ -410,7 +413,35 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&salaryExpenseList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
+
         ),
       ),
     );

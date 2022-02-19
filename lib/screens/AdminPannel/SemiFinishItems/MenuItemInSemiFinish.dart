@@ -4,6 +4,7 @@ import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/ProductsInSemiFinish.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'OrderMakingSemiFinish/Adding.dart';
 
@@ -87,6 +88,7 @@ class _ProductsInSemiFinishPageState extends State<ProductsInSemiFinishPage>{
               if(result){
                 networksOperation.ProductsInSemiFinishList(context,token,widget.semiId).then((value){
                   setState(() {
+                    isListVisible=true;
                     print(value);
                     productsInSemiFinishList = value;
                     print("qwerty"+productsInSemiFinishList.toString());
@@ -107,7 +109,7 @@ class _ProductsInSemiFinishPageState extends State<ProductsInSemiFinishPage>{
               }
             });
           },
-          child: productsInSemiFinishList!=null?productsInSemiFinishList.length>0?Container(
+          child:isListVisible==true&&productsInSemiFinishList.length>0?Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
@@ -149,8 +151,36 @@ class _ProductsInSemiFinishPageState extends State<ProductsInSemiFinishPage>{
                 );
               })
             ),
-          ):Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)):
-          Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)),
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&productsInSemiFinishList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
+          ),
+
+
         )
 
 

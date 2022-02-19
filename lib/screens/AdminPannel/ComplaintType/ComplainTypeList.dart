@@ -6,6 +6,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/AdminPannel/PreDefinedReasons/PreDefinedReasonsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +31,7 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
   String token;
    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<ComplaintType> ComplaintTypeList = [];
+  bool isListVisible = false;
 
   @override
   void initState() {
@@ -99,6 +101,7 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
               if(result){
                 networksOperation.getComplainTypeListByStoreId(context, token,widget.storeId).then((value) {
                   setState(() {
+                    isListVisible=true;
                     ComplaintTypeList = value;
                     print(ComplaintTypeList.toString() + "jndkjfdk");
                   });
@@ -119,7 +122,7 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&ComplaintTypeList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:ComplaintTypeList == null ? 0:ComplaintTypeList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -182,6 +185,33 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
                 );
               }),
 
+            ):isListVisible==false?Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                color: yellowColor,
+                size: 100.0,
+              ),
+            ):isListVisible==true&&ComplaintTypeList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
           ),
         )

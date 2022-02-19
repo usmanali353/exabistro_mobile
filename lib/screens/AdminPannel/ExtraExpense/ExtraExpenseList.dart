@@ -7,6 +7,7 @@ import 'package:capsianfood/screens/Tables/AddTables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +39,8 @@ class _ExtraExpenseListState extends State<ExtraExpenseList> {
   static final List<int> chartDropdownValue = [0,7,30,365];
   String actualDropdown ;//= chartDropdownItems[0];
   int selectedDays=0;
+  bool isListVisible = false;
+
 
   @override
   void didChangeDependencies() {
@@ -140,6 +143,7 @@ class _ExtraExpenseListState extends State<ExtraExpenseList> {
               networksOperation.getAllExtraExpense(context, token,widget.storeId,chartDropdownValue[selectedDays])
                   .then((value) {
                 setState(() {
+                  isListVisible=true;
                   this.extraExpenseList = value;
                 });
               });
@@ -158,7 +162,7 @@ class _ExtraExpenseListState extends State<ExtraExpenseList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&extraExpenseList.length>0? new Container(
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
                 itemCount: extraExpenseList!=null?extraExpenseList.length:0,
@@ -292,7 +296,35 @@ class _ExtraExpenseListState extends State<ExtraExpenseList> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&extraExpenseList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
+
         ),
       ),
     );

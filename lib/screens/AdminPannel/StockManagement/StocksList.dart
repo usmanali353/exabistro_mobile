@@ -12,6 +12,7 @@ import 'package:capsianfood/screens/AdminPannel/StockManagement/AddStock.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -40,6 +41,7 @@ class _StocksListPageState extends State<StocksList>{
   List<StockItems> stockList = [],searchedList=[];
   List allUnitList=[];
   bool isListVisible = false;
+
 
   FirebaseMessaging _firebaseMessaging;
 
@@ -80,6 +82,7 @@ class _StocksListPageState extends State<StocksList>{
       });
       networksOperation.getAllItemBrandByStoreId(context,token,widget.storeId).then((value){
         setState(() {
+          isListVisible=true;
           itemBrandList = value;
           print(itemBrandList);
         });
@@ -89,6 +92,7 @@ class _StocksListPageState extends State<StocksList>{
         if(value!=null)
         {
           setState(() {
+            isListVisible=true;
             vendorList = value;
           });
         }
@@ -136,7 +140,7 @@ class _StocksListPageState extends State<StocksList>{
                         ),
                         Padding(
                           padding: const EdgeInsets.all(6.0),
-                          child: Container(
+                          child: isListVisible==true&&itemBrandList.length>0? Container(
                             height: 200,
                             width: MediaQuery.of(context).size.width,
                             child: ListView.builder(
@@ -158,6 +162,33 @@ class _StocksListPageState extends State<StocksList>{
                                     ),
                                   );
                                 }),
+                          ):isListVisible==false?Center(
+                            child: SpinKitSpinningLines(
+                              lineWidth: 5,
+                              color: yellowColor,
+                              size: 100.0,
+                            ),
+                          ):isListVisible==true&&itemBrandList.length==0?Center(
+                            child: Container(
+                              width: 300,
+                              height: 300,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage("assets/noDataFound.png")
+                                  )
+                              ),
+                            ),
+                          ):
+                          Container(
+                            width: 300,
+                            height: 300,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage("assets/noDataFound.png")
+                                )
+                            ),
                           ),
                         ),
                         Row(
@@ -172,6 +203,7 @@ class _StocksListPageState extends State<StocksList>{
                                       if(stockList!=null)
                                         stockList.clear();
                                       setState(() {
+                                        isListVisible=true;
                                         stockList = value;
                                       });
                                     });
