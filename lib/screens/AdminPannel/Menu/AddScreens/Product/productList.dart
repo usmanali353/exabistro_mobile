@@ -10,6 +10,7 @@ import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Product/updatePr
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Toppings/ToppingList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../QRGernator.dart';
@@ -264,8 +265,8 @@ class _categoryListPageState extends ResumableState<productListPage>{
                 );
               }),
             ):isListVisible==false?Center(
-              child: CircularProgressIndicator(),
-            ):isListVisible==true&&productList.length==0?Center(
+            child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+          ):isListVisible==true&&productList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

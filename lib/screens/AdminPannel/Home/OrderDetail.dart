@@ -863,7 +863,7 @@ class _OrderDetailPageState extends State<OrderDetailPage>{
                                             ),
                                             Visibility(
                                                 visible: widget.Order["orderItems"][index]['orderItemStatus']==1,
-                                                child: SpinKitPouringHourglass(color: yellowColor, size: 20,)
+                                                child: SpinKitPouringHourGlass(color: yellowColor, size: 20,)
                                             ),
                                             Row(
                                               children: [

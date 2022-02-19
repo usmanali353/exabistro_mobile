@@ -529,7 +529,7 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                                                                               SizedBox(width: 90,),
                                                                               Visibility(
                                                                                 visible: orderList[index]['orderItems'][i]['orderItemStatus']==1,
-                                                                                  child: SpinKitPouringHourglass(color: yellowColor)
+                                                                                  child: SpinKitPouringHourGlass(color: yellowColor)
                                                                               ),
                                                                               Row(
                                                                                 children: [

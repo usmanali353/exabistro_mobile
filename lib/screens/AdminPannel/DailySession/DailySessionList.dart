@@ -8,6 +8,7 @@ import 'package:capsianfood/screens/AdminPannel/Home/DailySessions.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Sizes/updateSize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:need_resume/need_resume.dart';
@@ -300,8 +301,8 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
                 );
               }),
             ):isListVisible==false?Center(
-              child: CircularProgressIndicator(),
-            ):isListVisible==true&&sessionList.length==0?Center(
+            child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+          ):isListVisible==true&&sessionList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

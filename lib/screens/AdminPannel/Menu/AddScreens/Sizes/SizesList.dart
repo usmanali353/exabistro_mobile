@@ -7,6 +7,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Sizes/updateSize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'addSizes.dart';
@@ -206,8 +207,8 @@ class _categoryListPageState extends ResumableState<SizesListPage>{
                 );
               }),
             ):isListVisible==false?Center(
-              child: CircularProgressIndicator(),
-            ):isListVisible==true&&sizes.length==0?Center(
+            child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+          ):isListVisible==true&&sizes.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

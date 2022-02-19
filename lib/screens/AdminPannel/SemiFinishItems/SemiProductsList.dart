@@ -6,6 +6,7 @@ import 'package:capsianfood/model/Products.dart';
 import 'package:capsianfood/model/Sizes.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:need_resume/need_resume.dart';
 
@@ -231,8 +232,8 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
                 );
               }),
             ):isListVisible==false?Center(
-              child: CircularProgressIndicator(),
-            ):isListVisible==true&&productList.length==0?Center(
+            child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+          ):isListVisible==true&&productList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

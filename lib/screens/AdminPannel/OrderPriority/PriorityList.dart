@@ -4,6 +4,7 @@ import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -245,8 +246,8 @@ class _categoryListPageState extends State<PriorityList>{
                 );
               }),
             ):isListVisible==false?Center(
-              child: CircularProgressIndicator(),
-            ):isListVisible==true&&priorityList.length==0?Center(
+            child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+          ):isListVisible==true&&priorityList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

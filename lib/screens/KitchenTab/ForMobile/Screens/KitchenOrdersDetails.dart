@@ -362,7 +362,7 @@ class _OrderDetailPageState extends State<KitchenOrderDetailPage>{
                                               ),
                                               Visibility(
                                                   visible: itemsList[index]['orderItemStatus']==1,
-                                                  child: SpinKitPouringHourglass(color: yellowColor)
+                                                  child: SpinKitPouringHourGlass(color: yellowColor)
                                               ),
                                               Row(
                                                 children: [

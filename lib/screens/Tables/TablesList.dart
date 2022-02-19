@@ -9,6 +9,7 @@ import 'package:capsianfood/screens/Tables/UpdateTables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -309,7 +310,7 @@ class _TablesListState extends ResumableState<TablesList> {
                 },
               )
           ):isListVisible==false?Center(
-            child: CircularProgressIndicator(),
+            child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
           ):isListVisible==true&&tablesList.length==0?Center(
             child: Container(
               width: 300,
