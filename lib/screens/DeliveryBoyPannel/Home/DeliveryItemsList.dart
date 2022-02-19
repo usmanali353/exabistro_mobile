@@ -86,6 +86,7 @@ class _PastOrdersState extends State<DeliveryOrdersList> {
             if(result){
               networksOperation.getAllOrderByDriver(context, token,widget.driverId).then((value) {
                 setState(() {
+                  isListVisible=true;
                   orderList.clear();
                   //orderList = value;
                   if(value!=null) {
@@ -95,9 +96,6 @@ class _PastOrdersState extends State<DeliveryOrdersList> {
                       }
                     }
                   }
-                  else
-                    orderList =null;
-
                   // print(value.toString());
                 });
               });
@@ -119,7 +117,7 @@ class _PastOrdersState extends State<DeliveryOrdersList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&orderList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -373,6 +371,29 @@ class _PastOrdersState extends State<DeliveryOrdersList> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: CircularProgressIndicator(),
+          ):isListVisible==true&&orderList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),

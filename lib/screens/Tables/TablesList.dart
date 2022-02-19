@@ -32,7 +32,7 @@ class _TablesListState extends ResumableState<TablesList> {
   bool value = false;
   String token;
   List tablesList=[];
-  var _isSearching=false,isFilter =true;
+  var _isSearching=false,isFilter =true,isListVisible=false;
   TextEditingController _searchQuery;
   String searchQuery = "";
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -70,6 +70,7 @@ class _TablesListState extends ResumableState<TablesList> {
         WidgetsBinding.instance
             .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
       }else{
+        isListVisible=true;
         Utils.showError(context, "Please Check Internet Connection");
       }
     });
@@ -132,6 +133,7 @@ class _TablesListState extends ResumableState<TablesList> {
               networksOperation.getAllTables(context, token,widget.storeId,"")
                   .then((value) {
                 setState(() {
+                  isListVisible=true;
                   if(tablesList!=null)
                     tablesList.clear();
                   this.tablesList = value;
@@ -152,7 +154,7 @@ class _TablesListState extends ResumableState<TablesList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&tablesList.length>0?new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
                 padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -306,6 +308,29 @@ class _TablesListState extends ResumableState<TablesList> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: CircularProgressIndicator(),
+          ):isListVisible==true&&tablesList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),
@@ -387,18 +412,21 @@ class _TablesListState extends ResumableState<TablesList> {
 
     setState(() {
       searchQuery = newQuery;
+      isListVisible=false;
     });
     Utils.check_connectivity().then((result){
       if(result){
         networksOperation.getAllTables(context, token,widget.storeId,searchQuery)
             .then((value) {
           setState(() {
+            isListVisible=true;
             if(tablesList!=null)
               tablesList.clear();
             this.tablesList = value;
           });
         });
       }else{
+        isListVisible=true;
         Utils.showError(context, "Please Check Your Internet");
       }
     });

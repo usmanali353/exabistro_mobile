@@ -134,10 +134,10 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
                //if(result){
               networksOperation.getAllProductAgainstSemiFinish(context,widget.storeId).then((value){
                 setState(() {
+                  isListVisible=true;
                   if(productList!=null)
                     productList.clear();
                   productList = value;
-
                 });
               });
               // }else{
@@ -145,7 +145,7 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
               // }
             });
           },
-          child: productList!=null?productList.length>0?Container(
+          child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
@@ -154,7 +154,7 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&productList.length>0? new Container(
               child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:productList == null ? 0:productList.length, itemBuilder: (context,int index){
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -230,9 +230,31 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
                   ),
                 );
               }),
+            ):isListVisible==false?Center(
+              child: CircularProgressIndicator(),
+            ):isListVisible==true&&productList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
-          ):Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)):
-          Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)),
+          )
         )
 
 

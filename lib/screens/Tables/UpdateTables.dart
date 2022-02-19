@@ -34,6 +34,12 @@ class _AddTablesState extends State<UpdateTables> {
       setState(() {
         this.token = value.getString("token");
         table_name.text = widget.updateTablesDetails['name'];
+        if(widget.updateTablesDetails['description']!=null){
+          description.text=widget.updateTablesDetails['description'];
+        }
+        if(widget.updateTablesDetails['seatingCapacity']!=null){
+          capacity.text=widget.updateTablesDetails['seatingCapacity'].toString();
+        }
       });
     });
 

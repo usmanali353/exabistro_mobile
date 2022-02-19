@@ -28,7 +28,7 @@ class _categoryListPageState extends State<PriorityList>{
   String token;
    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List priorityList = [];
-
+  bool isListVisible=false;
   @override
   void initState() {
     WidgetsBinding.instance
@@ -92,6 +92,7 @@ class _categoryListPageState extends State<PriorityList>{
               //if(result){
                 networksOperation.getAllOrdersPriority(context, token,widget.storeId).then((value) {
                   setState(() {
+                    isListVisible=true;
                     priorityList = value;
                   });
                 });
@@ -111,7 +112,7 @@ class _categoryListPageState extends State<PriorityList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&priorityList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:priorityList == null ? 0:priorityList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -243,6 +244,29 @@ class _categoryListPageState extends State<PriorityList>{
                   ),
                 );
               }),
+            ):isListVisible==false?Center(
+              child: CircularProgressIndicator(),
+            ):isListVisible==true&&priorityList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
           ),
         )

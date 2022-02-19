@@ -7,6 +7,7 @@ import 'package:capsianfood/model/ProductsInDeals.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/model/Products.dart';
 import 'package:capsianfood/model/Sizes.dart';
@@ -36,15 +37,22 @@ class _AddDiscountState extends State<UpdateDeals> {
 
   @override
   void initState() {
-    print(widget.storeId);
+    debugPrint(widget.dealDetail["productDeals"][0].toString());
     setState(() {
       dealsName = TextEditingController();
       description = TextEditingController();
       storeId = TextEditingController();
       discountPrice =TextEditingController();
-       dealsName.text = widget.dealDetail['name']!=null?widget.dealDetail['name']:"";
-      description.text = widget.dealDetail['name']!=null?widget.dealDetail['description']:"";
-      discountPrice.text = widget.dealDetail['name']!=null?widget.dealDetail['Price']:"";
+      dealsName.text = widget.dealDetail['name']!=null?widget.dealDetail['name']:"";
+      description.text = widget.dealDetail['description']!=null?widget.dealDetail['description']:"";
+      discountPrice.text = widget.dealDetail['price']!=null?widget.dealDetail['price'].toString():"";
+      actualDealPrice=widget.dealDetail['actualPrice']!=null?widget.dealDetail['actualPrice']:0.0;
+      if(widget.dealDetail['startDate']!=null&&widget.dealDetail['startDate'].toString().isNotEmpty){
+        intialDate=DateFormat("yyyy-MM-dd").parse(widget.dealDetail['startDate'].toString().substring(0,10));
+      }
+      if(widget.dealDetail['endDate']!=null&&widget.dealDetail['endDate'].toString().isNotEmpty){
+        lastDate=DateFormat("yyyy-MM-dd").parse(widget.dealDetail['endDate'].toString().substring(0,10));
+      }
       SharedPreferences.getInstance().then((value){
         token = value.getString("token");
         print(token);
@@ -57,6 +65,18 @@ class _AddDiscountState extends State<UpdateDeals> {
           setState(() {
             this.allProduct = value;
             // print(allProduct);
+            if(widget.dealDetail["productDeals"]!=null&&widget.dealDetail["productDeals"].length>0){
+              for(int i=0;i<widget.dealDetail["productDeals"].length;i++){
+
+                productList.add(ProductsInDeals(
+                  quantity: widget.dealDetail["productDeals"][i]["quantity"],
+                  productId: widget.dealDetail["productDeals"][i]["product"]["id"],
+                  sizeId: widget.dealDetail["productDeals"][i]["size"]["id"],
+                ));
+                debugPrint(productList[i].toJson().toString());
+                chips.add(Chip(label: Text("${getProductName(productList[i].productId)+"  [${getSizeName(productList[i].sizeId)}]  "+" x"+productList[i].quantity.toString()}")));
+              }
+            }
           });
         });
         networksOperation.getSizes(context,widget.storeId)
@@ -66,6 +86,7 @@ class _AddDiscountState extends State<UpdateDeals> {
             // print(allProduct);
           });
         });
+
       }else{
         Utils.showError(context, "Networks Error");
       }
@@ -203,35 +224,25 @@ class _AddDiscountState extends State<UpdateDeals> {
                             border: Border.all(color: blueColor)
                         ),
                         child: InkWell(
-                          onTap: () async{
-                            if(chips.isNotEmpty)
-                              chips.clear();
-                            if(productList !=null )
-                              productList.clear();
-                            if(dealsItems!=null )
-                              dealsItems.clear();
-                            if(actualDealPrice!=0.0)
-                              actualDealPrice =0.0;
-                            if(isLoading) Utils.showError(context, "Please Wait May Be Items are loading");
-                            else if(allProduct.length>0)
-                              productList = await Navigator.push(context, MaterialPageRoute(builder: (context) => AddProductToDeals(storeId: widget.storeId,),),);
-                            else Utils.showError(context, "Please add Items First");
-                            setState(() {
-                              chips.clear();
-                              dealsItems.clear();
-                              if(productList!=null && productList.length>0) {
-                                for (int i = 0; i < productList.length; i++) {
-                                  chips.add(Chip(label: Text("${getProductName(productList[i].productId)+"  [${getSizeName(productList[i].sizeId)}]  "+" x"+productList[i].quantity.toString()}")));
-                                  actualDealPrice += productList[i].totalPrice;
-                                  dealsItems.add( {"ProductId":productList[i].productId,
-                                    "SizeId":productList[i].sizeId,
-                                    "Quantity":productList[i].quantity});
-
-                                }
-                              }else{
-                                dealsItems = null;
-                              }
-                            });
+                          onTap: () {
+                             if(allProduct.length>0)
+                              // chips.clear();
+                              // dealsItems.clear();
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => AddProductToDeals(storeId: widget.storeId,),),).then((selectedProductsForDeal){
+                                setState(() {
+                                  if(selectedProductsForDeal!=null&&selectedProductsForDeal.length>0){
+                                    chips.clear();
+                                    for (int i = 0; i < selectedProductsForDeal.length; i++) {
+                                      chips.add(Chip(label: Text("${getProductName(selectedProductsForDeal[i].productId)+"  [${getSizeName(selectedProductsForDeal[i].sizeId)}]  "+" x"+selectedProductsForDeal[i].quantity.toString()}")));
+                                      actualDealPrice += selectedProductsForDeal[i].totalPrice;
+                                      dealsItems.add( {"ProductId":selectedProductsForDeal[i].productId,
+                                        "SizeId":selectedProductsForDeal[i].sizeId,
+                                        "Quantity":selectedProductsForDeal[i].quantity});
+                                    }
+                                    this.productList=selectedProductsForDeal;
+                                  }
+                                });
+                              });
                           },
                           child: InputDecorator(
                             decoration: InputDecoration(
@@ -291,7 +302,7 @@ class _AddDiscountState extends State<UpdateDeals> {
                       ),
                       child: ListTile(
                         title: Text("Actual Price",style: TextStyle(color:yellowColor,fontWeight: FontWeight.bold),),
-                        trailing: Text("${actualDealPrice.toStringAsFixed(2)}",style: TextStyle(color: PrimaryColor, fontWeight: FontWeight.bold, fontSize: 15)),
+                        trailing: Text("${actualDealPrice.toStringAsFixed(1)}",style: TextStyle(color: PrimaryColor, fontWeight: FontWeight.bold, fontSize: 15)),
                       ),
                     ),
                   ),

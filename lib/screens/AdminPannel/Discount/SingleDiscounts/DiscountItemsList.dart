@@ -34,7 +34,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   List discountList = [];
-  var _isSearching = false, isFilter = true;
+  var _isSearching = false, isFilter = true,isListVisible=false;
   TextEditingController _searchQuery, percent;
   String searchQuery = "";
   static final GlobalKey<ScaffoldState> scaffoldKey =
@@ -56,6 +56,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
           });
         });
       } else {
+        isListVisible=true;
         Utils.showError(context, "Please Check Internet Connection");
       }
     });
@@ -195,18 +196,21 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
                       padding: const EdgeInsets.all(8.0),
                       child: MaterialButton(
                         onPressed: () {
+                          isListVisible=false;
                           Utils.check_connectivity().then((result) {
-                            //if (result) {
+                            if (result) {
                               networksOperation.getAllDiscount(context, token, widget.storeId, start_date, end_date, percent.text, null).then((value) {
                                 setState(() {
+                                  isListVisible=true;
                                   if (discountList != null)
                                     discountList.clear();
                                   this.discountList = value;
                                 });
                               });
-                            // } else {
-                            //   Utils.showError(context, "Network Error");
-                            // }
+                            } else {
+                              isListVisible=true;
+                              Utils.showError(context, "Network Error");
+                            }
                           });
                         },
                         color: yellowColor,
@@ -234,6 +238,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
                             start_date = null;
                             end_date = null;
                             percent = null;
+                            isListVisible=false;
                             WidgetsBinding.instance.addPostFrameCallback((_) =>
                                 _refreshIndicatorKey.currentState.show());
                           });
@@ -314,11 +319,13 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
               )
                   .then((value) {
                 setState(() {
+                  isListVisible=true;
                   if (discountList != null) discountList.clear();
                   this.discountList = value;
                 });
               });
             }else{
+              isListVisible=true;
               Utils.showError(context, "Network Error");
             }
           });
@@ -332,7 +339,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child:isListVisible==true&&discountList.length>0? new Container(
               child: ListView.builder(
                 itemCount: discountList!=null?discountList.length:0,
                 itemBuilder: (context, index) {
@@ -534,6 +541,29 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: CircularProgressIndicator(),
+          ):isListVisible==true&&discountList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),
@@ -613,6 +643,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
   void updateSearchQuery(String newQuery) {
     setState(() {
       searchQuery = newQuery;
+      isListVisible=false;
     });
     Utils.check_connectivity().then((result) {
       if (result) {
@@ -621,11 +652,13 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
             context, token, widget.storeId, null, null, null, searchQuery)
             .then((value) {
           setState(() {
+            isListVisible=true;
             if (discountList != null) discountList.clear();
             this.discountList = value;
           });
         });
       } else {
+        isListVisible=true;
         Utils.showError(context, "Please Check Your Internet");
       }
     });

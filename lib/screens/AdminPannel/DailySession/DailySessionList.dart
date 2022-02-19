@@ -112,6 +112,7 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
               if(result){
                 networksOperation.getAllDailySessionByStoreId(context,token,widget.storeId).then((value){
                   //pd.hide();
+                  isListVisible=true;
                   setState(() {
                     if(sessionList!=null)
                       sessionList.clear();
@@ -119,11 +120,12 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
                   });
                 });
               }else{
+                isListVisible=true;
                 Utils.showError(context, "Network Error");
               }
             });
           },
-          child: sessionList!=null?sessionList.length>0?Container(
+          child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
@@ -133,7 +135,7 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&sessionList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:sessionList == null ? 0:sessionList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -297,10 +299,32 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
                   ),
                 );
               }),
+            ):isListVisible==false?Center(
+              child: CircularProgressIndicator(),
+            ):isListVisible==true&&sessionList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
 
-          ):Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)):
-          Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)),
+          )
         )
 
 

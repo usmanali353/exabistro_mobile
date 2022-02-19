@@ -38,7 +38,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
   // // bool isVisible=false;
   List dealsList=[]; List trendingDeal=[];
   // bool isListVisible = false;
-  var _isSearching=false,isFilter =true;
+  var _isSearching=false,isFilter =true,isListVisible=false;
   TextEditingController _searchQuery,startPrice,endPrice;
   String searchQuery = "";
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -59,6 +59,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
           });
         });
       }else{
+        isListVisible=true;
         Utils.showError(context, "Please Check Internet Connection");
       }
     });
@@ -208,9 +209,6 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                   padding: const EdgeInsets.all(16.0),
                   child: TextFormField(
                     controller: endPrice,
-                    onChanged: (value) {
-
-                    },
                     keyboardType: TextInputType.number,
                     maxLines: 1,
                     inputFormatters: [
@@ -244,21 +242,24 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                       padding: const EdgeInsets.all(8.0),
                       child: MaterialButton(
                         onPressed: () {
+                          isListVisible=false;
                           Utils.check_connectivity().then((result) {
-                            //if (result) {
+                            if (result) {
                               // if(startPrice.text!=null && endPrice.text ==null ||startPrice.text==null && endPrice.text !=null)
                               //   Utils.showError(context, "Starting and Ending Both Are ")
                               networksOperation.getAllDeals(context, token,widget.storeId,startPrice.text,endPrice.text,null,start_date,end_date).then((value) {
                                 setState(() {
+                                  isListVisible=true;
                                   if(dealsList!=null)
                                     dealsList.clear();
                                   this.dealsList = value;
                                   print(dealsList);
                                 });
                               });
-                            // } else {
-                            //   Utils.showError(context, "Network Error");
-                            // }
+                            } else {
+                              isListVisible=true;
+                              Utils.showError(context, "Network Error");
+                            }
                           });
                         },
                         color: yellowColor,
@@ -287,6 +288,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                             end_date = null;
                             startPrice.text = null;
                             endPrice.text =null;
+                            isListVisible=false;
                             WidgetsBinding.instance.addPostFrameCallback((_) =>
                                 _refreshIndicatorKey.currentState.show());
                           });
@@ -348,6 +350,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
             if(result){
               networksOperation.getAllDeals(context, token,widget.storeId,null,null,null,null,null).then((value) {
                 setState(() {
+                  isListVisible=true;
                   if(dealsList!=null)
                     dealsList.clear();
                   this.dealsList = value;
@@ -355,6 +358,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                 });
               });
             }else{
+              isListVisible=true;
               Utils.showError(context, "Network Error");
             }
           });
@@ -368,7 +372,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&dealsList.length>0? new Container(
               child: ListView.builder(
                 itemCount: dealsList==null?0:dealsList.length,
                 itemBuilder: (context, index) {
@@ -592,6 +596,29 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                   );
                 },
               )
+          ):isListVisible==false?Center(
+            child: CircularProgressIndicator(),
+          ):isListVisible==true&&dealsList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
           ),
         ),
       ),
@@ -673,11 +700,13 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
 
     setState(() {
       searchQuery = newQuery;
+      isListVisible=false;
     });
     Utils.check_connectivity().then((result){
       if(result){
         networksOperation.getAllDeals(context, token,widget.storeId,null,null,searchQuery,null,null).then((value) {
           setState(() {
+            isListVisible=true;
             if(dealsList!=null)
               dealsList.clear();
             this.dealsList = value;

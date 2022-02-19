@@ -1607,7 +1607,7 @@ class networksOperation{
     return null;
   }
   static Future<dynamic> getAllDailySessionByStoreId(BuildContext context,String token,int storeId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("getAllDailySession"+storeId.toString());
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -1621,13 +1621,11 @@ class networksOperation{
         }
       }
       if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-        pd.show();
       print(token);
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"dailysession/GetAll/"+storeId.toString());
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         print("abc"+data.toString());
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "getAllDailySession"+storeId.toString(), syncData: response.body);
@@ -1639,12 +1637,10 @@ class networksOperation{
       //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
       // }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
       }
       }
     }catch(e){
-      pd.hide();
       var claims= Utils.parseJwt(token);
       if(DateTime.fromMillisecondsSinceEpoch(int.parse(claims['exp'].toString()+"000")).isBefore(DateTime.now())){
         Utils.showError(context, "Token Expire Please Login Again");
@@ -1853,9 +1849,7 @@ class networksOperation{
     }
   }
   static Future<bool> payCashOrder(BuildContext context,String token,dynamic payCash)async {
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
       Map<String,String> headers = {'Content-Type':'application/json','Authorization':'Bearer '+token};
 
       var body=jsonEncode(
@@ -1863,39 +1857,31 @@ class networksOperation{
       );
       var response=await http.post(Utils.baseUrl()+"orders/paycash",headers: headers,body: body);
       if(response.statusCode==200){
-        pd.hide();
         Utils.showSuccess(context, "Order Delivered & Cash Paid");
         return true;
       }
       else{
-        pd.hide();
         Utils.showError(context, "${jsonDecode(response.body)['message']}");
         return false;
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Error Found: ");
       return false;
     }
     //return null;
   }
   static Future<dynamic> getAllOrderByDriver(BuildContext context,String token,int driverId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"Orders/GetAllBasicOrdersByDriverId/"+driverId.toString(),headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         return data;
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Error Found: $e");
     }
     return null;
@@ -2458,7 +2444,6 @@ class networksOperation{
     return null;
   }
   static Future<List<dynamic>> getAllOrdersPriority(BuildContext context,String token,int storeId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("getPriority$storeId");
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -2469,7 +2454,6 @@ class networksOperation{
           return jsonDecode(cacheData.syncData);
         }
       }else if(connectivityResult==ConnectivityResult.wifi||connectivityResult==ConnectivityResult.mobile) {
-        pd.show();
         // List list=[];
         Map<String, String> headers = {'Authorization': 'Bearer ' + token};
         var response = await http.get(
@@ -2477,24 +2461,20 @@ class networksOperation{
             headers: headers);
         var data = jsonDecode(response.body);
         if (response.statusCode == 200) {
-          pd.hide();
           APICacheDBModel cacheDBModel = new APICacheDBModel(
               key: "getPriority$storeId", syncData: response.body);
           await APICacheManager().addCacheData(cacheDBModel);
           return data;
         }
         else {
-          pd.hide();
           Utils.showError(context, "Please Try Again");
           return null;
         }
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Error Found:");
       return null;
     }finally{
-      pd.hide();
     }
 
   }
@@ -3276,7 +3256,6 @@ class networksOperation{
     return null;
   }
   static Future<dynamic> getAllDiscount(BuildContext context,String token,int storeId,DateTime startDate,DateTime endDate,String percent,String search)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("discountList");
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -3290,7 +3269,6 @@ class networksOperation{
         }
       }
       if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-        pd.show();
       var response;
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       if(startDate ==null && endDate==null && percent==null && search==null)
@@ -3307,7 +3285,6 @@ class networksOperation{
       print(data);
       if(response.statusCode==200){
         print("a");
-        pd.hide();
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "discountList", syncData: response.body);
         await APICacheManager().addCacheData(cacheDBModel);
@@ -3315,18 +3292,15 @@ class networksOperation{
       }
       else{
         print("b");
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
          }
       }
       else{
-        pd.hide();
         Utils.showError(context, "You are in Offline mode");
       }
     }catch(e){
       print("c");
-      pd.hide();
       Utils.showError(context, "Error Found:");
     }
     return null;
@@ -3578,7 +3552,6 @@ class networksOperation{
     return null;
   }
   static Future<dynamic> getAllDeals(BuildContext context,String token,int storeId,String startingPrice,String endingPrice,String search,DateTime startDate,DateTime endDate)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("dealList");
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -3592,8 +3565,6 @@ class networksOperation{
         }
       }
       if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-
-        pd.show();
       var response;
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       //  response=await http.get(Utils.baseUrl()+"deals/GetAll?storeId=$storeId&searchstring=$search",headers: headers);
@@ -3612,23 +3583,19 @@ class networksOperation{
       var data= jsonDecode(response.body);
       print(data);
       if(response.statusCode==200){
-        pd.hide();
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "dealList", syncData: response.body);
         await APICacheManager().addCacheData(cacheDBModel);
         return data;
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
          }
       }else{
-        pd.hide();
         Utils.showError(context, "You are in Offline mode");
       }
     }catch(e){
-      pd.hide();
       print(e);
       Utils.showError(context, "Error Found:");
     }
@@ -3771,7 +3738,7 @@ class networksOperation{
     return null;
   }
   static Future<dynamic> getAllTables(BuildContext context,String token,int storeId,String search)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("tableList");
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -3785,7 +3752,6 @@ class networksOperation{
         }
       }
       if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-        pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"tables/GetAll?StoreId=$storeId&searchstring=$search",headers: headers);
       var data= jsonDecode(response.body);
@@ -3793,10 +3759,8 @@ class networksOperation{
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "tableList", syncData: response.body);
         await APICacheManager().addCacheData(cacheDBModel);
-        pd.hide();
         return data;
       }else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       }
@@ -3805,7 +3769,6 @@ class networksOperation{
         Utils.showError(context, "You are in Offline mode");
           }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Data Not Found Or Error Found");
     }
     return null;
