@@ -4,6 +4,7 @@ import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Categories.dart';
 import 'package:capsianfood/screens/AdminPannel/Home/OrderDetail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 
@@ -245,7 +246,7 @@ class _PastOrdersState extends State<RiderDeliveryHistory> {
                 },
               )
           ):isListVisible==false?Center(
-            child: CircularProgressIndicator(),
+            child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
           ):isListVisible==true&&orderList.length==0?Center(
             child: Container(
               width: 300,

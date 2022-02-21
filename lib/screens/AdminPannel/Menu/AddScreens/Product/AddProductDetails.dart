@@ -133,13 +133,13 @@ class ProductDetailsState extends State<ProductDetails>{
                "description":productDescription,
                "storeid":storeId,
                "categoryId":categoryId,
-               "subCategoryId":subCategoryId,
+               "subCategoryId":subCategoryId==0?null:subCategoryId,
                "productSizes":entries,
                "image": image,
                "IsVisible":true,
 
              };
-              print(product);
+              print("Product json "+product.toString());
 
               networksOperation.addProduct(context, token, product)
                   .then((response){
@@ -157,20 +157,19 @@ class ProductDetailsState extends State<ProductDetails>{
                "description":productDescription,
                "storeid":storeId.toString(),
                "categoryId":categoryId.toString(),
-               "subCategoryId":subCategoryId.toString(),
+               "subCategoryId":subCategoryId==0?null:subCategoryId,
                "productSizes":entries,
                "image": image,
                "IsVisible":true,
 
              };
-             print(product);
              // networksOperation.updateProduct(context, token, categoryId.toString(), subCategoryId.toString(), productId, productName, productDescription, storeId.toString(), image)
              networksOperation.updateProduct(context, token, product)
                  .then((response){
                if(response){
                  Navigator.pop(context,'Refresh');
                  Navigator.pop(context,'Refresh');
-                 // Navigator.of(context).pop();
+                  Navigator.of(context).pop();
                  // Navigator.pop(context);
                  // Navigator.pop(context);
                  Utils.showSuccess(context, "Successfully Update");
@@ -221,7 +220,6 @@ class ProductDetailsState extends State<ProductDetails>{
                       onChanged: (value){
                         setState(() {
                           selected_size.insert(cards.length-1, sizesList.indexOf(value));
-
                         });
                       },
                     ),

@@ -5,6 +5,7 @@ import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'AddDiscount.dart';
@@ -299,7 +300,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
         backgroundColor: yellowColor,
         isExtended: true,
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddDiscount(widget.storeId)));
+          push(context, MaterialPageRoute(builder: (context)=> AddDiscount(widget.storeId)));
           },
       ),
       body: RefreshIndicator(
@@ -355,7 +356,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
                           caption: 'Update',
                           onTap: () async {
                             //print(discountList[index]);
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateDiscount(discountList[index],widget.storeId)));
+                            push(context,MaterialPageRoute(builder: (context)=>UpdateDiscount(discountList[index],widget.storeId)));
                           },
                         ),
                         IconSlideAction(
@@ -542,7 +543,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
                 },
               )
           ):isListVisible==false?Center(
-            child: CircularProgressIndicator(),
+            child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
           ):isListVisible==true&&discountList.length==0?Center(
             child: Container(
               width: 300,

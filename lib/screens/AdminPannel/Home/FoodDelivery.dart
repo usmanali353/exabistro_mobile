@@ -47,7 +47,7 @@ List orderList=[];
           this.email = value.getString("email");
           this.name = value.getString("name");
           networksOperation.getReservationList(context, value.getString("token"), widget.storeId,null,null,null).then((value) {
-            //setState(() {
+            setState(() {
               print(value);
               reservationList.clear();
               for(int i=0;i<value.length;i++){
@@ -55,7 +55,7 @@ List orderList=[];
                   reservationList.add(value[i]);
                 }
               }
-          //  });
+            });
           });
         });
       });
@@ -178,20 +178,20 @@ List orderList=[];
                 },
               ),
             ),
-            Divider(),
-            ListTile(
-              title: Text("Notification",
-                style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: PrimaryColor
-                ),
-              ),
-              trailing: FaIcon(Icons.notification_important, color: yellowColor, size: 30,),
-              onTap: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => NotificationList(widget.storeId)));
-              },
-            ),
+           // Divider(),
+            // ListTile(
+            //   title: Text("Notification",
+            //     style: TextStyle(
+            //         fontSize: 17,
+            //         fontWeight: FontWeight.bold,
+            //         color: PrimaryColor
+            //     ),
+            //   ),
+            //   trailing: FaIcon(Icons.notification_important, color: yellowColor, size: 30,),
+            //   onTap: (){
+            //     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => NotificationList(widget.storeId)));
+            //   },
+            // ),
             Divider(),
             ListTile(
               title: Text("Reservation",
@@ -206,7 +206,7 @@ List orderList=[];
                 child: Badge(
                   showBadge: true,
                   borderRadius: BorderRadius.circular(10),
-                  badgeContent: Center(child: Text(reservationList.length>0?reservationList.toString():"0",style: TextStyle(color: BackgroundColor,fontWeight: FontWeight.bold),)),
+                  badgeContent: Center(child: Text(reservationList.length>0?reservationList.length.toString():"0",style: TextStyle(color: BackgroundColor,fontWeight: FontWeight.bold),)),
                   // padding: EdgeInsets.all(7),
                   child: InkWell(
                     onTap: () {
@@ -281,7 +281,6 @@ List orderList=[];
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => BarChartSample2(token,widget.storeId)));
               },
             ),
-            Divider(),
             Divider(),
             ListTile(
               title: Text("Sign Out",

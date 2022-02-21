@@ -56,8 +56,10 @@ class _UpdateStocksState extends State<UpdateStocks> {
         selectedUnitId = widget.stockItems.unit;
         minQuantity.text = widget.stockItems.minQuantity.toString();
         maxQuantity.text = widget.stockItems.maxQuantity.toString();
-
-
+        if(widget.stockItems.wasteQuantityPerUnitItem!=null)
+          perUnitWaste.text=widget.stockItems.wasteQuantityPerUnitItem.toString();
+        if(widget.stockItems.isSauce!=null)
+          isProduct=!widget.stockItems.isSauce;
       });
     });
     networksOperation.getStockUnitsDropDown(context,widget.token).then((value) {

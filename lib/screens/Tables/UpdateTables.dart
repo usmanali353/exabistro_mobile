@@ -160,6 +160,8 @@ class _AddTablesState extends State<UpdateTables> {
                         };
                         networksOperation.updateTable(context, token, table_data).then((value) {
                           if(value){
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                             Utils.showSuccess(context, "Updated Successfully");                          }
                         });
                       }

@@ -174,7 +174,11 @@ class _categoryListPageState extends State<categoryListPage>{
           backgroundColor: yellowColor,
           isExtended: true,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> add_Category(widget.storeId)));
+            Navigator.push(context,MaterialPageRoute(builder: (context)=>add_Category(widget.storeId))).then((value){
+              WidgetsBinding.instance
+                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+            });
+           // Navigator.push(context, MaterialPageRoute(builder: (context)=> add_Category(widget.storeId)));
           },
         ),
         // appBar: AppBar(
@@ -242,7 +246,10 @@ class _categoryListPageState extends State<categoryListPage>{
                             caption: 'Update',
                             onTap: () async {
                               //print(barn_lists[index]);
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_Category(categoryList[index],widget.storeId)));
+                              Navigator.push(context,MaterialPageRoute(builder: (context)=>update_Category(categoryList[index],widget.storeId))).then((value){
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                              });
                               //_showPopupMenu(categoryList[index].id);
                             },
                           ),

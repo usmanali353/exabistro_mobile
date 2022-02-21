@@ -849,6 +849,10 @@ class _SignUpScreenState extends State<AddEmployee> {
 
     } else {
       form.save();
+      print("Comision Amount "+(commissionAmount.text));
+      print("Comision Percentage "+(commissionPercent.text));
+      print("Comision Amount "+(commissionAmount.text.isEmpty).toString());
+      print("Comision Percentage "+(commissionPercent.text.isNotEmpty).toString());
       var employee_data = {
         "firstname":firstname.text,
         "lastname":lastname.text,
@@ -875,8 +879,8 @@ class _SignUpScreenState extends State<AddEmployee> {
         "DutyEndTime":end_time.toString().substring(11,16),
         "PetrolAlloted":deliveryVal??null,
         "VehicleAlloted":pickUpVal??null,
-        "CommisionPercentage":commissionPercent.text??null,//commissionPercent.text!=null?double.parse(commissionPercent.text):null,
-        "CommisionAmount":commissionAmount.text??null,
+        "CommisionPercentage":commissionPercent.text.isNotEmpty?double.parse(commissionPercent.text):0.0,//commissionPercent.text!=null?double.parse(commissionPercent.text):null,
+        "CommisionAmount":commissionAmount.text.isNotEmpty?double.parse(commissionAmount.text):0.0,
         "SalaryPerHour":selectedSalaryType=="Per Hour"?perHourSalary.text:null,
         "image":picked_image,//commissionAmount.text!=null?double.parse(commissionAmount.text):null
       };

@@ -50,12 +50,26 @@ class _add_CategoryState extends State<UpdateSemiFinish> {
     this.quantity=TextEditingController();
     this.price=TextEditingController();
 
-
+    print(widget.finishItemsDetail.toJson().toString());
     SharedPreferences.getInstance().then((value) {
       setState(() {
         this.token = value.getString("token");
         name.text = widget.finishItemsDetail.itemName;
         quantity.text = widget.finishItemsDetail.totalQuantity.toString();
+        if(widget.finishItemsDetail.price!=null){
+          price.text=widget.finishItemsDetail.price.toString();
+        }
+        Utils.urlToFile(context, widget.finishItemsDetail.image).then((value){
+            _image = value;
+            value.readAsBytes().then((image){
+              if(image!=null){
+                setState(() {
+                  //this.picked_image=image;
+                  this.picked_image = base64Encode(image);
+                });
+              }
+            });
+        });
       });
     });
     Utils.check_connectivity().then((result){
@@ -78,6 +92,10 @@ class _add_CategoryState extends State<UpdateSemiFinish> {
               allUnitList = value;
               for(int i=0;i<allUnitList.length;i++){
                 unitDDList.add(allUnitList[i]['name']);
+                if(allUnitList[i]['id']==widget.finishItemsDetail.unit){
+                  selectedUnit=allUnitList[i]['name'];
+                  selectedUnitId=allUnitList[i]['id'];
+                }
               }
             });
           }
@@ -299,6 +317,7 @@ class _add_CategoryState extends State<UpdateSemiFinish> {
                                 unit:allUnitList[selectedUnitId]['id'],
                               image: picked_image,
                               price: price.text,
+
                             )));
                         }else{
                           Utils.showError(context, "Network Error");

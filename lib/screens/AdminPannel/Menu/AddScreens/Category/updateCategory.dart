@@ -60,6 +60,14 @@ class _add_CategoryState extends State<update_Category> {
       setState(() {
         this.token = value.getString("token");
         name.text = widget.categoryDetails.name;
+        if(widget.categoryDetails.startTime!=null){
+          start_time = DateTime.parse(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.parse("0000-00-00 "+widget.categoryDetails.startTime)));
+          print("Start Time "+start_time.toString());
+        }
+        if(widget.categoryDetails.endTime!=null){
+          end_time = DateTime.parse(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.parse("0000-00-00 "+widget.categoryDetails.endTime)));
+          print("End Time "+end_time.toString());
+        }
       });
     });
   }

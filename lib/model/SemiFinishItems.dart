@@ -37,7 +37,7 @@ class SemiFinishItems {
   bool isVisible;
   int unit;
   DateTime expiryDate;
-  int price;
+  var price;
   var image;
 
   factory SemiFinishItems.fromJson(Map<String, dynamic> json) => SemiFinishItems(

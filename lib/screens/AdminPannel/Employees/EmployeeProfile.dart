@@ -132,7 +132,10 @@ class _SettingsState extends State<EmployeeProfile> {
                             child: Center(
                               child: InkWell(
                                 onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> UpdateEmployee(widget.storeId,widget.employee_data)));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> UpdateEmployee(widget.storeId,widget.employee_data))).then((value){
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                  });
                                 },
                                 child: Container(
                                   width: 40,
@@ -417,7 +420,7 @@ class _SettingsState extends State<EmployeeProfile> {
                                     SizedBox(width: 5,),
                                     Text(
                                       //"0900 2332 8811 2211",
-                                      employee_data["isRegularEmployee"]!=null&&employee_data["isRegularEmployee"]==true&&employee_data["monthlyBasedSalary"]!=null?employee_data["monthlyBasedSalary"].toStringAsFixed(1):employee_data["SalaryPerHour"]!=null?employee_data["SalaryPerHour"].toStringAsFixed(1):"-",
+                                      employee_data["isRegularEmployee"]!=null&&employee_data["isRegularEmployee"]==true&&employee_data["monthlyBasedSalary"]!=null?employee_data["monthlyBasedSalary"].toStringAsFixed(1):employee_data["salaryPerHour"]!=null?employee_data["salaryPerHour"].toStringAsFixed(1):"-",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 17,

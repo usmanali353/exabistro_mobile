@@ -140,7 +140,7 @@ class _NotificationListState extends State<NotificationList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&notificationList.length>0?   new Container(
+            child: isListVisible==true&&notificationList!=null&&notificationList.length>0?   new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:notificationList == null ? 0:notificationList.length, itemBuilder: (context,int index){
                 return Column(
@@ -181,7 +181,7 @@ class _NotificationListState extends State<NotificationList>{
                 color: yellowColor,
                 size: 100.0,
               ),
-            ):isListVisible==true&&notificationList.length==0?Center(
+            ):isListVisible==true&&notificationList!=null&&notificationList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,
@@ -225,9 +225,25 @@ class _NotificationListState extends State<NotificationList>{
       elevation: 8.0,
     ).then((value){
       if(value == "low"){
-        networksOperation.getNotificationForLowQuantity(context, token, widget.storeId,deviceId);
+        networksOperation.getNotificationForLowQuantity(context, token, widget.storeId,deviceId).then((value) {
+          setState(() {
+            isListVisible=true;
+            if(notificationList!=null)
+              notificationList.clear();
+            notificationList = value;
+            print(value);
+          });
+        });
       }else if(value == "expiry"){
-        networksOperation.getNotificationForExpiry(context, token, widget.storeId,deviceId);
+        networksOperation.getNotificationForExpiry(context, token, widget.storeId,deviceId).then((value) {
+          setState(() {
+            isListVisible=true;
+            if(notificationList!=null)
+              notificationList.clear();
+            notificationList = value;
+            print(value);
+          });
+        });
       }
     });
   }

@@ -554,6 +554,7 @@ class _AddSemiFinishStockState extends State<AddSemiFinishStock> {
                               unit: widget.unit,
                               price: widget.price,
                               image: widget.image,
+                              isVisible:true,
                               semiFinishedItemIngredients: list
                           )).then((value){
                             if(value){
@@ -571,6 +572,7 @@ class _AddSemiFinishStockState extends State<AddSemiFinishStock> {
 
                                 }
                               });
+                              Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.of(context).pop();
                             }
@@ -601,6 +603,7 @@ class _AddSemiFinishStockState extends State<AddSemiFinishStock> {
 
                               }
                             });
+                            Navigator.pop(context);
                             Navigator.pop(context);
                             Navigator.of(context).pop();
                           }

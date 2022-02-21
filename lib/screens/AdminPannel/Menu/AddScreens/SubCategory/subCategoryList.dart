@@ -160,7 +160,7 @@ class _categoryListPageState extends ResumableState<subCategoryList>{
                         caption: 'Update',
                         onTap: () async {
                           print(subCategoryList[index].id);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_SubCategory(widget.categoryId,subCategoryList[index])));
+                          push(context,MaterialPageRoute(builder: (context)=>update_SubCategory(widget.categoryId,subCategoryList[index])));
                         },
                       ),
                       IconSlideAction(

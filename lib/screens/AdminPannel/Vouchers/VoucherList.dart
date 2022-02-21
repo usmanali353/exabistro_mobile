@@ -8,6 +8,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,7 +35,7 @@ class _TaxListState extends ResumableState<VoucherList>{
   String token;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<Voucher> voucherList = [];
-  var _isSearching=false,isFilter =true;
+  var _isSearching=false,isFilter =true,isListVisible=false;
   TextEditingController _searchQuery;
   String searchQuery = "";
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -93,7 +94,7 @@ class _TaxListState extends ResumableState<VoucherList>{
           backgroundColor: yellowColor,
           isExtended: true,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddVoucher(widget.storeId)));
+            push(context, MaterialPageRoute(builder: (context)=> AddVoucher(widget.storeId)));
           },
         ),
         body: RefreshIndicator(
@@ -103,6 +104,7 @@ class _TaxListState extends ResumableState<VoucherList>{
             //  if(result){
                 networksOperation.getVoucherListByStoreId(context,widget.storeId,null,null,"").then((value) {
                   setState(() {
+                    isListVisible=true;
                     if(voucherList!=null)
                       voucherList.clear();
                     voucherList = value;
@@ -123,7 +125,7 @@ class _TaxListState extends ResumableState<VoucherList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child:isListVisible==true&&voucherList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:voucherList == null ? 0:voucherList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -138,7 +140,7 @@ class _TaxListState extends ResumableState<VoucherList>{
                         caption: 'Update',
                         onTap: () async {
                           //print(barn_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateVoucher(voucherList[index],widget.storeId)));
+                          push(context,MaterialPageRoute(builder: (context)=>UpdateVoucher(voucherList[index],widget.storeId)));
                         },
                       ),
                       IconSlideAction(
@@ -388,6 +390,29 @@ class _TaxListState extends ResumableState<VoucherList>{
                 );
               }),
 
+            ):isListVisible==false?Center(
+              child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+            ):isListVisible==true&&voucherList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
           ),
         )
@@ -609,11 +634,13 @@ class _TaxListState extends ResumableState<VoucherList>{
 
     setState(() {
       searchQuery = newQuery;
+      isListVisible=false;
     });
     Utils.check_connectivity().then((result){
       if(result){
         networksOperation.getVoucherListByStoreId(context,widget.storeId,null,null,searchQuery).then((value) {
           // setState(() {
+          isListVisible=true;
           if(voucherList!=null)
             voucherList.clear();
           setState(() {
@@ -623,6 +650,7 @@ class _TaxListState extends ResumableState<VoucherList>{
           //  });
         });
       }else{
+        isListVisible=true;
         Utils.showError(context, "Please Check Your Internet");
       }
     });

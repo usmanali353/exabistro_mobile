@@ -29,8 +29,8 @@ class _PastOrdersState extends State<ProductReviewsList> {
 
   @override
   void initState() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    // WidgetsBinding.instance
+    //     .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     SharedPreferences.getInstance().then((value) {
       setState(() {
         this.token = value.getString("token");
@@ -59,6 +59,7 @@ class _PastOrdersState extends State<ProductReviewsList> {
           });
         });
       }else{
+        isListVisible=true;
         Utils.showError(context, "Network Error");
       }
     });

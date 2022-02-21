@@ -285,7 +285,7 @@ class _SettingsState extends State<SettingsPage> {
                           borderRadius: BorderRadius.circular(8),
                           //border: Border.all(color: Colors.orange, width: 5)
                         ),
-                        child: Center(child: FaIcon(FontAwesomeIcons.expandArrowsAlt, size: 25, color: blueColor,)),
+                        child: Center(child: FaIcon(FontAwesomeIcons.breadSlice, size: 25, color: blueColor,)),
                       ),
                       SizedBox(width: 5,),
                       Container(

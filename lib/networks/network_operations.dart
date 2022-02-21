@@ -1131,7 +1131,6 @@ class networksOperation{
     return null;
   }
   static Future<Products> getProductById(BuildContext context,int productId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("additionalListbyProductId");
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -1149,11 +1148,9 @@ class networksOperation{
         }
       }
       if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-        pd.show();
       var response=await http.get(Utils.baseUrl()+"Products/"+productId.toString(),);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "additionalListbyProductId", syncData: response.body);
         await APICacheManager().addCacheData(cacheDBModel);
@@ -1164,14 +1161,12 @@ class networksOperation{
         // return Products.ProductFromJson(response.body);
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
          }
       }else{
         Utils.showError(context, "You are in Offline mode");
       }
     }catch(e){
-      pd.hide();
       print(e);
       Utils.showError(context, e.toString());
     }
@@ -2816,6 +2811,7 @@ class networksOperation{
     }
     catch(e){
       pd.hide();
+      print("Exception in Add Products "+e.toString());
       Utils.showError(context, "Error Found");
       return false;
     }
@@ -3671,8 +3667,9 @@ class networksOperation{
         return true;
       }
       else{
+        print("Response Code "+response.statusCode.toString());
         pd.hide();
-        Utils.showError(context, "${data['message']}");
+        Utils.showSuccess(context, "${data['message']}");
         return false;
       }
     }catch(e){
@@ -5243,7 +5240,6 @@ class networksOperation{
     return null;
   }
   static Future<List<Voucher>> getVoucherListByStoreId(BuildContext context,int storeId ,DateTime startDate,DateTime endDate,String search)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       print(storeId);
       // var isCacheExist = await APICacheManager().isAPICacheKeyExist("voucherList");
@@ -5258,7 +5254,6 @@ class networksOperation{
       //   }
       // }
       // if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-      pd.show();
       var response;
       // var response=await http.get(Utils.baseUrl()+"Vouchers/GetAll?storeId="+storeId.toString()+"&startDate=$startDate&endDate=$endDate&searchstring=$search");
       if(storeId!=null){
@@ -5274,7 +5269,6 @@ class networksOperation{
       var data= jsonDecode(response.body);
       print(data);
       if(response.statusCode==200){
-        pd.hide();
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "voucherList", syncData: response.body);
         await APICacheManager().addCacheData(cacheDBModel);
@@ -5282,13 +5276,11 @@ class networksOperation{
 
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       }
     //  }
     }catch(e){
-      pd.hide();
       print(e);
       Utils.showError(context, "Error Found:");
     }
@@ -5453,7 +5445,7 @@ class networksOperation{
     return null;
   }
   static Future<List<StockItems>> getStockItemsListByStoreIdWithOutFilter(BuildContext context,String token,int storeId )async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+
     try
     {
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("stockList");
@@ -5468,13 +5460,11 @@ class networksOperation{
       }
     }
     if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-      pd.show();
       // pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"ItemStocks/Get?storeId="+storeId.toString(),headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "stockList", syncData: response.body);
         await APICacheManager().addCacheData(cacheDBModel);
@@ -5482,16 +5472,13 @@ class networksOperation{
 
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       } }
     else{
-      pd.hide();
       Utils.showError(context, "You are in Offline mode");
     }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Error Found:");
     }
     return null;
@@ -5521,7 +5508,6 @@ class networksOperation{
     return null;
   }
   static Future<List<StockItems>> getStockItemsListByStoreIdWithBrand(BuildContext context,String token,int storeId,int brandId, )async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       // pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
@@ -5529,18 +5515,14 @@ class networksOperation{
       var data= jsonDecode(response.body);
       print(response.body);
       if(response.statusCode==200){
-        pd.hide();
         return StockItems.StockItemsListFromJson(response.body);
-
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
       print(e);
-      pd.hide();
       Utils.showError(context, "Error Found:");
     }
     return null;
@@ -5635,25 +5617,20 @@ class networksOperation{
     return null;
   }
   static Future<List<Vendors>> getVendorList(BuildContext context,String token,int storeId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"account/GetVendors/"+storeId.toString(),headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         return Vendors.vendorsListFromJson(response.body);
 
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
       print(e);
-      pd.hide();
       Utils.showError(context, "Error Found: ");
     }
     return null;
@@ -7233,7 +7210,7 @@ class networksOperation{
         return null;
       }
     }catch(e){
-      print(e);
+      debugPrint(e.toString());
       pd.hide();
       Utils.showError(context, "Error Found:");
     }
@@ -8049,8 +8026,9 @@ class networksOperation{
     try{
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"SemiFinishedItems/GetSemiFinishedItemDetails?StoreId="+storeId.toString(),headers: headers);
-      print("fghjkl;"+response.body.toString());
-      //var data= jsonDecode(response.body);
+      //print("fghjkl;"+response.body.toString());
+      var data= jsonDecode(response.body);
+      print("Semifinished Item json "+data[0]["semiFinishedItem"].toString());
       if(response.statusCode==200){
         return SemiFinishedDetail.semiFinishedDetailListFromJson(response.body);
 
@@ -8148,30 +8126,25 @@ class networksOperation{
         return null;
       }
     }catch(e){
-      print(e.toString());
-      Utils.showError(context, "Error Found:");
+      Utils.showError(context,e.toString());
     }
     return null;
   }
   static Future<List<ItemBrand>> getAllItemBrandByStoreIdWithSearch(BuildContext context,String token,int  storeId,String search)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+
     try{
-      pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"ItemBrand/GetItemBrand?storeId="+storeId.toString()+"&searchstring=$search",headers: headers);
       if(response.statusCode==200){
-        pd.hide();
         return ItemBrand.itemBrandListFromJson(response.body);
 
       }
       else{
-        pd.hide();
         print(response.statusCode);
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
-      pd.hide();
       print(e.toString());
       Utils.showError(context, "Error Found:");
     }

@@ -63,8 +63,6 @@ factory SemiFinishedDetail.fromJson(Map<String, dynamic> json) => SemiFinishedDe
     storeId: json["storeId"] == null ? null : json["storeId"],
     semiFinishedItem: json["semiFinishedItem"] == null ? null : SemiFinishItems.fromJson(json["semiFinishedItem"]),
     wastageQuantity: json["wastageQuantity"] == null ? null : json["wastageQuantity"],
-
-
 );
 
   Map<String, dynamic> toJson() => {

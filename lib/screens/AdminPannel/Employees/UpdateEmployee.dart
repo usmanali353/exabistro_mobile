@@ -81,8 +81,14 @@ class _SignUpScreenState extends State<UpdateEmployee> {
       // city.text = widget.userDetail['city'].toString();
       commissionPercent.text = widget.userDetail['commisionPercentage'].toString();
       commissionAmount.text = widget.userDetail['commisionAmount'].toString();
-      perHourSalary.text = widget.userDetail['salaryPerHour']!=null?widget.userDetail['salaryPerHour'].toStringAsFixed(1):"";
-      perHourSalary.text = widget.userDetail['monthlyBasedSalary']!=null?widget.userDetail['monthlyBasedSalary'].toStringAsFixed(1):"";
+
+      debugPrint("Salary Per Hour "+perHourSalary.text);
+      if( widget.userDetail["isRegularEmployee"]!=null&&widget.userDetail["isRegularEmployee"]==true){
+        perHourSalary.text = widget.userDetail['monthlyBasedSalary']!=null?widget.userDetail['monthlyBasedSalary'].toStringAsFixed(1):"";
+      }else{
+        perHourSalary.text = widget.userDetail['salaryPerHour']!=null?widget.userDetail['salaryPerHour'].toStringAsFixed(1):"";
+      }
+
       widget.userDetail["isRegularEmployee"]!=null&&widget.userDetail["isRegularEmployee"]==true?selectedSalaryType="Monthly":selectedSalaryType="Per Hour";
       if(widget.userDetail["dutyStartTime"]!=null){
         start_time=DateFormat("hh:mm:ss").parse(widget.userDetail["dutyStartTime"].toString().substring(11));
@@ -916,12 +922,12 @@ class _SignUpScreenState extends State<UpdateEmployee> {
         "DutyEndTime":end_time.toString().substring(11,16),
         "PetrolAlloted":petrolVal??null,
         "VehicleAlloted":vehiecleVal??null,
-        "CommisionPercentage":commissionPercent.text??0.0,//commissionPercent.text!=null?double.parse(commissionPercent.text):null,
-        "CommisionAmount":commissionAmount.text??0.0,
+        "CommisionPercentage":commissionPercent.text!="null"?double.parse(commissionPercent.text):0.0,//commissionPercent.text!=null?double.parse(commissionPercent.text):null,
+        "CommisionAmount":commissionAmount.text!="null"?double.parse(commissionAmount.text):0.0,
         "SalaryPerHour":selectedSalaryType=="Per Hour"?perHourSalary.text:null,
         "image":picked_image,//commissionAmount.text!=null?double.parse(commissionAmount.text):null
       };
-      print(token);
+      print("Update Employee Data "+employee_data.toString());
       networksOperation.updateEmployees(context, token,employee_data).then((value) {
         if(value){
           Navigator.of(context).pop();

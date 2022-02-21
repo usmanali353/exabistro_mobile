@@ -147,7 +147,9 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
                 networksOperation.getAllSemiFinishItems(context,token,widget.storeId).then((value){
                   setState(() {
                     isListVisible=true;
-                    print(value);
+                    for(SemiFinishItems items in value){
+                      print(items.toJson().toString());
+                    }
                     semiFinishList = value;
                     print(semiFinishList);
 
@@ -167,7 +169,7 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
               // }
             });
           },
-          child: semiFinishList!=null?semiFinishList.length>0?Container(
+          child:Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
@@ -178,7 +180,7 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                isListVisible==true&&semiFinishList.length>0?   new Container(
+                isListVisible==true&&semiFinishList!=null&&semiFinishList.length>0?   new Container(
                   height: MediaQuery.of(context).size.height-180,
                   child: _isSearching==false?ListView.builder(scrollDirection: Axis.vertical, itemCount:semiFinishList == null ? 0:semiFinishList.length, itemBuilder: (context,int index){
                     return Column(
@@ -621,12 +623,8 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
                     );
                   }),
                 ):isListVisible==false?Center(
-                  child: SpinKitSpinningLines(
-                    lineWidth: 5,
-                    color: yellowColor,
-                    size: 100.0,
-                  ),
-                ):isListVisible==true&&semiFinishList.length==0?Center(
+                  child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+                ):isListVisible==true&&semiFinishList!=null&&semiFinishList.length==0?Center(
                   child: Container(
                     width: 300,
                     height: 300,
@@ -671,8 +669,7 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
                 // ),
               ],
             ),
-          ):Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)):
-          Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)),
+          )
         )
 
 
@@ -780,11 +777,13 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
 
     setState(() {
       searchQuery = newQuery;
+      isListVisible=false;
     });
     Utils.check_connectivity().then((result){
       if(result){
         networksOperation.getAllSemiFinishItemsSearch(context,token,widget.storeId,searchQuery).then((value){
           setState(() {
+            isListVisible=true;
             print(value);
             if(searchList!=null)
                searchList.clear();
@@ -792,6 +791,7 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
           });
         });
       }else{
+        isListVisible=true;
         Utils.showError(context, "Please Check Your Internet");
       }
     });

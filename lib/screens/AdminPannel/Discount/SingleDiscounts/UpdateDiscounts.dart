@@ -299,7 +299,7 @@ class _AddDiscountState extends State<UpdateDiscount> {
 
                     onTap: (){
                       print(token);
-                      var perecentage =  (int.parse(discounted_price.text)/100);
+                      var perecentage =  (double.parse(discounted_price.text)/100);
                       print(perecentage.toString());
                       if(offer_name.text==null||offer_name.text.isEmpty){
                         Utils.showError(context, "Name Required");

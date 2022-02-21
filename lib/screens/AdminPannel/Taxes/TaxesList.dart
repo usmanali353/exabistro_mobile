@@ -5,6 +5,7 @@ import 'package:capsianfood/model/Tax.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'UpdateTaxes.dart';
@@ -26,7 +27,7 @@ class _TaxListState extends State<TaxList>{
   String token;
    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<Tax> taxList = [];
-
+   bool isListVisible=false;
   @override
   void initState() {
     WidgetsBinding.instance
@@ -95,6 +96,7 @@ class _TaxListState extends State<TaxList>{
              // if(result){
                 networksOperation.getTaxListByStoreId(context,widget.storeId).then((value) {
                   setState(() {
+                    isListVisible=true;
                     taxList = value;
                   });
                 });
@@ -113,7 +115,7 @@ class _TaxListState extends State<TaxList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&taxList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:taxList == null ? 0:taxList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -333,6 +335,29 @@ class _TaxListState extends State<TaxList>{
                   ),
                 );
               }),
+            ):isListVisible==false?Center(
+              child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+            ):isListVisible==true&&taxList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
           ),
         )

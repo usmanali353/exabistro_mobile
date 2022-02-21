@@ -200,15 +200,16 @@ class _StocksListPageState extends State<StocksList>{
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     networksOperation.getStockItemsListByStoreIdWithBrand(context, token,widget.storeId, _groupValue).then((value) {
+                                      isListVisible=true;
                                       if(stockList!=null)
                                         stockList.clear();
                                       setState(() {
-                                        isListVisible=true;
                                         stockList = value;
                                       });
                                     });
 
                                   }else{
+                                    isListVisible=true;
                                     Utils.showError(context, "Network Error");
                                   }
                                 });

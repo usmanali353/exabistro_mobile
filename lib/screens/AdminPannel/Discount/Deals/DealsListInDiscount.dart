@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -387,7 +388,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                           color: Colors.blue,
                           caption: 'Update',
                           onTap: () async {
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => UpdateDeals(dealsList[index],widget.storeId)));
+                            push(context,MaterialPageRoute(builder: (context) => UpdateDeals(dealsList[index],widget.storeId)));
                           },
                         ),
                         IconSlideAction(
@@ -597,7 +598,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                 },
               )
           ):isListVisible==false?Center(
-            child: CircularProgressIndicator(),
+            child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
           ):isListVisible==true&&dealsList.length==0?Center(
             child: Container(
               width: 300,

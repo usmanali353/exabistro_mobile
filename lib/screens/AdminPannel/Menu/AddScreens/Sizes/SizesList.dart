@@ -84,7 +84,7 @@ class _categoryListPageState extends ResumableState<SizesListPage>{
           backgroundColor: yellowColor,
           isExtended: true,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> add_Sizes(widget.storeId)));
+            push(context, MaterialPageRoute(builder: (context)=> add_Sizes(widget.storeId)));
           },
         ),
         // appBar: AppBar(
@@ -154,7 +154,7 @@ class _categoryListPageState extends ResumableState<SizesListPage>{
                         caption: 'Update',
                         onTap: () async {
                           //print(barn_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>update_Sizes(sizes[index])));
+                          push(context,MaterialPageRoute(builder: (context)=>update_Sizes(sizes[index])));
                         },
                       ),
                     ],

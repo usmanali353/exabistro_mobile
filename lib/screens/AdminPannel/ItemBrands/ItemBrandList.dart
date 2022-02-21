@@ -6,6 +6,7 @@ import 'package:capsianfood/model/ItemBrand.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddItemBrand.dart';
@@ -124,6 +125,7 @@ class _ItemBrandListState extends ResumableState<ItemBrandList>{
                 networksOperation.getAllItemBrandByStoreIdWithSearch(context,token,widget.storeId,"").then((value){
                   //pd.hide();
                   setState(() {
+                    isListVisible=true;
                     if(itemBrandList!=null)
                       itemBrandList.clear();
                     itemBrandList = value;
@@ -134,7 +136,7 @@ class _ItemBrandListState extends ResumableState<ItemBrandList>{
               // }
             });
           },
-          child: itemBrandList!=null?itemBrandList.length>0?Container(
+          child: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
@@ -144,7 +146,7 @@ class _ItemBrandListState extends ResumableState<ItemBrandList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&itemBrandList.length>0?new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:itemBrandList == null ? 0:itemBrandList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -216,10 +218,31 @@ class _ItemBrandListState extends ResumableState<ItemBrandList>{
                   ),
                 );
               }),
+            ):isListVisible==false?Center(
+              child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+            ):isListVisible==true&&itemBrandList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
-
-          ):Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)):
-          Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)),
+          )
         )
 
 
@@ -303,18 +326,21 @@ class _ItemBrandListState extends ResumableState<ItemBrandList>{
 
     setState(() {
       searchQuery = newQuery;
+      isListVisible=false;
     });
     Utils.check_connectivity().then((result){
       if(result){
         networksOperation.getAllItemBrandByStoreIdWithSearch(context,token,widget.storeId,searchQuery).then((value){
           //pd.hide();
           setState(() {
+            isListVisible=true;
             if(itemBrandList!=null)
               itemBrandList.clear();
             itemBrandList = value;
           });
         });
       }else{
+        isListVisible=true;
         Utils.showError(context, "Please Check Your Internet");
       }
     });

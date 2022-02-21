@@ -103,7 +103,7 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
           backgroundColor: yellowColor,
           isExtended: true,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddSessions(widget.storeId)));
+            push(context, MaterialPageRoute(builder: (context)=> AddSessions(widget.storeId)));
           },
         ),
         body: RefreshIndicator(

@@ -29,8 +29,7 @@ class _PastOrdersState extends State<AllFeedBackList> {
 
   @override
   void initState() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+
     SharedPreferences.getInstance().then((value) {
       setState(() {
         this.token = value.getString("token");
@@ -63,6 +62,8 @@ class _PastOrdersState extends State<AllFeedBackList> {
         Utils.showError(context, "Network Error");
       }
     });
+    // WidgetsBinding.instance
+    //     .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     // TODO: implement initState
     super.initState();
   }

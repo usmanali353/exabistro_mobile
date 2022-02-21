@@ -127,9 +127,9 @@ class _AddSessionsState extends State<AddSessions> {
                           };
                           networksOperation.addDailySession(context, token, session).then((value){
                             if(value){
+                              Navigator.pop(context);
+                              Navigator.pop(context);
                               Utils.showSuccess(context, "Successfully Added");
-                              Navigator.pop(context);
-                              Navigator.pop(context);
                             }
                           });
                         }else{

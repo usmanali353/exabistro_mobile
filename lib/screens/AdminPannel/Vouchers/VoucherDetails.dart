@@ -69,8 +69,8 @@ class _TaxListState extends State<VoucherDetail>{
                   setState(() {
                     print("ffghjh");
                     voucherDetails = value;
-                    print(voucherDetails.customersAmount.length);
-                    print(voucherDetails.customersAmount[0].name);
+                    // print(voucherDetails.customersAmount.length);
+                    // print(voucherDetails.customersAmount[0].name);
                   });
                 });
               }else{

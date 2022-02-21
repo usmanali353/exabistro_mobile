@@ -101,7 +101,7 @@ class _TablesListState extends ResumableState<TablesList> {
         backgroundColor: yellowColor,
         isExtended: true,
         onPressed: () {
-             Navigator.push(context, MaterialPageRoute(builder: (context)=> AddTables(widget.storeId)));
+             push(context, MaterialPageRoute(builder: (context)=> AddTables(widget.storeId)));
         },
       ),
       // appBar: AppBar(
@@ -173,7 +173,9 @@ class _TablesListState extends ResumableState<TablesList> {
                           caption: 'Update',
                           onTap: () async {
                             //print(discountList[index]);
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=> UpdateTables(tablesList[index],widget.storeId)));
+                            Navigator.push(context,MaterialPageRoute(builder: (context)=> UpdateTables(tablesList[index],widget.storeId))).then((value){
+                              WidgetsBinding.instance.addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                            });
                           },
                         ),
                         IconSlideAction(

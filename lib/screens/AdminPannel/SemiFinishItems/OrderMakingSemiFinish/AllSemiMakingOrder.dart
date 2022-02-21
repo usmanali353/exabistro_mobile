@@ -125,6 +125,7 @@ class _StocksListPageState extends State<AllSemiMakingOrder>{
                   {
                     setState(() {
                       allUnitList.clear();
+
                       allUnitList = value;
                     });
                   }
@@ -144,7 +145,7 @@ class _StocksListPageState extends State<AllSemiMakingOrder>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&semiItemDetailsList.length>0? new Container(
+            child: isListVisible==true&&semiItemDetailsList!=null&&semiItemDetailsList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(padding: EdgeInsets.all(8), scrollDirection: Axis.vertical, itemCount: semiItemDetailsList ==null? 0:semiItemDetailsList.length, itemBuilder: (context,int index){
                 return InkWell(
@@ -362,7 +363,7 @@ class _StocksListPageState extends State<AllSemiMakingOrder>{
                 color: yellowColor,
                 size: 100.0,
               ),
-            ):isListVisible==true&&semiItemDetailsList.length==0?Center(
+            ):isListVisible==true&&semiItemDetailsList!=null&&semiItemDetailsList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

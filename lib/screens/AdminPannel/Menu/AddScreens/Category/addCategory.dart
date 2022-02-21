@@ -224,8 +224,6 @@ class _add_CategoryState extends State<add_Category> {
                                    if(value){
                                      Navigator.of(context).pop();
                                      Navigator.pop(context);
-                                     Navigator.pop(context);
-
                                      Utils.showSuccess(context, "Added Successfully");
                                    }
                                  });

@@ -104,13 +104,11 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
               if(result){
                 networksOperation.getAdditionalsByProductId(context,token,widget.productDetails.id).then((value) {
                   setState(() {
-                    bool isListVisible = true;
                     additionals = value;
                   });
                 });
                 networksOperation.getSizes(context,widget.productDetails.storeId).then((value){
                   setState(() {
-                    bool isListVisible = true;
                     sizes = value;
                     for(int i=0;i<sizes.length;i++) {
                     }
@@ -120,13 +118,14 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
                   if(value!=null)
                   {
                     setState(() {
-                      bool isListVisible = true;
+                       isListVisible = true;
                       allUnitList.clear();
                       allUnitList = value;
                     });
                   }
                 });
               }else{
+                isListVisible=true;
                 Utils.showError(context, "Network Error");
               }
             });
@@ -144,103 +143,88 @@ class _categoryListPageState extends ResumableState<ToppingLists>{
             child: isListVisible==true&&additionals.length>0?  new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:additionals == null ? 0:additionals.length, itemBuilder: (context,int index){
-                return Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.20,
-                  secondaryActions: <Widget>[
-                    IconSlideAction(
-                      icon: Icons.edit,
-                      color: Colors.blue,
-                      caption: 'update',
-                      onTap: () async {
-                        //print(barn_lists[index]);
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateToppings(widget.productDetails,additionals[index],token)));
-                      },
-                    ),
-                  ],
-                  child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Card(
-                      elevation: 8,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        //height: 100,
-                        child: Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(additionals[index].name!=null?additionals[index].name:"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: yellowColor),),
-                                        Row(
-                                          children: [
-                                            Text("Price: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                                            Text(additionals[index].price!=null?additionals[index].price.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
-                                          ],
-                                        ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                        Row(
-                                          children: [
-                                            Text("Quantity: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                                            Text(additionals[index].quantity!=null?additionals[index].quantity.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text("Unit: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                                            Text(additionals[index].unit!=null?"${getUnitName(additionals[index].unit)}":"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
-                                          ],
-                                        ),
-                                ],
-                              ),
-                                    Row(
-                                      children: [
-                                        Text("Size : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                                        Text(additionals[index].sizeId!=null?getsize(additionals[index].sizeId):"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
-                                      ],
-                                    ),
-                            ],
-                          ),
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Card(
+                    elevation: 8,
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      //height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(additionals[index].name!=null?additionals[index].name:"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: yellowColor),),
+                                      Row(
+                                        children: [
+                                          Text("Price: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                                          Text(additionals[index].price!=null?additionals[index].price.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
+                                        ],
+                                      ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                      Row(
+                                        children: [
+                                          Text("Quantity: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                                          Text(additionals[index].quantity!=null?additionals[index].quantity.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text("Unit: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                                          Text(additionals[index].unit!=null?"${getUnitName(additionals[index].unit)}":"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
+                                        ],
+                                      ),
+                              ],
+                            ),
+                                  Row(
+                                    children: [
+                                      Text("Size : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                                      Text(additionals[index].sizeId!=null?getsize(additionals[index].sizeId):"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
+                                    ],
+                                  ),
+                          ],
                         ),
-                      )
-                      // ListTile(
-                      //   title: Text(additionals[index].name!=null?additionals[index].name:"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: yellowColor),),
-                      //  // leading: Image.network(additionals[index].image!=null?additionals[index].image:'http://www.4motiondarlington.org/wp-content/uploads/2013/06/No-image-found.jpg',fit: BoxFit.fill,height: 50,width: 50,),
-                      //   trailing: Text(additionals[index].price!=null?"Price: "+additionals[index].price.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                      //   subtitle: Column(
-                      //     children: [
-                      //       Row(
-                      //         children: [
-                      //           Text("Quantity: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                      //           Text(additionals[index].quantity!=null?additionals[index].quantity.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text("Unit: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                      //           Text(additionals[index].unit!=null?getUnitName(additionals[index].unit):"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
-                      //         ],
-                      //       ),
-                      //       Row(
-                      //         children: [
-                      //           Text("Size : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
-                      //           Text(additionals[index].sizeId!=null?getsize(additionals[index].sizeId):"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
-                      //         ],
-                      //       ),
-                      //     ],
-                      //   ),
-                      //   onLongPress:(){
-                      //   //  showAlertDialog(context,additionals[index].id);
-                      //   },
-                      //   onTap: () {
-                      //   },
-                      // ),
-                    ),
+                      ),
+                    )
+                    // ListTile(
+                    //   title: Text(additionals[index].name!=null?additionals[index].name:"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: yellowColor),),
+                    //  // leading: Image.network(additionals[index].image!=null?additionals[index].image:'http://www.4motiondarlington.org/wp-content/uploads/2013/06/No-image-found.jpg',fit: BoxFit.fill,height: 50,width: 50,),
+                    //   trailing: Text(additionals[index].price!=null?"Price: "+additionals[index].price.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                    //   subtitle: Column(
+                    //     children: [
+                    //       Row(
+                    //         children: [
+                    //           Text("Quantity: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                    //           Text(additionals[index].quantity!=null?additionals[index].quantity.toString():"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
+                    //         ],
+                    //       ),
+                    //       Row(
+                    //         children: [
+                    //           Text("Unit: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                    //           Text(additionals[index].unit!=null?getUnitName(additionals[index].unit):"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
+                    //         ],
+                    //       ),
+                    //       Row(
+                    //         children: [
+                    //           Text("Size : ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor),),
+                    //           Text(additionals[index].sizeId!=null?getsize(additionals[index].sizeId):"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.grey),),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   onLongPress:(){
+                    //   //  showAlertDialog(context,additionals[index].id);
+                    //   },
+                    //   onTap: () {
+                    //   },
+                    // ),
                   ),
                 );
               }),

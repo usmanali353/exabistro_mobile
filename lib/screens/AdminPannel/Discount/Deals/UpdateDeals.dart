@@ -73,6 +73,9 @@ class _AddDiscountState extends State<UpdateDeals> {
                   productId: widget.dealDetail["productDeals"][i]["product"]["id"],
                   sizeId: widget.dealDetail["productDeals"][i]["size"]["id"],
                 ));
+                dealsItems.add( {"ProductId":widget.dealDetail["productDeals"][i]["productId"],
+                  "SizeId":widget.dealDetail["productDeals"][i]["sizeId"],
+                  "Quantity":widget.dealDetail["productDeals"][i]["quantity"]});
                 debugPrint(productList[i].toJson().toString());
                 chips.add(Chip(label: Text("${getProductName(productList[i].productId)+"  [${getSizeName(productList[i].sizeId)}]  "+" x"+productList[i].quantity.toString()}")));
               }
@@ -232,6 +235,8 @@ class _AddDiscountState extends State<UpdateDeals> {
                                 setState(() {
                                   if(selectedProductsForDeal!=null&&selectedProductsForDeal.length>0){
                                     chips.clear();
+                                    dealsItems.clear();
+                                    actualDealPrice=0.0;
                                     for (int i = 0; i < selectedProductsForDeal.length; i++) {
                                       chips.add(Chip(label: Text("${getProductName(selectedProductsForDeal[i].productId)+"  [${getSizeName(selectedProductsForDeal[i].sizeId)}]  "+" x"+selectedProductsForDeal[i].quantity.toString()}")));
                                       actualDealPrice += selectedProductsForDeal[i].totalPrice;
