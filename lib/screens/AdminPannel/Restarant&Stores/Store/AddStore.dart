@@ -31,23 +31,18 @@ class _SplashScreenState extends State<AddStore> {
   String selectedCurrency;
   String selectedCuisine;
   Address address;
-  TextEditingController storeName,city,postCode,contactNo,storeAddress;
+  TextEditingController storeName,city,contactNo,storeAddress;
   bool payOut = false;
   bool deliveryVal = false;
   bool pickUpVal = false;
   bool dineInVal = false;
   String token,reviewToken;
-  static const orange = Color(0xFFFE9A75);
-  static const dark = Color(0xFFFFAB00);
   static const double leftPadding = 50;
   DateTime start_time ;//= DateTime.now();
   DateTime end_time ;
   int selectedCountryId;
   var _formKey = new GlobalKey<FormState>();
   var _autoValidate = false;
-  File _image;
-  var picked_image;
-
   var claims,userDetail,userId;
   String password;
 
@@ -59,7 +54,6 @@ class _SplashScreenState extends State<AddStore> {
   void initState() {
     storeName =TextEditingController();
     city=TextEditingController();
-    postCode==TextEditingController();
     contactNo=TextEditingController();
     storeAddress=TextEditingController();
     SharedPreferences.getInstance().then((value) {
@@ -195,8 +189,9 @@ class _SplashScreenState extends State<AddStore> {
                                   //border: Border.all(color: yellowColor, width: 2),
                                   borderRadius: BorderRadius.circular(9)
                               ),
-                              child: ListTile(
-                                title: TextFormField(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
                                   controller: storeAddress,
                                   style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
                                   obscureText: false,maxLines: 2,
@@ -215,43 +210,17 @@ class _SplashScreenState extends State<AddStore> {
                                     //suffixIcon: Icon(Icons.email,color: Colors.amberAccent,size: 27,),
                                   ),
                                   textInputAction: TextInputAction.next,
+                                  onTap: ()async{
+                                    FocusScope.of(context).requestFocus(new FocusNode());
+                                    address = await Navigator.push(context, MaterialPageRoute(builder: (context) => getPosition(),),);
+                                    // setState(() {
+                                    // print(address.latitude+"vbcvnvcnbnc");
+                                    storeAddress.text = address.address;
+                                    // latitude = address.latitude;
+                                    // });
+                                  },
                                 ),
-                                trailing: InkWell(
-                                    onTap: () async{
-                                      address = await Navigator.push(context, MaterialPageRoute(builder: (context) => getPosition(),),);
-                                      // setState(() {
-                                      // print(address.latitude+"vbcvnvcnbnc");
-                                      storeAddress.text = address.address;
-                                      // latitude = address.latitude;
-                                      // });
-                                    },
-                                    child: Icon(Icons.add_location,color: yellowColor, size: 30,)),
-                              )
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: postCode,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(8),
-                              WhitelistingTextInputFormatter.digitsOnly,
-                            ],
-                            style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: yellowColor, width: 1.0)
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: PrimaryColor, width: 1.0)
-                              ),
-                              labelText: "PostCode",
-                              labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
-
-                            ),
-                            textInputAction: TextInputAction.next,
                           ),
                         ),
                         Padding(
@@ -341,15 +310,15 @@ class _SplashScreenState extends State<AddStore> {
                               //border: Border.all(color: yellowColor, width: 2)
                             ),
                             width: MediaQuery.of(context).size.width*0.98,
-                            padding: EdgeInsets.all(14),
+                            padding: EdgeInsets.all(6),
                             child: DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 labelText: "Cuisine",
                                 alignLabelWithHint: true,
                                 labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: yellowColor),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color:
-                                  yellowColor),
+                                  // borderSide: BorderSide(color:
+                                  // yellowColor),
                                 ),
                                 focusedBorder:  OutlineInputBorder(
                                   borderSide: BorderSide(color:
@@ -387,15 +356,15 @@ class _SplashScreenState extends State<AddStore> {
                               //border: Border.all(color: yellowColor, width: 2)
                             ),
                             width: MediaQuery.of(context).size.width*0.98,
-                            padding: EdgeInsets.all(14),
+                            padding: EdgeInsets.all(4),
                             child: DropdownButtonFormField<String>(
                               decoration: InputDecoration(
                                 labelText: "Restaurant Currency",
                                 alignLabelWithHint: true,
                                 labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 15, color: yellowColor),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color:
-                                  yellowColor),
+                                  // borderSide: BorderSide(color:
+                                  // yellowColor),
                                 ),
                                 focusedBorder:  OutlineInputBorder(
                                   borderSide: BorderSide(color:
@@ -430,7 +399,7 @@ class _SplashScreenState extends State<AddStore> {
                         ),
                         SizedBox(height: 10,),
                         Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.only(left:15.0,right:15),
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(9),
@@ -440,6 +409,20 @@ class _SplashScreenState extends State<AddStore> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text("Pay out",style: TextStyle(color: yellowColor,fontSize: 15, fontWeight: FontWeight.bold),),
+                                    Checkbox(
+                                      value: payOut,
+                                      onChanged: (bool value) {
+                                        setState(() {
+                                          payOut = value;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                ),
                                 // [Monday] checkbox
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -500,7 +483,7 @@ class _SplashScreenState extends State<AddStore> {
                               //border: Border.all(color: yellowColor, width: 2)
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4),
                               child: FormBuilderDateTimePicker(
                                 name: "Start Time",
                                 style: Theme.of(context).textTheme.bodyText1,
@@ -524,7 +507,7 @@ class _SplashScreenState extends State<AddStore> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(left:8.0,right:8.0),
                           child: Container(
 
                             decoration: BoxDecoration(
@@ -556,43 +539,6 @@ class _SplashScreenState extends State<AddStore> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.all(16),
-                                height: 100,
-                                width: 80,
-                                child: _image == null ? Text('No image selected.', style: TextStyle(color: PrimaryColor),) : Image.file(_image),
-                              ),
-                              MaterialButton(
-                                color: yellowColor,
-                                onPressed: (){
-                                  Utils.getImage().then((image_file){
-                                    if(image_file!=null){
-                                      image_file.readAsBytes().then((image){
-                                        if(image!=null){
-                                          setState(() {
-                                            //this.picked_image=image;
-                                            _image = image_file;
-                                            this.picked_image = base64Encode(image);
-                                          });
-                                        }
-                                      });
-                                    }else{
-
-                                    }
-                                  });
-                                },
-                                child: Text("Business Image",style: TextStyle(color: whiteTextColor),),
-                              ),
-                            ],
-                          ),
-                        ),
-
-
                       ],
                     ),
                   ),

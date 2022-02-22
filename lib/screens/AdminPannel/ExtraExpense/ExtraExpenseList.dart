@@ -162,7 +162,7 @@ class _ExtraExpenseListState extends State<ExtraExpenseList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: isListVisible==true&&extraExpenseList.length>0? new Container(
+          child: isListVisible==true&&extraExpenseList!=null&&extraExpenseList.length>0? new Container(
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
                 itemCount: extraExpenseList!=null?extraExpenseList.length:0,
@@ -302,7 +302,7 @@ class _ExtraExpenseListState extends State<ExtraExpenseList> {
               color: yellowColor,
               size: 100.0,
             ),
-          ):isListVisible==true&&extraExpenseList.length==0?Center(
+          ):isListVisible==true&&extraExpenseList!=null&&extraExpenseList.length==0?Center(
             child: Container(
               width: 300,
               height: 300,

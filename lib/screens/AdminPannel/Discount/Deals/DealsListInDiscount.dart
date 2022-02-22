@@ -245,7 +245,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                         onPressed: () {
                           isListVisible=false;
                           Utils.check_connectivity().then((result) {
-                            if (result) {
+                            // if (result) {
                               // if(startPrice.text!=null && endPrice.text ==null ||startPrice.text==null && endPrice.text !=null)
                               //   Utils.showError(context, "Starting and Ending Both Are ")
                               networksOperation.getAllDeals(context, token,widget.storeId,startPrice.text,endPrice.text,null,start_date,end_date).then((value) {
@@ -257,10 +257,10 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                                   print(dealsList);
                                 });
                               });
-                            } else {
-                              isListVisible=true;
-                              Utils.showError(context, "Network Error");
-                            }
+                            // } else {
+                            //   isListVisible=true;
+                            //   Utils.showError(context, "Network Error");
+                            // }
                           });
                         },
                         color: yellowColor,
@@ -348,7 +348,7 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
         key: _refreshIndicatorKey,
         onRefresh: (){
           return Utils.check_connectivity().then((result){
-            if(result){
+            // if(result){
               networksOperation.getAllDeals(context, token,widget.storeId,null,null,null,null,null).then((value) {
                 setState(() {
                   isListVisible=true;
@@ -358,10 +358,10 @@ class _DiscountItemsListState extends ResumableState<DealsList> {
                   print(dealsList);
                 });
               });
-            }else{
-              isListVisible=true;
-              Utils.showError(context, "Network Error");
-            }
+            // }else{
+            //   isListVisible=true;
+            //   Utils.showError(context, "Network Error");
+            // }
           });
         },
         child: Container(

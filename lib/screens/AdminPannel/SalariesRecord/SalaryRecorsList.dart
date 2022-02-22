@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddSalary.dart';
 import 'UpdateSalaryRecord.dart';
@@ -24,7 +25,7 @@ class SalaryExpenseList extends StatefulWidget {
   _SalaryExpenseListState createState() => _SalaryExpenseListState();
 }
 
-class _SalaryExpenseListState extends State<SalaryExpenseList> {
+class _SalaryExpenseListState extends ResumableState<SalaryExpenseList> {
   final Color activeColor = Color.fromARGB(255, 52, 199, 89);
   bool value = false;
   String token;
@@ -36,7 +37,12 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
   int selectedDays=0;
   bool isListVisible = false;
   List employeesList=[];
-
+  @override
+  void onResume() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    super.onResume();
+  }
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -130,13 +136,13 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(backgroundColor: yellowColor,child: Icon(Icons.add),onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=> AddSalaryExpense(widget.storeId)));
+        push(context, MaterialPageRoute(builder: (context)=> AddSalaryExpense(widget.storeId)));
       },),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: (){
           return Utils.check_connectivity().then((result){
-            if(result){
+            // if(result){
               networksOperation.getAllSalaryExpense(context, token,widget.storeId,chartDropdownValue[selectedDays])
                   .then((value) {
                 setState(() {
@@ -144,9 +150,9 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
                   this.salaryExpenseList = value;
                 });
               });
-            }else{
-              Utils.showError(context, "Network Error");
-            }
+            // }else{
+            //   Utils.showError(context, "Network Error");
+            // }
           });
         },
         child: Container(
@@ -159,7 +165,7 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: isListVisible==true&&salaryExpenseList.length>0? new Container(
+          child: isListVisible==true&&salaryExpenseList!=null&&salaryExpenseList.length>0? new Container(
 
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
@@ -178,7 +184,7 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
                           caption: 'Update',
                           onTap: () async {
                             //print(discountList[index]);
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=> UpdateSalaryExpense(salaryExpenseList[index])));
+                            push(context,MaterialPageRoute(builder: (context)=> UpdateSalaryExpense(salaryExpenseList[index])));
                           },
                         ),
                         IconSlideAction(
@@ -419,7 +425,7 @@ class _SalaryExpenseListState extends State<SalaryExpenseList> {
               color: yellowColor,
               size: 100.0,
             ),
-          ):isListVisible==true&&salaryExpenseList.length==0?Center(
+          ):isListVisible==true&&salaryExpenseList!=null&&salaryExpenseList.length==0?Center(
             child: Container(
               width: 300,
               height: 300,

@@ -370,7 +370,7 @@ class _StocksListPageState extends State<PurchaseOrderList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&purchaseOrderList.length>0? new Container(
+            child: isListVisible==true&&purchaseOrderList!=null&&purchaseOrderList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: Column(
                 children: [
@@ -611,7 +611,7 @@ class _StocksListPageState extends State<PurchaseOrderList>{
                 color: yellowColor,
                 size: 100.0,
               ),
-            ):isListVisible==true&&purchaseOrderList.length==0?Center(
+            ):isListVisible==true&&purchaseOrderList!=null&&purchaseOrderList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

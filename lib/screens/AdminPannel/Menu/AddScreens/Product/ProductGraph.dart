@@ -5,7 +5,6 @@ import 'package:capsianfood/model/Stores.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

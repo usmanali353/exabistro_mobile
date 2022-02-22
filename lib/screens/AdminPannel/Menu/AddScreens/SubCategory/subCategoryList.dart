@@ -399,7 +399,9 @@ class _categoryListPageState extends ResumableState<subCategoryList>{
           });
         });
       }else{
-        isListVisible=true;
+        setState(() {
+          isListVisible=true;
+        });
         Utils.showError(context, "Please Check Your Internet");
       }
     });

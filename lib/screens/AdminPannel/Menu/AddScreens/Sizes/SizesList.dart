@@ -114,7 +114,7 @@ class _categoryListPageState extends ResumableState<SizesListPage>{
           key: _refreshIndicatorKey,
           onRefresh: (){
             return Utils.check_connectivity().then((result){
-              if(result){
+              // if(result){
                 networksOperation.getSizesWithSearch(context,widget.storeId,"").then((value){
                   isListVisible=true;
                   setState(() {
@@ -123,10 +123,10 @@ class _categoryListPageState extends ResumableState<SizesListPage>{
                     sizes = value;
                   });
                 });
-              }else{
-                isListVisible=true;
-                Utils.showError(context, "Viewing in Offline Mode");
-              }
+              // }else{
+              //   isListVisible=true;
+              //   Utils.showError(context, "Viewing in Offline Mode");
+              // }
             });
           },
           child: Container(
@@ -139,7 +139,7 @@ class _categoryListPageState extends ResumableState<SizesListPage>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child:isListVisible==true&&sizes.length>0? new Container(
+            child:isListVisible==true&&sizes!=null&&sizes.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:sizes == null ? 0:sizes.length, itemBuilder: (context,int index){
                 return Padding(
@@ -208,7 +208,7 @@ class _categoryListPageState extends ResumableState<SizesListPage>{
               }),
             ):isListVisible==false?Center(
             child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
-          ):isListVisible==true&&sizes.length==0?Center(
+          ):isListVisible==true&&sizes!=null&&sizes.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

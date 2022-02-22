@@ -39,7 +39,7 @@ class _UpdateSalaryExpenseState extends State<UpdateSalaryExpense> {
         this.token = value.getString("token");
         //expenseName.text = widget.salaryExpense.expenseName;
         expenseAmount.text = widget.salaryExpense.days.toString();
-
+        print(widget.salaryExpense.toJson().toString());
       });
     });
 
@@ -48,6 +48,9 @@ class _UpdateSalaryExpenseState extends State<UpdateSalaryExpense> {
       setState(() {
 
         for(int i=0; i < value.length; i++){
+          if(value[i]["id"]==widget.salaryExpense.userId){
+            selectedUser=value[i];
+          }
           for(int j=0; j<value[i]['roles'].length; j++){
             if(value[i]['roles'][j]['id']!=1&&value[i]['roles'][j]['id']!=2){
               employeesList.add(value[i]);

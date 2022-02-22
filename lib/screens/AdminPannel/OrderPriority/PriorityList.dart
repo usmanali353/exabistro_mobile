@@ -113,7 +113,7 @@ class _categoryListPageState extends State<PriorityList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&priorityList.length>0? new Container(
+            child: isListVisible==true&&priorityList!=null&&priorityList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:priorityList == null ? 0:priorityList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -247,7 +247,7 @@ class _categoryListPageState extends State<PriorityList>{
               }),
             ):isListVisible==false?Center(
             child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
-          ):isListVisible==true&&priorityList.length==0?Center(
+          ):isListVisible==true&&priorityList!=null&&priorityList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

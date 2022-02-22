@@ -75,7 +75,10 @@ class _NewStoresState extends State<NewStores> {
         backgroundColor: yellowColor,
         isExtended: true,
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddStore(widget.restaurant)));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddStore(widget.restaurant))).then((value){
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+          });
         },
       ),
       body: RefreshIndicator(
@@ -130,7 +133,10 @@ class _NewStoresState extends State<NewStores> {
                       caption: 'Update',
                       onTap: () async {
                         //print(discountList[index]);
-                        Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateStore(storeList[index])));
+                        Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateStore(storeList[index]))).then((value){
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                        });
                       },
                     ),
                     IconSlideAction(

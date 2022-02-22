@@ -155,7 +155,7 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&productList.length>0? new Container(
+            child: isListVisible==true&&productList!=null&&productList.length>0? new Container(
               child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:productList == null ? 0:productList.length, itemBuilder: (context,int index){
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -233,7 +233,7 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
               }),
             ):isListVisible==false?Center(
             child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
-          ):isListVisible==true&&productList.length==0?Center(
+          ):isListVisible==true&&productList!=null&&productList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

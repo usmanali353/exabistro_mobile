@@ -129,7 +129,7 @@ class _ProductPageState extends State<TrendingByCustomer>{
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: isListVisible==true&&productlist.length>0?  new Container(
+          child: isListVisible==true&&productlist!=null&&productlist.length>0?  new Container(
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:productlist == null ? 0:productlist.length, itemBuilder: (context,int index){
                 return Column(
@@ -243,7 +243,7 @@ class _ProductPageState extends State<TrendingByCustomer>{
               color: yellowColor,
               size: 100.0,
             ),
-          ):isListVisible==true&&productlist.length==0?Center(
+          ):isListVisible==true&&productlist!=null&&productlist.length==0?Center(
             child: Container(
               width: 300,
               height: 300,

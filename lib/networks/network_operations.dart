@@ -829,11 +829,10 @@ class networksOperation{
   }
   static Future<List<Products>> getTrendingByCustomer(BuildContext context,int userId)async{
     try{
-
+      print(Utils.baseUrl()+"Products/GetAllForCustomers?trendingDays=365&userId=$userId");
       var response=await http.get(Utils.baseUrl()+"Products/GetAllForCustomers?trendingDays=365&userId=$userId",);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        ;
         List<Products> list=List();
         list.clear();
         for(int i=0;i<data.length;i++){
@@ -1103,13 +1102,10 @@ class networksOperation{
     return null;
   }
   static Future<List<Products>> getTrending1(BuildContext context,int storeId,int days)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
       var response=await http.get(Utils.baseUrl()+"Products/GetAll/"+storeId.toString()+"/"+days.toString()+"/0",);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         List<Products> list=List();
         list.clear();
         for(int i=0;i<data.length;i++){
@@ -1120,11 +1116,9 @@ class networksOperation{
         return list;
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
       }
     }catch(e){
-      pd.hide();
       print(e);
       Utils.showError(context, e.toString());
     }
@@ -3403,8 +3397,6 @@ class networksOperation{
     }
   }
   static Future<dynamic> getDiscountTrending(BuildContext context,String token,int storeId)async {
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
-    pd.show();
     try{
       Map<String,String> headers = {'Content-Type':'application/json','Authorization':'Bearer '+token};
 
@@ -3414,18 +3406,14 @@ class networksOperation{
       var response=await http.get(Utils.baseUrl()+"Discounts/GetTrendingDiscount/"+storeId.toString(),headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         return data;
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Error Found:");
-
       return null;
     }
   }
@@ -3595,23 +3583,18 @@ class networksOperation{
     return null;
   }
   static Future<dynamic> getDealsTrending(BuildContext context,String token,int storeId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"Deals/GetDealTrending/$storeId",headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         return data;
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Error Found:");
     }
     return null;
@@ -5858,7 +5841,7 @@ class networksOperation{
       pd.show();
       Map<String,String> headers = {'Content-Type':'application/json','Authorization':'Bearer '+token};
       var response=await http.post(Utils.baseUrl()+"PurchaseOrder/AddPurchaseOrderAutomatically?storeId=$storeId",body: body,headers: headers);
-      print(response.body);
+      print(response.statusCode);
       if(response.statusCode==200){
         pd.hide();
         Utils.showSuccess(context, "Purchase Order Created Successfully");
@@ -5871,6 +5854,7 @@ class networksOperation{
       }
     }catch(e){
       pd.hide();
+      print(e.toString());
       Utils.showError(context, "Error Found:");
 
       return false;

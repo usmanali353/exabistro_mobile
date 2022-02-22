@@ -704,7 +704,9 @@ class _categoryListPageState extends State<categoryListPage>{
           });
         });
       }else{
-        isListVisible=true;
+        setState(() {
+          isListVisible=true;
+        });
         Utils.showError(context, "Please Check Your Internet");
       }
     });

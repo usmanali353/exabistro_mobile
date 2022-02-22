@@ -291,9 +291,11 @@ class _StocksListPageState extends State<StocksList>{
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: MaterialButton(onPressed: () {
+                                isListVisible=false;
                                 Utils.check_connectivity().then((result){
                                   if(result){
                                     networksOperation.getStockItemsListByStoreIdWithVendor(context, token,widget.storeId,vendorValue).then((value) {
+                                      isListVisible=true;
                                       if(stockList!=null)
                                         stockList.clear();
                                       setState(() {
@@ -302,6 +304,7 @@ class _StocksListPageState extends State<StocksList>{
                                     });
 
                                   }else{
+                                    isListVisible=true;
                                     Utils.showError(context, "Network Error");
                                   }
                                 });
@@ -379,15 +382,18 @@ class _StocksListPageState extends State<StocksList>{
             //  if(result){
                 networksOperation.getStockItemsListByStoreIdWithOutFilter(context, token,widget.storeId).then((value) {
                   setState(() {
+
                     if(stockList!=null)
                     stockList.clear();
                     stockList = value;
                   });
                 });
                 networksOperation.getStockUnitsDropDown(context,token).then((value) {
+
                   if(value!=null)
                   {
                     setState(() {
+                      isListVisible=true;
                       allUnitList.clear();
                       allUnitList = value;
                     });
@@ -408,7 +414,7 @@ class _StocksListPageState extends State<StocksList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: new Container(
+            child: isListVisible==true&&stockList!=null&&stockList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: _isSearching==false?ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:stockList == null ? 0:stockList.length, itemBuilder: (context,int index){
                 return Column(
@@ -862,6 +868,29 @@ class _StocksListPageState extends State<StocksList>{
               }),
 
 
+            ):isListVisible==false?Center(
+              child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
+            ):isListVisible==true&&stockList!=null&&stockList.length==0?Center(
+              child: Container(
+                width: 300,
+                height: 300,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage("assets/noDataFound.png")
+                    )
+                ),
+              ),
+            ):
+            Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
             ),
 
           ),
@@ -967,12 +996,14 @@ class _StocksListPageState extends State<StocksList>{
 
     setState(() {
       searchQuery = newQuery;
+      isListVisible=false;
     });
     Utils.check_connectivity().then((result){
       if(result){
-        ProgressDialog pd=ProgressDialog(context,type: ProgressDialogType.Normal,isDismissible: true);
-        pd.show();
           networksOperation.getStockItemsListByStoreIdWithSearch(context, token,widget.storeId, searchQuery).then((value) {
+            setState(() {
+              isListVisible=true;
+            });
             if(searchedList!=null)
               searchedList.clear();
             setState(() {
@@ -980,6 +1011,9 @@ class _StocksListPageState extends State<StocksList>{
             });
           });
       }else{
+        setState(() {
+          isListVisible=true;
+        });
         Utils.showError(context, "Please Check Your Internet");
       }
     });

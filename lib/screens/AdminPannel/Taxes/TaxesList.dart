@@ -115,7 +115,7 @@ class _TaxListState extends State<TaxList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&taxList.length>0? new Container(
+            child: isListVisible==true&&taxList!=null&&taxList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:taxList == null ? 0:taxList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -337,7 +337,7 @@ class _TaxListState extends State<TaxList>{
               }),
             ):isListVisible==false?Center(
               child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
-            ):isListVisible==true&&taxList.length==0?Center(
+            ):isListVisible==true&&taxList!=null&&taxList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

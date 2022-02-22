@@ -110,7 +110,7 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
           key: _refreshIndicatorKey,
           onRefresh: (){
             return Utils.check_connectivity().then((result){
-              if(result){
+             // if(result){
                 networksOperation.getAllDailySessionByStoreId(context,token,widget.storeId).then((value){
                   //pd.hide();
                   isListVisible=true;
@@ -120,10 +120,10 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
                     sessionList = value;
                   });
                 });
-              }else{
-                isListVisible=true;
-                Utils.showError(context, "Network Error");
-              }
+              // }else{
+              //   isListVisible=true;
+              //   Utils.showError(context, "Network Error");
+              // }
             });
           },
           child: Container(
@@ -136,7 +136,7 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&sessionList.length>0? new Container(
+            child: isListVisible==true&&sessionList!=null&&sessionList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:sessionList == null ? 0:sessionList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -302,7 +302,7 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
               }),
             ):isListVisible==false?Center(
             child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
-          ):isListVisible==true&&sessionList.length==0?Center(
+          ):isListVisible==true&&sessionList!=null&&sessionList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

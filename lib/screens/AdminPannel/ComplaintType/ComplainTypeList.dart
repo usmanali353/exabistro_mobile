@@ -98,7 +98,7 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
           key: _refreshIndicatorKey,
           onRefresh: (){
             return Utils.check_connectivity().then((result){
-              if(result){
+              // if(result){
                 networksOperation.getComplainTypeListByStoreId(context, token,widget.storeId).then((value) {
                   setState(() {
                     isListVisible=true;
@@ -106,10 +106,9 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
                     print(ComplaintTypeList.toString() + "jndkjfdk");
                   });
                 });
-
-              }else{
-                Utils.showError(context, "Network Error");
-              }
+              // }else{
+              //   Utils.showError(context, "Network Error");
+              // }
             });
           },
           child: Container(
@@ -122,7 +121,7 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&ComplaintTypeList.length>0? new Container(
+            child: isListVisible==true&&ComplaintTypeList!=null&&ComplaintTypeList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(scrollDirection: Axis.vertical, itemCount:ComplaintTypeList == null ? 0:ComplaintTypeList.length, itemBuilder: (context,int index){
                 return Padding(
@@ -191,7 +190,7 @@ class _ComplaintTypeListState extends State<ComplaintTypeList>{
                 color: yellowColor,
                 size: 100.0,
               ),
-            ):isListVisible==true&&ComplaintTypeList.length==0?Center(
+            ):isListVisible==true&&ComplaintTypeList!=null&&ComplaintTypeList.length==0?Center(
               child: Container(
                 width: 300,
                 height: 300,

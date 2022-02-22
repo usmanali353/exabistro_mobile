@@ -34,7 +34,7 @@ class _SplashScreenState extends State<UpdateStore> {
   // List<Country> countries = [];
   var selectedCuisine;
   Address address;
-  TextEditingController storeName,city,postCode,contactNo,storeAddress;
+  TextEditingController storeName,city,contactNo,storeAddress;
   bool deliveryVal = false;
   bool pickUpVal = false;
   bool dineInVal = false;
@@ -56,7 +56,6 @@ class _SplashScreenState extends State<UpdateStore> {
   void initState() {
     storeName =TextEditingController();
     city=TextEditingController();
-    postCode==TextEditingController();
     contactNo=TextEditingController();
     storeAddress=TextEditingController();
     SharedPreferences.getInstance().then((value) {
@@ -72,7 +71,6 @@ class _SplashScreenState extends State<UpdateStore> {
         dineInVal = widget.storeDetail.dineIn==true?true:false;
 
         payOut = widget.storeDetail.payOut==true?true:false;
-
       });
     });
     // networksOperation.getCountriesList(context).then((value) {
@@ -149,6 +147,7 @@ class _SplashScreenState extends State<UpdateStore> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: CSCPicker(
+
                                 ///Enable disable state dropdown
                                 showStates: true,
 
@@ -202,70 +201,35 @@ class _SplashScreenState extends State<UpdateStore> {
                             //   ),
                             // ),
                             Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Container(
-                                  color: BackgroundColor,
-                                  child: ListTile(
-                                    title: TextFormField(
-                                      controller: storeAddress,
-                                      validator: (String value) =>
-                                      value.isEmpty ? "This field is Required" : null,
-                                      style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
-                                      obscureText: false,maxLines: 2,
-                                      decoration: InputDecoration(
-                                        // suffixIcon: Icon(Icons.add_location,color: yellowColor,),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: yellowColor, width: 1.0)
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
-                                        ),
-                                        labelText: 'Store Address',
-                                        labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
-                                        //suffixIcon: Icon(Icons.email,color: yellowColor,size: 27,),
-                                      ),
-                                      textInputAction: TextInputAction.next,
-                                    ),
-                                    trailing: InkWell(
-                                        onTap: () async{
-                                          address = await Navigator.push(context, MaterialPageRoute(builder: (context) => getPosition(),),);
-                                          // setState(() {
-                                          // print(address.latitude+"vbcvnvcnbnc");
-                                          storeAddress.text = address.address;
-                                          // latitude = address.latitude;
-                                          // });
-                                        },
-                                        child: Icon(Icons.add_location,color: yellowColor, size: 35,)),
-                                  )
-                              ),
-                            ),
-                            Card(
-                              elevation: 5,
-                              color: BackgroundColor,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                  controller: postCode,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    LengthLimitingTextInputFormatter(8),
-                                    WhitelistingTextInputFormatter.digitsOnly,
-                                  ],
-                                  style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: yellowColor, width: 1.0)
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
-                                    ),
-                                    labelText: "PostCode",
-                                    labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
-
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextFormField(
+                                controller: storeAddress,
+                                style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
+                                obscureText: false,maxLines: 2,
+                                validator: (String value) =>
+                                value.isEmpty ? "This field is Required" : null,
+                                decoration: InputDecoration(
+                                  // suffixIcon: Icon(Icons.add_location,color: Colors.amberAccent,),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: yellowColor, width: 1.0)
                                   ),
-                                  textInputAction: TextInputAction.next,
+                                  enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: PrimaryColor, width: 1.0)
+                                  ),
+                                  labelText: 'Store Address',
+                                  labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
+                                  //suffixIcon: Icon(Icons.email,color: Colors.amberAccent,size: 27,),
                                 ),
+                                textInputAction: TextInputAction.next,
+                                onTap: ()async{
+                                  FocusScope.of(context).requestFocus(new FocusNode());
+                                  address = await Navigator.push(context, MaterialPageRoute(builder: (context) => getPosition(),),);
+                                  // setState(() {
+                                  // print(address.latitude+"vbcvnvcnbnc");
+                                  storeAddress.text = address.address;
+                                  // latitude = address.latitude;
+                                  // });
+                                },
                               ),
                             ),
                             Card(
@@ -615,8 +579,8 @@ class _SplashScreenState extends State<UpdateStore> {
         "CellNo":contactNo.text,
         "City":city.text,
         "Address":storeAddress.text,
-        "Longitude":address.longitude,
-        "Latitude":address.latitude,
+        "Longitude":address!=null?address.longitude:widget.storeDetail.longitude,
+        "Latitude":address!=null?address.latitude:widget.storeDetail.latitude,
         "RestaurantId":widget.storeDetail.restaurantId,
         "OpenTime": start_time.toString().substring(11,19),//_timeRange.start.format(context),
         "CloseTime": end_time.toString().substring(11,19),//_timeRange.end.format(context),

@@ -62,7 +62,23 @@ class _OrderDetailPageState extends State<OrderDetailPage>{
             //     print(value);
             //   });
             // });
-
+            if(widget.Order['orderStatus']==7){
+              networksOperation.getPredefinedReasons(context, token,widget.Order["storeId"]).then((value){
+                setState(() {
+                  this.predefinedReasons=value;
+                  print("Predefined Reason "+predefinedReasons.toString());
+                });
+              });
+              networksOperation.getComplainTypeListByStoreId(context, token, widget.Order["storeId"]).then((complaintTypes){
+                setState(() {
+                  types=complaintTypes;
+                  for(int i=0;i<types.length;i++){
+                    complainTypes.add(types[i].name);
+                  }
+                  print("Complaint Types "+complainTypes.toString());
+                });
+              });
+            }
             if(widget.Order['customerId']!=null){
               networksOperation.getCustomerById(context, token,widget.Order['customerId'] ).then((value){
                 setState(() {
@@ -79,23 +95,7 @@ class _OrderDetailPageState extends State<OrderDetailPage>{
             networksOperation.getCustomerById(context, token,int.parse(userId) ).then((value){
               setState(() {
                 checkPermission = value;
-                if(widget.Order['orderStatus']==7){
-                  networksOperation.getPredefinedReasons(context, token,widget.Order["storeId"]).then((value){
-                    setState(() {
-                      this.predefinedReasons=value;
-                      print("Predefined Reason "+predefinedReasons.toString());
-                    });
-                  });
-                  networksOperation.getComplainTypeListByStoreId(context, token, widget.Order["storeId"]).then((complaintTypes){
-                    setState(() {
-                      types=complaintTypes;
-                      for(int i=0;i<types.length;i++){
-                        complainTypes.add(types[i].name);
-                      }
-                      print("Complaint Types "+complainTypes.toString());
-                    });
-                  });
-                }
+
               });
             });
             networksOperation.getTableList(context,token,widget.Order['storeId'])
@@ -108,6 +108,7 @@ class _OrderDetailPageState extends State<OrderDetailPage>{
                 .then((value) {
               setState(() {
                 this.storeobj= value;
+
               });
             });
 
@@ -1251,7 +1252,7 @@ class _OrderDetailPageState extends State<OrderDetailPage>{
                                     ),
                                   ),
                                 ):Container(),
-                                widget.Order['orderStatus']==7&&checkPermission!=null&&checkPermission['waiveOffService']!=null&&checkPermission['waiveOffService']==true&&(widget.Order["isRefunded"]==null||widget.Order["isRefunded"]==false)? InkWell(
+                                widget.Order['orderStatus']==7&&checkPermission!=null&&checkPermission['waiveOffService']!=null&&checkPermission['waiveOffService']==true&&(widget.Order["isRefunded"]==null||widget.Order["isRefunded"]==false&&storeobj!=null)? InkWell(
                                   onTap: ()async{
                                     showDialog(
                                         context: context,
