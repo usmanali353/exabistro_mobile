@@ -5,6 +5,7 @@ import 'package:capsianfood/model/Categories.dart';
 import 'package:capsianfood/screens/CutomerPannel/Home/Screens/productPage.dart';
 import 'package:capsianfood/screens/CutomerPannel/Home/Screens/subCategory_page.dart';
  import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
  class CategoriesPage extends StatefulWidget {
@@ -25,6 +26,7 @@ CategoriesPage(this.storeId);
    void initState() {
          networksOperation.getCategories(context,widget.storeId).then((value){
            setState(() {
+             isListVisible = true;
              this.categoryList = value;
            });
      });
@@ -54,7 +56,7 @@ CategoriesPage(this.storeId);
              ),
            ),
          ),
-         body: categoryList!=null?categoryList.length>0?Container(
+         body: Container(
            decoration: BoxDecoration(
                image: DecorationImage(
                  fit: BoxFit.cover,
@@ -63,7 +65,7 @@ CategoriesPage(this.storeId);
            ),
            height: MediaQuery.of(context).size.height,
            width: MediaQuery.of(context).size.width,
-           child: new Container(
+           child: isListVisible==true&&categoryList!=null&&categoryList.length>0? new Container(
              child: ListView.builder(scrollDirection: Axis.vertical, itemCount:categoryList == null ? 0:categoryList.length, itemBuilder: (context,int index){
                return Padding(
                  padding: const EdgeInsets.all(8.0),
@@ -102,19 +104,34 @@ CategoriesPage(this.storeId);
                  ),
                );
              }),
+           ):isListVisible==false?Center(
+             child: SpinKitSpinningLines(
+               lineWidth: 5,
+               color: yellowColor,
+               size: 100.0,
+             ),
+           ):isListVisible==true&&categoryList!=null&&categoryList.length==0?Center(
+             child: Container(
+               width: 300,
+               height: 300,
+               decoration: BoxDecoration(
+                   image: DecorationImage(
+                       fit: BoxFit.cover,
+                       image: AssetImage("assets/noDataFound.png")
+                   )
+               ),
+             ),
+           ):
+           Container(
+             width: 300,
+             height: 300,
+             decoration: BoxDecoration(
+                 image: DecorationImage(
+                     fit: BoxFit.cover,
+                     image: AssetImage("assets/noDataFound.png")
+                 )
+             ),
            ),
-
-         ):Container(
-
-             child: Center(
-               child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),
-             )
-
-         ):Container(
-
-             child: Center(
-               child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),
-             )
 
          )
 

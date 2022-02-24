@@ -1,13 +1,20 @@
+import 'dart:convert';
+
+import 'package:capsianfood/RequestList/RequestList.dart';
+import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/animations/fadeAnimation.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/components/customButton.dart';
 import 'package:capsianfood/components/customButtonAnimation.dart';
 import 'package:capsianfood/screens/AdminPannel/Restarant&Stores/Restaurant/AddRestaurant.dart';
+import 'package:capsianfood/screens/AdminPannel/Restarant&Stores/Restaurant/RestaurantList/RestaurantMainList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../RolesBaseStoreSelection.dart';
 import 'LoginScreen.dart';
 import 'SignUpScreen.dart';
 
@@ -17,6 +24,47 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  List rolesAndStores =[],restaurantList=[];
+  bool isCustomer =true;
+  @override
+  void initState() {
+   SharedPreferences.getInstance().then((prefs){
+      setState(() {
+        if(prefs.getString("login_response")!=null){
+          var log1nResponse=jsonDecode(prefs.getString("login_response"));
+          List decoded=log1nResponse["roles"];
+          rolesAndStores.clear();
+          restaurantList.clear();
+          for(int i=0;i<decoded.length;i++){
+            rolesAndStores.add(decoded[i]);
+            restaurantList.add(decoded[i]['restaurant']);
+          }
+          var claims = Utils.parseJwt(log1nResponse['token']);
+          if (claims['IsCustomerOnly'] == "false") {
+            if (decoded[0]['roleId'] == 1) {
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) => RequestList(1)), (
+                      Route<dynamic> route) => false);
+            }
+            else if (decoded[0]['roleId'] == 2) {
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) =>
+                      RestaurantScreen(restaurantList, 2)), (
+                      Route<dynamic> route) => false);
+            }
+            else {
+              Navigator.pushAndRemoveUntil(context,
+                  MaterialPageRoute(builder: (context) =>
+                      RoleBaseStoreSelection(rolesAndStores)), (
+                      Route<dynamic> route) => false);
+            }
+          }
+        }
+      });
+
+   });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     var localizationDelegate = LocalizedApp.of(context).delegate;

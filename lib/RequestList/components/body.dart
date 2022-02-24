@@ -77,6 +77,7 @@ class _BodyState extends State<RequestBody> {
                     SharedPreferences.getInstance().then((value) {
                       value.remove("token");
                       value.remove("reviewToken");
+                      value.remove("login_response");
                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
                     } );
                 })),

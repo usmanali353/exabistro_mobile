@@ -24,6 +24,8 @@ import 'package:capsianfood/model/PreDefinedReasons.dart';
 import 'package:capsianfood/model/PurchaseOrder.dart';
 import 'package:capsianfood/model/ProductIngredients.dart';
 import 'package:capsianfood/model/SalaryExpense.dart';
+import 'package:capsianfood/model/SalesByEmployee.dart';
+import 'package:capsianfood/model/SalesByProduct.dart';
 import 'package:capsianfood/model/SemiFinishDetail.dart';
 import 'package:capsianfood/model/SemiFinishInProduct.dart';
 import 'package:capsianfood/model/SemiFinishItems.dart';
@@ -265,6 +267,7 @@ class networksOperation{
               prefs.setString('nameid', claims['nameid']);
               prefs.setString("name", claims['unique_name']);
               prefs.setString('password', password);
+              prefs.setString("login_response",cacheData.syncData);
             });
             Utils.showSuccess(context, "Login Successful");
             print(claims['IsCustomerOnly'].toString() + "vfdgfdgfdgfdgdfgd");
@@ -323,6 +326,7 @@ class networksOperation{
           prefs.setString('nameid', claims['nameid']);
           prefs.setString("name", claims['unique_name']);
           prefs.setString('password', password);
+          prefs.setString("login_response",response.body);
           // prefs.setString('isCustomer', claims['IsCustomerOnly']);
 
 
@@ -8353,5 +8357,70 @@ class networksOperation{
     }
   }
 
-
+  static Future<List<SalesByEmployee>>getSalesByEmployee(BuildContext context,String startDate,String endDate,int storeId)async{
+    try{
+      var isCacheExist = await APICacheManager().isAPICacheKeyExist("SalesByEmployee"+storeId.toString());
+      var result=await Utils.check_connection();
+      if (result == ConnectivityResult.none){
+        if (isCacheExist) {
+          var cacheData = await APICacheManager().getCacheData("SalesByEmployee"+storeId.toString());
+          return SalesByEmployee.salesByEmployeeFromJson(cacheData.syncData);
+        }else{
+          Utils.showError(context, "No Offline Data");
+        }
+      }
+      if(result == ConnectivityResult.mobile||result == ConnectivityResult.wifi) {
+        var response = await http.get(Uri.parse(Utils.baseUrl() + "orders/EmployeeReport?storeId="+ storeId.toString()+"&StartDate="+startDate+"&EndDate="+endDate));
+        var data = jsonDecode(response.body);
+        print(data);
+        if (response.statusCode == 200) {
+          APICacheDBModel cacheDBModel = new APICacheDBModel(
+              key: "SalesByEmployee"+storeId.toString(), syncData: response.body);
+          await APICacheManager().addCacheData(cacheDBModel);
+          return SalesByEmployee.salesByEmployeeFromJson(response.body);
+        }
+        else {
+          Utils.showError(context, "Please Try Again");
+          return null;
+        }
+      }else{
+        Utils.showError(context, "You are in Offline mode");
+      }
+    }catch(e){
+      Utils.showError(context,"Unable to Fetch info due to some error Please Contact Support");
+    }
+  }
+  static Future<List<SalesByProduct>>getSalesByProducts(BuildContext context,String startDate,String endDate,int storeId)async{
+    try{
+      var isCacheExist = await APICacheManager().isAPICacheKeyExist("SalesByProducts"+storeId.toString());
+      var result=await Utils.check_connection();
+      if (result == ConnectivityResult.none){
+        if (isCacheExist) {
+          var cacheData = await APICacheManager().getCacheData("SalesByProducts"+storeId.toString());
+          return SalesByProduct.salesByProductFromJson(cacheData.syncData);
+        }else{
+          Utils.showError(context, "No Offline Data");
+        }
+      }
+      if(result == ConnectivityResult.mobile||result == ConnectivityResult.wifi) {
+        var response = await http.get(Uri.parse(Utils.baseUrl() + "orders/ProductReport?storeId="+ storeId.toString()+"&StartDate="+startDate+"&EndDate="+endDate));
+        var data = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          APICacheDBModel cacheDBModel = new APICacheDBModel(
+              key: "SalesByProducts"+storeId.toString(), syncData: response.body);
+          await APICacheManager().addCacheData(cacheDBModel);
+          return SalesByProduct.salesByProductFromJson(response.body);
+        }
+        else {
+          Utils.showError(context, "Please Try Again");
+          return null;
+        }
+      }else{
+        Utils.showError(context, "You are in Offline mode");
+      }
+    }catch(e){
+      print(e.toString());
+      Utils.showError(context,"Unable to Fetch info due to some error Please Contact Support");
+    }
+  }
 }

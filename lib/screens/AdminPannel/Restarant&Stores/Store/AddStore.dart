@@ -582,7 +582,7 @@ class _SplashScreenState extends State<AddStore> {
     } else {
       form.save();
       dynamic storeData={
-
+        "isVisible":true,
         "Name":storeName.text,
         "CellNo":contactNo.text,
         "City":cityValue,

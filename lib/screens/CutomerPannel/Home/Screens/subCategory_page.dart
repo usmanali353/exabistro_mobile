@@ -7,6 +7,7 @@ import 'package:capsianfood/screens/CutomerPannel/Cart/MyCartScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:capsianfood/model/Categories.dart';
 import 'package:capsianfood/networks/network_operations.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'productPage.dart';
 
@@ -22,6 +23,7 @@ class subCategories extends StatefulWidget {
 
 class _NewModelRequestState extends State<subCategories>{
   var categoryId,categoryName,totalItems;
+  bool isListVisible = false;
   List<Categories> subCategoriesList= [];
 
   _NewModelRequestState(this.categoryId,this.categoryName);
@@ -33,6 +35,7 @@ class _NewModelRequestState extends State<subCategories>{
      // if (value) {
         networksOperation.getSubcategories(context, categoryId).then((value) {
           setState(() {
+            isListVisible=true;
             subCategoriesList = value;
             print(value);
           });
@@ -98,7 +101,7 @@ class _NewModelRequestState extends State<subCategories>{
           ),
           backgroundColor: BackgroundColor ,
         ),
-        body: subCategoriesList!=null?subCategoriesList.length>0?Container(
+        body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
@@ -107,7 +110,7 @@ class _NewModelRequestState extends State<subCategories>{
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new Container(
+          child: isListVisible==true&&subCategoriesList!=null&&subCategoriesList!=null&&subCategoriesList.length>0? new Container(
             child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:subCategoriesList == null ? 0:subCategoriesList.length, itemBuilder: (context,int index){
               return Column(
                 children: <Widget>[
@@ -137,9 +140,35 @@ class _NewModelRequestState extends State<subCategories>{
                 ],
               );
             }),
-        )
-    ):Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)):
-        Container(child: Center(child: Text("No Data Found",style: TextStyle(fontSize: 40,color: blueColor),maxLines: 2,),)),
+        ):isListVisible==false?Center(
+            child: SpinKitSpinningLines(
+              lineWidth: 5,
+              color: yellowColor,
+              size: 100.0,
+            ),
+          ):isListVisible==true&&subCategoriesList!=null&&subCategoriesList.length==0?Center(
+            child: Container(
+              width: 300,
+              height: 300,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/noDataFound.png")
+                  )
+              ),
+            ),
+          ):
+          Container(
+            width: 300,
+            height: 300,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage("assets/noDataFound.png")
+                )
+            ),
+          ),
+    )
     );
 
   }

@@ -48,12 +48,6 @@ class _ProductPageState extends State<PreviousCustomerOrderAnonymous>{
             print("ggu"+value.getString("userId"));
             this.token = value.getString("token");
             this.userId = value.getString("userId");
-            networksOperation.getAllPreviousOrdersAnonymous(context,"090078601","").then((
-                value) {
-              setState(() {
-                productlist = value;
-              });
-            });
           });
         });
         WidgetsBinding.instance

@@ -49,6 +49,7 @@ class KitchenWidgetState extends State<KitchenMobileScreenTab> with SingleTicker
                 onPressed: (){
                   SharedPreferences.getInstance().then((value) {
                     value.remove("token");
+                    value.remove("login_response");
                     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
                   } );
                 },

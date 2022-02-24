@@ -64,6 +64,7 @@ class _SettingsState extends State<Settings> {
                     onPressed: (){
                       SharedPreferences.getInstance().then((value) {
                         value.remove("token");
+                        value.remove("login_response");
                         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
                       } );
                     },

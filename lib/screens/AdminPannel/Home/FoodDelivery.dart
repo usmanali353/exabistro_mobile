@@ -8,6 +8,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/AdminPannel/Complaint/ComplaintList.dart';
 import 'package:capsianfood/screens/AdminPannel/FeedbackTabs/ForMobile/components/TabsComponent.dart';
 import 'package:capsianfood/screens/AdminPannel/Notification/NotificationList.dart';
+import 'package:capsianfood/screens/AdminPannel/Sales%20Dashboard/SalesDashboard.dart';
 import 'package:capsianfood/screens/AdminPannel/TrendingTabs/ForMobile/components/TabsComponent.dart';
 import 'package:capsianfood/screens/Reservations/ReservationList.dart';
 import 'package:capsianfood/screens/WelcomeScreens/SplashScreen.dart';
@@ -178,20 +179,20 @@ List orderList=[];
                 },
               ),
             ),
-           // Divider(),
-            // ListTile(
-            //   title: Text("Notification",
-            //     style: TextStyle(
-            //         fontSize: 17,
-            //         fontWeight: FontWeight.bold,
-            //         color: PrimaryColor
-            //     ),
-            //   ),
-            //   trailing: FaIcon(Icons.notification_important, color: yellowColor, size: 30,),
-            //   onTap: (){
-            //     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => NotificationList(widget.storeId)));
-            //   },
-            // ),
+           Divider(),
+            ListTile(
+              title: Text("Sales Report",
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: PrimaryColor
+                ),
+              ),
+              trailing: FaIcon(FontAwesomeIcons.commentDollar, color: yellowColor, size: 30,),
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => SalesDashboardTab(widget.storeId)));
+              },
+            ),
             Divider(),
             ListTile(
               title: Text("Reservation",
@@ -294,6 +295,7 @@ List orderList=[];
               onTap: (){
                 SharedPreferences.getInstance().then((value) {
                   value.remove("token");
+                  value.remove("login_response");
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
                 } );
               },

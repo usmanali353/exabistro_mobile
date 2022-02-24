@@ -64,6 +64,7 @@ class _NewRestaurantListState extends State<NewRestaurantList> {
                 SharedPreferences.getInstance().then((value) {
                   value.remove("token");
                   value.remove("reviewToken");
+                  value.remove("login_response");
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
                 } );
               },

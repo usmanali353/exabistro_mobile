@@ -574,6 +574,7 @@ class _SplashScreenState extends State<UpdateStore> {
     }else {
       form.save();
       dynamic storeData={
+        "isVisible":true,
         "id":widget.storeDetail.id,
         "Name":storeName.text,
         "CellNo":contactNo.text,

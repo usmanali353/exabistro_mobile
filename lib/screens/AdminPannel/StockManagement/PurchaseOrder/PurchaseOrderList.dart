@@ -275,36 +275,15 @@ class _StocksListPageState extends State<PurchaseOrderList>{
             ),
           ),
         ),
-        floatingActionButtonLocation:
-        FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              FloatingActionButton(
-                heroTag: "Auto",
-                backgroundColor: yellowColor,
-                tooltip: "Auto-Purchase Order",
-                onPressed: () {
-                  networksOperation.addPurchaseOrderAuto(context, token,widget.storeId).then((value) {
-                    if(value){
-                      WidgetsBinding.instance
-                          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                    }
-                  });                },
-                child: Icon(Icons.auto_fix_high, color: Colors.white,),
-              ),
-              FloatingActionButton(
-                  heroTag: "Add new",
-                  backgroundColor: yellowColor,child: Icon(Icons.add),tooltip: "Add Purchase Order",onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> AddPurhaseOrder(storeId: widget.storeId,token: token,)));
+        floatingActionButton: FloatingActionButton(
+            heroTag: "Add new",
+            backgroundColor: yellowColor,child: Icon(Icons.add),tooltip: "Add Purchase Order",onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddPurhaseOrder(storeId: widget.storeId,token: token,))).then((value){
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+          });
 
-              }),
-
-            ],
-          ),
-        ),
+        }),
         // floatingActionButton: FloatingActionButton(
         //   child: Icon(Icons.add,),
         //   backgroundColor: yellowColor,
@@ -372,237 +351,204 @@ class _StocksListPageState extends State<PurchaseOrderList>{
             width: MediaQuery.of(context).size.width,
             child: isListVisible==true&&purchaseOrderList!=null&&purchaseOrderList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height-180,
-                    child: ListView.builder(scrollDirection: Axis.vertical, itemCount:purchaseOrderList == null ? 0:purchaseOrderList.length, itemBuilder: (context,int index){
-                      return Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Slidable(
-                          actionPane: SlidableDrawerActionPane(),
-                          actionExtentRatio: 0.20,
-                          secondaryActions: <Widget>[
-                            // IconSlideAction(
-                            //   icon: Icons.edit,
-                            //   color: Colors.blue,
-                            //   caption: 'Update',
-                            //   onTap: () async {
-                            //     Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdatePurhaseOrder(storeId: purchaseOrderList[index].storesId,token: token,Id: purchaseOrderList[index].id,)));
-                            //
-                            //   },
-                            // ),
-                            IconSlideAction(
-                              icon: Icons.print,
-                              color: Colors.lightGreen,
-                              caption: 'Print',
-                              onTap: () async {
-                                Utils.urlToFile(context,_store.image).then((value){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => OverallPOPDFLaout(purchaseOrderList[index].id,purchaseOrderList[index].purchaseOrderItems,_store.name,value.readAsBytesSync(),token)));
-                                });
-                              },
-                            ),
-                            IconSlideAction(
-                              icon: purchaseOrderList[index].isVisible?Icons.visibility_off:Icons.visibility,
-                              color: Colors.red,
-                              caption: purchaseOrderList[index].isVisible?"InVisible":"Visible",
-                              onTap: () async {
-                                networksOperation.changeVisibilityPurchaseOrder(context,purchaseOrderList[index].id).then((value){
-                                  if(value){
-                                    Utils.showSuccess(context, "Visibility Changed");
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                  }
-                                  else
-                                    Utils.showError(context, "Please Try Again");
-                                });
-                              },
-                            ),
-                          ],
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => PurchaseOrderItemList(widget.storeId,purchaseOrderList[index].id,purchaseOrderList[index].purchaseOrderItems)));
-                            },
-                            child: Card(
-                              elevation: 8,
-                              color: Colors.white,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                //height: 70,
-                                decoration: BoxDecoration(
-                                  color: purchaseOrderList[index].isVisible?BackgroundColor:Colors.grey.shade300,
-                                  borderRadius: BorderRadius.circular(4),
-                                  //border: Border.all(color: yellowColor, width: 1)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    //mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Purchase Order#: ',
-                                            style: TextStyle(
-                                              color: yellowColor,
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.w600,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                          Text(
-                                            //'05',
-                                            purchaseOrderList[index].id!=null?purchaseOrderList[index].id.toString():"",
-                                            style: TextStyle(
-                                              color: blueColor,
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.w600,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                        ],
+              child: ListView.builder(scrollDirection: Axis.vertical, itemCount:purchaseOrderList == null ? 0:purchaseOrderList.length, itemBuilder: (context,int index){
+                return Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Slidable(
+                    actionPane: SlidableDrawerActionPane(),
+                    actionExtentRatio: 0.20,
+                    secondaryActions: <Widget>[
+                      // IconSlideAction(
+                      //   icon: Icons.edit,
+                      //   color: Colors.blue,
+                      //   caption: 'Update',
+                      //   onTap: () async {
+                      //     Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdatePurhaseOrder(storeId: purchaseOrderList[index].storesId,token: token,Id: purchaseOrderList[index].id,)));
+                      //
+                      //   },
+                      // ),
+                      IconSlideAction(
+                        icon: Icons.print,
+                        color: Colors.lightGreen,
+                        caption: 'Print',
+                        onTap: () async {
+                          Utils.urlToFile(context,_store.image).then((value){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => OverallPOPDFLaout(purchaseOrderList[index].id,purchaseOrderList[index].purchaseOrderItems,_store.name,value.readAsBytesSync(),token)));
+                          });
+                        },
+                      ),
+                      IconSlideAction(
+                        icon: purchaseOrderList[index].isVisible?Icons.visibility_off:Icons.visibility,
+                        color: Colors.red,
+                        caption: purchaseOrderList[index].isVisible?"InVisible":"Visible",
+                        onTap: () async {
+                          networksOperation.changeVisibilityPurchaseOrder(context,purchaseOrderList[index].id).then((value){
+                            if(value){
+                              Utils.showSuccess(context, "Visibility Changed");
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                            }
+                            else
+                              Utils.showError(context, "Please Try Again");
+                          });
+                        },
+                      ),
+                    ],
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => PurchaseOrderItemList(widget.storeId,purchaseOrderList[index].id,purchaseOrderList[index].purchaseOrderItems)));
+                      },
+                      child: Card(
+                        elevation: 8,
+                        color: Colors.white,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          //height: 70,
+                          decoration: BoxDecoration(
+                            color: purchaseOrderList[index].isVisible?BackgroundColor:Colors.grey.shade300,
+                            borderRadius: BorderRadius.circular(4),
+                            //border: Border.all(color: yellowColor, width: 1)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              //mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Purchase Order#: ',
+                                      style: TextStyle(
+                                        color: yellowColor,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                        //fontStyle: FontStyle.italic,
                                       ),
+                                    ),
+                                    Text(
+                                      //'05',
+                                      purchaseOrderList[index].id!=null?purchaseOrderList[index].id.toString():"",
+                                      style: TextStyle(
+                                        color: blueColor,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
 
-                                      SizedBox(height: 5,),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'Status: ',
-                                                style: TextStyle(
-                                                  color: blueColor,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w800,
-                                                  //fontStyle: FontStyle.italic,
-                                                ),
-                                              ),
-                                              Text(
-                                                //'05-08-2021',
-                                                purchaseOrderList[index].deliveryStatus!=null?"${purchaseOrderList[index].deliveryStatus}":"-",
-                                                style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
-                                                  //fontStyle: FontStyle.italic,
-                                                ),
-                                              ),
-                                            ],
+                                SizedBox(height: 5,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Status: ',
+                                          style: TextStyle(
+                                            color: blueColor,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            //fontStyle: FontStyle.italic,
                                           ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5,),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Vendor: ',
-                                            style: TextStyle(
-                                              color: blueColor,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w800,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
+                                        ),
+                                        Text(
+                                          //'05-08-2021',
+                                          purchaseOrderList[index].deliveryStatus!=null?"${purchaseOrderList[index].deliveryStatus}":"-",
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                            //fontStyle: FontStyle.italic,
                                           ),
-                                          Text(
-                                            //'05-08-2021',
-                                            purchaseOrderList[index].itemStockVendor.id!=null?"${purchaseOrderList[index].itemStockVendor.vendor.firstName+" "+purchaseOrderList[index].itemStockVendor.vendor.lastName}":"-",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5,),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Actual Deliver Date: ',
-                                            style: TextStyle(
-                                              color: blueColor,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w800,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                          Text(
-                                            //'05-08-2021',
-                                            purchaseOrderList[index].actualDeliveryDate!=null?"${purchaseOrderList[index].actualDeliveryDate.toString().substring(0,10)}":"-",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5,),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Expected Date: ',
-                                            style: TextStyle(
-                                              color: blueColor,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w800,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                          Text(
-                                            //'05-08-2021',
-                                            purchaseOrderList[index].expectedDeliveryDate!=null?purchaseOrderList[index].expectedDeliveryDate.toString().substring(0,10):"-",
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                              //fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ),
+                                SizedBox(height: 5,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Vendor: ',
+                                      style: TextStyle(
+                                        color: blueColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                    Text(
+                                      //'05-08-2021',
+                                      purchaseOrderList[index].itemStockVendor.id!=null?"${purchaseOrderList[index].itemStockVendor.vendor.firstName+" "+purchaseOrderList[index].itemStockVendor.vendor.lastName}":"-",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Actual Deliver Date: ',
+                                      style: TextStyle(
+                                        color: blueColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                    Text(
+                                      //'05-08-2021',
+                                      purchaseOrderList[index].actualDeliveryDate!=null?"${purchaseOrderList[index].actualDeliveryDate.toString().substring(0,10)}":"-",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Expected Date: ',
+                                      style: TextStyle(
+                                        color: blueColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                    Text(
+                                      //'05-08-2021',
+                                      purchaseOrderList[index].expectedDeliveryDate!=null?purchaseOrderList[index].expectedDeliveryDate.toString().substring(0,10):"-",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      );
-                    }),
+                      ),
+                    ),
                   ),
-                  // InkWell(
-                  //
-                  //   onTap: (){
-                  //  networksOperation.addPurchaseOrderAuto(context, token,widget.storeId).then((value) {
-                  //    if(value){
-                  //      WidgetsBinding.instance
-                  //          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                  //    }
-                  //  });
-                  //   },
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(8.0),
-                  //     child: Container(
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.all(Radius.circular(10)) ,
-                  //         color: yellowColor,
-                  //       ),
-                  //       width: 250,
-                  //       height: 40,
-                  //
-                  //       child: Center(
-                  //         child: Text('Auto Purchase Order',style: TextStyle(color: BackgroundColor,fontSize: 20,fontWeight: FontWeight.bold),),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
+                );
+              }),
 
 
             ):isListVisible==false?Center(
