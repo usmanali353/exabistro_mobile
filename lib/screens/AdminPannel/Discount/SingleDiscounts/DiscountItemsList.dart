@@ -340,7 +340,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child:isListVisible==true&&discountList.length>0? new Container(
+          child:isListVisible==true&&discountList!=null&&discountList.length>0? new Container(
               child: ListView.builder(
                 itemCount: discountList!=null?discountList.length:0,
                 itemBuilder: (context, index) {
@@ -544,7 +544,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
               )
           ):isListVisible==false?Center(
             child:  SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
-          ):isListVisible==true&&discountList.length==0?Center(
+          ):isListVisible==true&&discountList!=null&&discountList.length==0?Center(
             child: Container(
               width: 300,
               height: 300,

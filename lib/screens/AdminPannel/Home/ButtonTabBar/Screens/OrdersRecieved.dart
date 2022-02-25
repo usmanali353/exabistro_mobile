@@ -236,7 +236,7 @@ class _PastOrdersState extends State<OrdersRecieved> {
                                           onTap:(){
                                             var orderStatusData={
                                               "Id":orderList[index]['id'],
-                                              "status":3,
+                                              "status":4,
                                             };
                                             networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
                                               //print(value);

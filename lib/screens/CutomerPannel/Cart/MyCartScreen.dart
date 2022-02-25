@@ -587,7 +587,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       print(orderItems);
                          if(tableId!=null){
                            print(tableId.toString());
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => CheckedoutWithTable(orderItems:orderItems,netTotal:totalprice,applyVoucherPrice:voucherValidity!=null&&voucherValidity['result']!={}?voucherValidity:null,notes:addnotes.text,voucher:voucherValidity!=0.0?voucherValidity['result']['code']:null,token:token,storeId:storeId,tableId:tableId)));
+                           Navigator.push(context, MaterialPageRoute(builder: (context) => CheckedoutWithTable(orderItems:orderItems,netTotal:totalprice,applyVoucherPrice:voucherValidity!=null&&voucherValidity['result']!={}?voucherValidity:null,notes:addnotes.text,voucher:voucherValidity!=null&&voucherValidity!=0.0?voucherValidity['result']['code']:null,token:token,storeId:storeId,tableId:tableId)));
 
                          }else{
                            SharedPreferences.getInstance().then((prefs){

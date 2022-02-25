@@ -227,15 +227,28 @@ class _PastOrdersState extends State<Ready> {
                                         SizedBox(width: 5,),
                                         InkWell(
                                           onTap:(){
-                                            var orderStatusData={
-                                              "Id":orderList[index]['id'],
-                                              "status":3,
-                                            };
-                                            networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                              //print(value);
-                                            });
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                            print("OrderType "+orderList[index]['orderType'].toString());
+                                            if(orderList!=null&&orderList[index]['orderType']!=null&&orderList[index]['orderType']!=3){
+                                              var orderStatusData={
+                                                "Id":orderList[index]['id'],
+                                                "status":7,
+                                              };
+                                              networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
+                                                //print(value);
+                                              });
+                                              WidgetsBinding.instance
+                                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                            }else{
+                                              var orderStatusData={
+                                                "Id":orderList[index]['id'],
+                                                "status":6,
+                                              };
+                                              networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
+                                                //print(value);
+                                              });
+                                              WidgetsBinding.instance
+                                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                            }
                                             print("abc");
                                           },
                                           child: Padding(

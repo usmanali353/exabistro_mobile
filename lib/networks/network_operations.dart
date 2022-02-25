@@ -737,7 +737,6 @@ class networksOperation{
     return null;
   }
   static Future<List<Products>> getProductCustomer(BuildContext context,int categoryId,subCategoryId,int storeId,String search,int userId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("productPage"+subCategoryId.toString());
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -752,11 +751,9 @@ class networksOperation{
       }
       if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
 
-        pd.show();
         var response=await http.get(Utils.baseUrl()+"Products/GetByCategoryId?StoreId=$storeId&categoryId="+categoryId.toString()+"&subCategoryId="+subCategoryId.toString()+"&searchstring=$search+&userId=$userId",);
         var data= jsonDecode(response.body);
         if(response.statusCode==200){
-          pd.hide();
           APICacheDBModel cacheDBModel = new APICacheDBModel(
               key: "productPage"+subCategoryId.toString(), syncData: response.body);
           await APICacheManager().addCacheData(cacheDBModel);
@@ -770,22 +767,18 @@ class networksOperation{
           return list;
         }
         else{
-          pd.hide();
           Utils.showError(context, response.body);
         }
       } else{
-        pd.hide();
         Utils.showError(context, "You are in Offline mode");
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, e.toString());
     }
     return null;
   }
 
   static Future<List<Products>> getProductbyCategoryCustomer(BuildContext context,int categoryId,int storeId,String search,int userId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
       var isCacheExist = await APICacheManager().isAPICacheKeyExist("productPage"+categoryId.toString());
       var connectivityResult = await (Connectivity().checkConnectivity());
@@ -799,12 +792,9 @@ class networksOperation{
         }
       }
       if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-
-        pd.show();
       var response=await http.get(Utils.baseUrl()+"Products/GetByCategoryId?StoreId=$storeId&categoryId="+categoryId.toString()+"&searchstring=$search+&userId=$userId",);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         APICacheDBModel cacheDBModel = new APICacheDBModel(
             key: "productPage"+categoryId.toString(), syncData: response.body);
         await APICacheManager().addCacheData(cacheDBModel);
@@ -818,15 +808,12 @@ class networksOperation{
         return list;
       }
       else{
-        pd.hide();
         Utils.showError(context, response.body);
       }
       } else{
-        pd.hide();
         Utils.showError(context, "You are in Offline mode");
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, e.toString());
     }
     return null;
@@ -1711,15 +1698,17 @@ class networksOperation{
       var body=jsonEncode(
           OrderStatusData
       );
-      print(body);
+
       var response=await http.post(Utils.baseUrl()+"orders/UpdateStatus",headers: headers,body: body);
-      print(response.body);
 
       var data= jsonDecode(response.body);
+      print(response.body);
       if(response.statusCode==200){
         return true;
       }
       else{
+        print(response.body);
+        print(response.statusCode);
         Utils.showError(context, "Please Try Again");
         return false;
       }

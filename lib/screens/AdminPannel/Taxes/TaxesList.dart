@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'UpdateTaxes.dart';
 import 'AddTax.dart';
@@ -23,7 +24,7 @@ class TaxList extends StatefulWidget {
 }
 
 
-class _TaxListState extends State<TaxList>{
+class _TaxListState extends ResumableState<TaxList>{
   String token;
    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<Tax> taxList = [];
@@ -45,12 +46,9 @@ class _TaxListState extends State<TaxList>{
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    setState(() {
+  void onResume() {
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-    });
   }
 
   @override
@@ -86,7 +84,7 @@ class _TaxListState extends State<TaxList>{
           backgroundColor: yellowColor,
           isExtended: true,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddTaxes(widget.storeId)));
+            push(context, MaterialPageRoute(builder: (context)=> AddTaxes(widget.storeId)));
           },
         ),
         body: RefreshIndicator(
@@ -130,7 +128,7 @@ class _TaxListState extends State<TaxList>{
                         caption: 'Update',
                         onTap: () async {
                           //print(barn_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateTax(taxList[index],widget.storeId)));
+                          push(context,MaterialPageRoute(builder: (context)=>UpdateTax(taxList[index],widget.storeId)));
                         },
                       ),
                       IconSlideAction(

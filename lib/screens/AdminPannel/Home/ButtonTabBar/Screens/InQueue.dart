@@ -89,7 +89,7 @@ class _PastOrdersState extends State<InQueue> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child:isListVisible==true&&orderList.length>0?
+          child:isListVisible==true&&orderList!=null&&orderList.length>0?
           new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(
@@ -307,7 +307,7 @@ class _PastOrdersState extends State<InQueue> {
               color: yellowColor,
               size: 100.0,
             ),
-          ):isListVisible==true&&orderList.length==0?Center(
+          ):isListVisible==true&&orderList!=null&&orderList.length==0?Center(
             child: Container(
               width: 300,
               height: 300,

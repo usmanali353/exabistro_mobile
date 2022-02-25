@@ -559,7 +559,7 @@ class _MyCartScreenState extends State<CartForStaff> {
                                                     grossAmt=totalprice+serviceTaxes;
                                                     if(priorityId!=null){
                                                       priorityAmount = 0.0;
-                                                      priorityAmount =  (allPriorityDetail[priorityId]['percentage']/100.0)*grossAmt;
+                                                      priorityAmount =  (allPriorityDetail[allPriorityDetail.indexOf(allPriorityDetail.where((element)=>element["id"]==priorityId).toList()[0])]['percentage']/100.0)*grossAmt;
                                                       grossAmt=grossAmt+priorityAmount;
                                                       taxList.add(Tax(name:priority,price: priorityAmount,isService: true));
                                                     }
@@ -682,7 +682,9 @@ class _MyCartScreenState extends State<CartForStaff> {
                               grossAmt=totalprice+serviceTaxes;
                               if(priorityId!=null){
                                 priorityAmount = 0.0;
-                                priorityAmount =  (allPriorityDetail[priorityId]['percentage']/100.0)*grossAmt;
+                                print("Priority Id "+priorityId.toString());
+                                print("Priority Json "+allPriorityDetail.toString());
+                                priorityAmount =  (allPriorityDetail[allPriorityDetail.indexOf(allPriorityDetail.where((element)=>element["id"]==priorityId).toList()[0])]['percentage']/100.0)*grossAmt;
                                 grossAmt=grossAmt+priorityAmount;
                                 taxList.add(Tax(name:priority,price: priorityAmount,isService: true));
                               }

@@ -8,6 +8,7 @@ import 'package:capsianfood/components/customButton.dart';
 import 'package:capsianfood/components/customButtonAnimation.dart';
 import 'package:capsianfood/screens/AdminPannel/Restarant&Stores/Restaurant/AddRestaurant.dart';
 import 'package:capsianfood/screens/AdminPannel/Restarant&Stores/Restaurant/RestaurantList/RestaurantMainList.dart';
+import 'package:capsianfood/screens/CutomerPannel/ClientNavBar/ClientNavBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
@@ -58,6 +59,10 @@ class _SplashScreenState extends State<SplashScreen> {
                       RoleBaseStoreSelection(rolesAndStores)), (
                       Route<dynamic> route) => false);
             }
+          }else{
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context) => ClientNavBar()), (
+                    Route<dynamic> route) => false);
           }
         }
       });

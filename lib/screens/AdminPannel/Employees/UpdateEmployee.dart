@@ -932,6 +932,7 @@ class _SignUpScreenState extends State<UpdateEmployee> {
         if(value){
           Navigator.of(context).pop();
           Navigator.pop(context);
+          Navigator.pop(context);
         }
       });
     }

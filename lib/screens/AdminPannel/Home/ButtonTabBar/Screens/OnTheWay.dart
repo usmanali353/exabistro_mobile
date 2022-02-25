@@ -265,13 +265,13 @@ class _PastOrdersState extends State<OnTheWay> {
                                           onTap:(){
                                             var orderStatusData={
                                               "Id":orderList[index]['id'],
-                                              "status":3,
+                                              "status":7,
                                             };
                                             networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                              //print(value);
+                                              WidgetsBinding.instance
+                                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
                                             });
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+
                                             print("abc");
                                           },
                                           child: Padding(
