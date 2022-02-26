@@ -1704,6 +1704,7 @@ class networksOperation{
       var data= jsonDecode(response.body);
       print(response.body);
       if(response.statusCode==200){
+        Utils.showSuccess(context, "Order Status Changed");
         return true;
       }
       else{
@@ -3213,6 +3214,7 @@ class networksOperation{
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"Discounts/GetAllActive?storeId=$storeId",headers: headers);
       var data= jsonDecode(response.body);
+      print("Discount "+data.toString());
       if(response.statusCode==200){
         pd.hide();
         APICacheDBModel cacheDBModel = new APICacheDBModel(
@@ -3363,8 +3365,6 @@ class networksOperation{
     }
   }
   static Future<dynamic> getDiscountById(BuildContext context,String token,int discountId)async {
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
-    pd.show();
     try{
       Map<String,String> headers = {'Content-Type':'application/json','Authorization':'Bearer '+token};
 
@@ -3374,18 +3374,14 @@ class networksOperation{
       var response=await http.get(Utils.baseUrl()+"discounts/GetAssignedDiscountByDiscountId/"+discountId.toString(),headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
         return data;
       }
       else{
-        pd.hide();
         Utils.showError(context, "Please Try Again");
         return null;
       }
     }catch(e){
-      pd.hide();
       Utils.showError(context, "Error Found:");
-
       return null;
     }
   }

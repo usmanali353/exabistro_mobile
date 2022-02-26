@@ -234,20 +234,26 @@ class _PastOrdersState extends State<Ready> {
                                                 "status":7,
                                               };
                                               networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                                //print(value);
+                                                if(value){
+                                                  setState(() {
+                                                    WidgetsBinding.instance
+                                                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                                  });
+                                                }
                                               });
-                                              WidgetsBinding.instance
-                                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
                                             }else{
                                               var orderStatusData={
                                                 "Id":orderList[index]['id'],
                                                 "status":6,
                                               };
                                               networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                                //print(value);
+                                                if(value){
+                                                  setState(() {
+                                                    WidgetsBinding.instance
+                                                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                                  });
+                                                }
                                               });
-                                              WidgetsBinding.instance
-                                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
                                             }
                                             print("abc");
                                           },
@@ -269,34 +275,6 @@ class _PastOrdersState extends State<Ready> {
                                           ),
                                         ),
                                         SizedBox(width: 5,),
-                                        InkWell(
-                                          onTap:(){
-                                            networksOperation.removeOrder(context, token, orderList[index]['id'], 2).then((value){
-                                              if(value){
-                                                WidgetsBinding.instance
-                                                    .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                              }else{
-                                                Utils.showError(context, "Please Try Again");
-                                              }
-                                            });
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(top: 10, bottom: 5, right: 10),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(10)) ,
-                                                color: yellowColor,
-                                                //border: Border.all(color: Colors.amberAccent)
-                                              ),
-                                              width: 100,
-                                              height:MediaQuery.of(context).size.height  * 0.05,
-
-                                              child: Center(
-                                                child: Text("Cancel",style: TextStyle(color: BackgroundColor,fontSize: 15,fontWeight: FontWeight.bold),),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
                                       ],
                                     ),
 

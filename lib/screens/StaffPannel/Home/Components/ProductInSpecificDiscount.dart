@@ -127,13 +127,14 @@ class _DiscountItemsListState extends State<GetProductDiscountListForStaff> {
                   .getDiscountById(context, token, widget.discountId)
                   .then((value) {
                 setState(() {
-                  isListVisible=true;
+
                   this.productList = value;
                   print(productList);
                 });
               });
               networksOperation.getAllProducts(context, widget.storeId).then((value) {
                 setState(() {
+                  isListVisible=true;
                   this.allProduct = value;
                   print(allProduct);
                 });

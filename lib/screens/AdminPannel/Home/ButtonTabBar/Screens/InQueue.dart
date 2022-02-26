@@ -232,10 +232,15 @@ class _PastOrdersState extends State<InQueue> {
                                             "status":3,
                                           };
                                           networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                            //print(value);
+                                           if(value){
+                                             setState(() {
+                                               WidgetsBinding.instance
+                                                   .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                             });
+                                           }
                                           });
-                                          WidgetsBinding.instance
-                                              .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+
+
                                           print("abc");
                                         },
                                         child: Padding(

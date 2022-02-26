@@ -239,10 +239,13 @@ class _PastOrdersState extends State<OrdersRecieved> {
                                               "status":4,
                                             };
                                             networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                              //print(value);
+                                              if(value){
+                                                setState(() {
+                                                  WidgetsBinding.instance
+                                                      .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                                });
+                                              }
                                             });
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
                                             print("abc");
                                           },
                                           child: Padding(
