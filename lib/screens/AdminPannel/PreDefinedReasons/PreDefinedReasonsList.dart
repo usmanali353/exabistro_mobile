@@ -7,7 +7,6 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'AddPreDefinedReason.dart';
@@ -180,26 +179,62 @@ class _PreDefinedReasonsListState extends State<PreDefinedReasonsList>{
                 size: 100.0,
               ),
             ):isListVisible==true&&preDefinedReasonsList.length==0?Center(
-              child: Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/noDataFound.png")
+                child:Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/noDataFound.png")
+                          )
+                      ),
+                    ),
+                    MaterialButton(
+                        child: Text("Reload"),
+                        color: yellowColor,
+                        onPressed: (){
+                          setState(() {
+                            isListVisible=false;
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                          });
+
+                        }
                     )
-                ),
-              ),
+                  ],
+                )
             ):
-            Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/noDataFound.png")
-                  )
-              ),
+            Center(
+                child:Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/noDataFound.png")
+                          )
+                      ),
+                    ),
+                    MaterialButton(
+                        child: Text("Reload"),
+                        color: yellowColor,
+                        onPressed: (){
+                          setState(() {
+                            isListVisible=false;
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                          });
+
+                        }
+                    )
+                  ],
+                )
             ),
           ),
         )

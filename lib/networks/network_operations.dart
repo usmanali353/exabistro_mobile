@@ -3758,6 +3758,7 @@ class networksOperation{
         var response = await http.get(
             Utils.baseUrl() + "tables/" + tableId.toString());
         var data = jsonDecode(response.body);
+        print("Api Response "+data.toString());
         if (response.statusCode == 200) {
           APICacheDBModel cacheDBModel = new APICacheDBModel(
               key: "tableById$tableId", syncData: response.body);

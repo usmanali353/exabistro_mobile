@@ -10,6 +10,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/constants.dart';
 
@@ -20,7 +21,7 @@ class CustomerReservations extends StatefulWidget {
   _CustomerReservationsState createState() => _CustomerReservationsState();
 }
 
-class _CustomerReservationsState extends State<CustomerReservations> {
+class _CustomerReservationsState extends ResumableState<CustomerReservations> {
   final Color activeColor = Color.fromARGB(255, 52, 199, 89);
   bool value = false;
   String token,userId;
@@ -53,15 +54,10 @@ class _CustomerReservationsState extends State<CustomerReservations> {
   }
 
   @override
-  void didChangeDependencies() {
-    setState(() {
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-    });
-    super.didChangeDependencies();
+  void onResume() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    super.onResume();
   }
 
 
@@ -96,7 +92,7 @@ class _CustomerReservationsState extends State<CustomerReservations> {
         backgroundColor: yellowColor,
         isExtended: true,
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddReservations()));
+          push(context, MaterialPageRoute(builder: (context)=> AddReservations()));
         },
       ),
       body: RefreshIndicator(
@@ -385,26 +381,62 @@ class _CustomerReservationsState extends State<CustomerReservations> {
               size: 100.0,
             ),
           ):isListVisible==true&&reservationList.length==0?Center(
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/noDataFound.png")
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/noDataFound.png")
+                        )
+                    ),
+                  ),
+                  MaterialButton(
+                      child: Text("Reload"),
+                      color: yellowColor,
+                      onPressed: (){
+                        setState(() {
+                          isListVisible=false;
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                        });
+
+                      }
                   )
-              ),
-            ),
+                ],
+              )
           ):
-          Container(
-            width: 300,
-            height: 300,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/noDataFound.png")
-                )
-            ),
+          Center(
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/noDataFound.png")
+                        )
+                    ),
+                  ),
+                  MaterialButton(
+                      child: Text("Reload"),
+                      color: yellowColor,
+                      onPressed: (){
+                        setState(() {
+                          isListVisible=false;
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                        });
+
+                      }
+                  )
+                ],
+              )
           ),
 
         ),

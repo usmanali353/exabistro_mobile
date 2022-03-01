@@ -12,11 +12,12 @@ import 'package:capsianfood/model/Tax.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/SecondryAddress.dart';
 import 'package:connectivity/connectivity.dart';
+// import 'package:filter_list/filter_list.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:filter_list/filter_list.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:multiselect_formfield/multiselect_formfield.dart';
 import '../../ClientNavBar/ClientNavBar.dart';
 
 class CheckedoutDetails extends StatefulWidget {
@@ -49,50 +50,58 @@ class _CheckedoutDetailsState extends State<CheckedoutDetails> {
   var latitude,longitude;
   FirebaseMessaging _firebaseMessaging;
   List allChairList =[],chairListForPayment=[],selectedChairListForPayment=[];
-  List<String> orderSelectedChairsList = [],countList = [];
+  List<String> countList = [];
   List orderSelectedChairsListIds = [];
   var cardData,dailySession;
   DateTime pickingTime ;
   List<Tax> taxList = [];
+  List chairListForMultiSelect=[],orderSelectedChairsList=[];
   double totalPercentage=0.0,totalTaxPrice=0.0;
   List orderTaxList =[];
   var claims;
   APICacheDBModel offlineData;
+  final formKey = new GlobalKey<FormState>();
   var userDetail;
   var serviceTaxes=0.0,grossAmt=0.0,nonServiceTaxes=0.0,voucherPercentage=0.0;
-  void _openFilterDialog() async {
-    await FilterListDialog.display(context,
-        listData: countList,
-
-        height: 380,
-        borderRadius: 20,
-        headlineText: "Select Count",
-        searchFieldHintText: "Search Here",
-       selectedListData: orderSelectedChairsList, onApplyButtonClick: (list) {
-          if (list != null) {
-            setState(() {
-              orderSelectedChairsList = List.from(list);
-              chairChips.clear();
-              orderSelectedChairsListIds.clear();
-              chairListForPayment.clear();
-              if(orderSelectedChairsList!=null && orderSelectedChairsList.length>0) {
-                for (int i = 0; i < orderSelectedChairsList.length; i++) {
-                  chairChips.add(Chip(label: Text(orderSelectedChairsList[i])));
-                  print(countList.indexOf(orderSelectedChairsList[i]).toString()+"djjkjdhjdhjdhcjdc");
-                  orderSelectedChairsListIds.add({
-                    "ChairId":allChairList[countList.indexOf(orderSelectedChairsList[i])]['id'],
-                  });
-                  chairListForPayment.add({
-                    'display':allChairList[countList.indexOf(orderSelectedChairsList[i])]['name'],
-                    'value':allChairList[countList.indexOf(orderSelectedChairsList[i])]['id']
-                  });
-                }
-              }
-            });
-            Navigator.pop(context);
-          }
-        });
-  }
+  // void _openFilterDialog() async {
+  //   await FilterListDialog.display(context,
+  //       listData: countList,
+  //
+  //       height: 380,
+  //       choiceChipLabel:(chairName){
+  //        return chairName;
+  //       },
+  //       validateSelectedItem: (list, val) => list.contains(val),
+  //       onItemSearch: (allChairList, query) {
+  //         return allChairList.where((element)=>element["name"].toString().toLowerCase()==query);
+  //       },
+  //       borderRadius: 20,
+  //       headlineText: "Select Count",
+  //      selectedListData: orderSelectedChairsList, onApplyButtonClick: (list) {
+  //         if (list != null) {
+  //           setState(() {
+  //             orderSelectedChairsList = List.from(list);
+  //             chairChips.clear();
+  //             orderSelectedChairsListIds.clear();
+  //             chairListForPayment.clear();
+  //             if(orderSelectedChairsList!=null && orderSelectedChairsList.length>0) {
+  //               for (int i = 0; i < orderSelectedChairsList.length; i++) {
+  //                 chairChips.add(Chip(label: Text(orderSelectedChairsList[i])));
+  //                 print(countList.indexOf(orderSelectedChairsList[i]).toString()+"djjkjdhjdhjdhcjdc");
+  //                 orderSelectedChairsListIds.add({
+  //                   "ChairId":allChairList[countList.indexOf(orderSelectedChairsList[i])]['id'],
+  //                 });
+  //                 chairListForPayment.add({
+  //                   'display':allChairList[countList.indexOf(orderSelectedChairsList[i])]['name'],
+  //                   'value':allChairList[countList.indexOf(orderSelectedChairsList[i])]['id']
+  //                 });
+  //               }
+  //             }
+  //           });
+  //           Navigator.pop(context);
+  //         }
+  //       });
+  // }
 
   @override
   void initState() {
@@ -442,22 +451,33 @@ class _CheckedoutDetailsState extends State<CheckedoutDetails> {
                               setState(() {
                               tableName = Value;
                               tableId = tableDDList.indexOf(tableName);
-                              });
-                              networksOperation.getChairsListByTable(context, allTableList[tableId]['id']).then((value) {
-
-                                if(value!=null){
-                                  countList.clear();
-                                  allChairList.clear();
-                                  for(int i=0;i<value.length;i++){
-                                    countList.add(value[i]['name']);
-                                    allChairList.add(value[i]);
+                              print("tables "+allTableList[tableId]["id"].toString());
+                              networksOperation.getChairsListByTable(context, allTableList[tableId]['id'].toString()).then((value) {
+                                setState(() {
+                                  if(value!=null){
+                                    countList.clear();
+                                    allChairList.clear();
+                                    chairListForMultiSelect.clear();
+                                    orderSelectedChairsList.clear();
+                                    for(int i=0;i<value.length;i++){
+                                      countList.add(value[i]['name']);
+                                      allChairList.add(value[i]);
+                                      chairListForMultiSelect.add(
+                                          {
+                                            "display":value[i]['name'],
+                                            "value": value[i]['id']
+                                          }
+                                      );
+                                    }
+                                  }else{
 
                                   }
-                                }else{
+                                });
 
-                                }
 
-                            });
+                              });
+                              });
+
                           },
                           items: tableDDList.map((value) {
                             return  DropdownMenuItem<String>(
@@ -479,56 +499,41 @@ class _CheckedoutDetailsState extends State<CheckedoutDetails> {
                     ),
                   ),
                   Visibility(
-                    visible:   countList.length>0 && orderType =="Dine In",
-                    child: Card(
-                      elevation: 5,
-                      color: BackgroundColor,
-                      child: InkWell(
-                        onTap: () async{
-                          _openFilterDialog();
-                        },
-                        child: InputDecorator(
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(25),
-                            filled: true,
-                            errorMaxLines: 4,
+                    visible: chairListForMultiSelect!=null&&chairListForMultiSelect.length>0 && orderType =="Dine In",
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:16.0,right:16.0),
+                      child: Form(
+                        key: formKey,
+                        child: MultiSelectFormField(
+                          autovalidate: false,
+                          dialogShapeBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                          title: Text(
+                            "Select Chairs",
+                            style: TextStyle(fontSize: 16),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Expanded(
-                                      child: Text(
-                                        'Select Chairs For Order',
-                                        style: TextStyle(fontSize: 15.0, color:yellowColor,fontWeight: FontWeight.bold),
-                                      )),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    color: Colors.black87,
-                                    size: 25.0,
-                                  ),
-                                ],
-                              ),
-                              orderSelectedChairsList != null && orderSelectedChairsList.length > 0
-                                  ? Wrap(
-                                spacing: 8.0,
-                                runSpacing: 0.0,
-                                children: chairChips,
-                              )
-                                  : new Container(
-                                padding: EdgeInsets.only(top: 4),
-                                child: Text(
-                                  'No Chairs selected',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: PrimaryColor,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                          dataSource: chairListForMultiSelect,
+                          textField: 'display',
+                          valueField: 'value',
+                          okButtonLabel: 'OK',
+                          cancelButtonLabel: 'CANCEL',
+                          hintWidget: Text('Please choose one or more Chair'),
+                          initialValue: orderSelectedChairsList,
+                          onSaved: (value) {
+                            if (value == null) return;
+                            setState(() {
+                              orderSelectedChairsListIds.clear();
+                              orderSelectedChairsList = value;
+                              if(orderSelectedChairsList!=null&&orderSelectedChairsList.length>0){
+                                print(orderSelectedChairsList.toString());
+                                for(int i=0;i<orderSelectedChairsList.length;i++){
+                                  orderSelectedChairsListIds.add({
+                                    "ChairId":orderSelectedChairsList[i]
+                                  });
+                                }
+                              }
+                            });
+                          },
                         ),
                       ),
                     ),

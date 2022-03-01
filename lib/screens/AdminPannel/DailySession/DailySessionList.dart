@@ -303,26 +303,59 @@ class _DailySessionPageState extends ResumableState<DailySessionPage>{
             ):isListVisible==false?Center(
             child: SpinKitSpinningLines(lineWidth: 5,size: 100,color: yellowColor,),
           ):isListVisible==true&&sessionList!=null&&sessionList.length==0?Center(
-              child: Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/noDataFound.png")
-                    )
-                ),
-              ),
-            ):
-            Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/noDataFound.png")
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/noDataFound.png")
+                        )
+                    ),
+                  ),
+                  MaterialButton(
+                     child: Text("Reload"),
+                      color: yellowColor,
+                      onPressed: (){
+                       setState(() {
+                         isListVisible=false;
+                         WidgetsBinding.instance
+                             .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                       });
+
+                      }
                   )
-              ),
+                ],
+              )
+            ):
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 300,
+                  height: 300,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("assets/noDataFound.png")
+                      )
+                  ),
+                ),
+                MaterialButton(
+                    child: Text("Reload"),
+                    color: yellowColor,
+                    onPressed: (){
+                      setState(() {
+                        isListVisible=false;
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                      });
+                    }
+                )
+              ],
             ),
 
           )

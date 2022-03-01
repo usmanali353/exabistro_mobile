@@ -115,53 +115,95 @@ class _QRViewExampleState extends State<QRScanner> {
       });
       Utils.showSuccess(context, qrText);
         print(qrText);
-        if(qrText!="")
-          {
-            controller.pauseCamera();
-            if(qrText.contains("Store/",0)){
-              print(qrText.replaceAll("Store/", ""));
-              Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(int.parse(qrText.replaceAll("Store/", "")))));
-              //controller.resumeCamera();
-            }else if(qrText.contains("http://dev.exabistro.com/StoreMenu/",0)){
-              print(qrText.replaceAll("qwetyuio"+"http://dev.exabistro.com/StoreMenu/", ""));
-              Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(int.parse(qrText.replaceAll("http://dev.exabistro.com/StoreMenu/", "")))));
-            }
-            else if(qrText.contains("Table/",0)){
-              networksOperation.getTableById(context,int.parse(qrText.replaceAll("Table/", ""))).then((value) {
-                  Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(value['storeId'])));
-                SharedPreferences.getInstance().then((value) {
-                  setState(() {
-                    value.setString("tableId", qrText.replaceAll("Table/", ""));
-                  });
-                });
+      if(qrText!="")
+      {
+        controller.pauseCamera();
+        if(qrText.contains("http://dev.exabistro.com/#/StoreMenu/",0)){
+          var split = qrText.split("/");
+          print("Last id from split"+split.last);
+          print("Length of split"+split.length.toString());
+          if(split.length>=7){
+            SharedPreferences.getInstance().then((value) {
+              setState(() {
+                print("TableId "+split[split.indexOf(split.last)]);
+                value.setString("tableId",split[split.indexOf(split.last)]);
               });
-              controller.resumeCamera();
-            } else if(qrText.contains("http://dev.exabistro.com/#/StoreMenu/",0)){
-              networksOperation.getTableById(context,int.parse(qrText.replaceAll("http://dev.exabistro.com/#/StoreMenu/", ""))).then((value) {
-                Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(value['storeId'])));
-                SharedPreferences.getInstance().then((value) {
-                  setState(() {
-                    value.setString("tableId", qrText.replaceAll("Table/", ""));
-                  });
-                });
-              });
-              controller.resumeCamera();
-            }else if(qrText.contains("Product/",0)){
-              networksOperation. getProductById(context, int.parse(qrText.replaceAll("Product/", ""))).then((value) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetails(token,value,value.storeId),));
-                SharedPreferences.getInstance().then((value) {
-                  setState(() {
-                    value.setString("id", qrText.replaceAll("Product/", ""));
-                  });
-                });
-              });
-              controller.resumeCamera();
-            }else{
-              Utils.showError(context, "No Record Found");
-            }
+            });
+            Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(int.parse(split[split.indexOf(split.last)-1]))));
           }else{
-          Utils.showError(context, "No Data Found");
+            Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(int.parse(qrText.replaceAll("http://dev.exabistro.com/StoreMenu/", "")))));
+          }
+
+        } else if(qrText.contains("http://dev.exabistro.com/#/productDetails/",0)){
+          networksOperation. getProductById(context, int.parse(qrText.replaceAll("http://dev.exabistro.com/#/productDetails/", ""))).then((value) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetails(token,value,value.storeId),));
+            SharedPreferences.getInstance().then((value) {
+              setState(() {
+                value.setString("id", qrText.replaceAll("http://dev.exabistro.com/#/productDetails/", ""));
+              });
+            });
+          });
+          controller.resumeCamera();
+        }else{
+          var split = qrText.split("/");
+          print("Last id from split "+split.last);
+          print("Length of split "+split.length.toString());
+          print(qrText);
+          Utils.showError(context, "No Record Found");
         }
+      }else{
+        Utils.showError(context, "No Data Found");
+      }
+
+
+
+        // if(qrText!="")
+        //   {
+        //     controller.pauseCamera();
+        //     if(qrText.contains("Store/",0)){
+        //       print(qrText.replaceAll("Store/", ""));
+        //       Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(int.parse(qrText.replaceAll("Store/", "")))));
+        //       //controller.resumeCamera();
+        //     }else if(qrText.contains("http://dev.exabistro.com/StoreMenu/",0)){
+        //       print(qrText.replaceAll("qwetyuio"+"http://dev.exabistro.com/StoreMenu/", ""));
+        //       Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(int.parse(qrText.replaceAll("http://dev.exabistro.com/StoreMenu/", "")))));
+        //     }
+        //     else if(qrText.contains("Table/",0)){
+        //       networksOperation.getTableById(context,int.parse(qrText.replaceAll("Table/", ""))).then((value) {
+        //           Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(value['storeId'])));
+        //         SharedPreferences.getInstance().then((value) {
+        //           setState(() {
+        //             value.setString("tableId", qrText.replaceAll("Table/", ""));
+        //           });
+        //         });
+        //       });
+        //       controller.resumeCamera();
+        //     } else if(qrText.contains("http://dev.exabistro.com/#/StoreMenu/",0)){
+        //       networksOperation.getTableById(context,int.parse(qrText.replaceAll("http://dev.exabistro.com/#/StoreMenu/", ""))).then((value) {
+        //         Navigator.push(context, MaterialPageRoute(builder:(context)=>HomePage(value['storeId'])));
+        //         SharedPreferences.getInstance().then((value) {
+        //           setState(() {
+        //             value.setString("tableId", qrText.replaceAll("Table/", ""));
+        //           });
+        //         });
+        //       });
+        //       controller.resumeCamera();
+        //     }else if(qrText.contains("Product/",0)){
+        //       networksOperation. getProductById(context, int.parse(qrText.replaceAll("Product/", ""))).then((value) {
+        //         Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetails(token,value,value.storeId),));
+        //         SharedPreferences.getInstance().then((value) {
+        //           setState(() {
+        //             value.setString("id", qrText.replaceAll("Product/", ""));
+        //           });
+        //         });
+        //       });
+        //       controller.resumeCamera();
+        //     }else{
+        //       Utils.showError(context, "No Record Found");
+        //     }
+        //   }else{
+        //   Utils.showError(context, "No Data Found");
+        // }
 
         qrText.contains("store",0);
 

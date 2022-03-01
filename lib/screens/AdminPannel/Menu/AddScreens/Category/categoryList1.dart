@@ -229,7 +229,7 @@ class _categoryListPageState extends State<categoryListPage>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&categoryList.length>0? new Container(
+            child: isListVisible==true&&categoryList!=null&&categoryList.length>0? new Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
               child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:categoryList == null ? 0:categoryList.length, itemBuilder: (context,int index){
                 return Column(
@@ -449,27 +449,63 @@ class _categoryListPageState extends State<categoryListPage>{
                 color: yellowColor,
                 size: 100.0,
               ),
-            ):isListVisible==true&&categoryList.length==0?Center(
-              child: Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/noDataFound.png")
+            ):isListVisible==true&&categoryList!=null&&categoryList.length==0?Center(
+                child:Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/noDataFound.png")
+                          )
+                      ),
+                    ),
+                    MaterialButton(
+                        child: Text("Reload"),
+                        color: yellowColor,
+                        onPressed: (){
+                          setState(() {
+                            isListVisible=false;
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                          });
+
+                        }
                     )
-                ),
-              ),
+                  ],
+                )
             ):
-            Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/noDataFound.png")
-                  )
-              ),
+            Center(
+                child:Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 300,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/noDataFound.png")
+                          )
+                      ),
+                    ),
+                    MaterialButton(
+                        child: Text("Reload"),
+                        color: yellowColor,
+                        onPressed: (){
+                          setState(() {
+                            isListVisible=false;
+                            WidgetsBinding.instance
+                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                          });
+
+                        }
+                    )
+                  ],
+                )
             ),
           )
 

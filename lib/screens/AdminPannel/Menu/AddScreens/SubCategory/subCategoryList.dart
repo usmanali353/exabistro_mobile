@@ -147,7 +147,7 @@ class _categoryListPageState extends ResumableState<subCategoryList>{
               ),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: isListVisible==true&&subCategoryList.length>0? ListView.builder(scrollDirection: Axis.vertical, itemCount:subCategoryList == null ? 0:subCategoryList.length, itemBuilder: (context,int index){
+              child: isListVisible==true&&subCategoryList!=null&&subCategoryList.length>0? ListView.builder(scrollDirection: Axis.vertical, itemCount:subCategoryList == null ? 0:subCategoryList.length, itemBuilder: (context,int index){
                 return Padding(
                   padding: const EdgeInsets.all(6.0),
                   child: Slidable(
@@ -230,27 +230,63 @@ class _categoryListPageState extends ResumableState<subCategoryList>{
                   color: yellowColor,
                   size: 100.0,
                 ),
-              ):isListVisible==true&&subCategoryList.length==0?Center(
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage("assets/noDataFound.png")
+              ):isListVisible==true&&subCategoryList!=null&&subCategoryList.length==0?Center(
+                  child:Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 300,
+                        height: 300,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/noDataFound.png")
+                            )
+                        ),
+                      ),
+                      MaterialButton(
+                          child: Text("Reload"),
+                          color: yellowColor,
+                          onPressed: (){
+                            setState(() {
+                              isListVisible=false;
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                            });
+
+                          }
                       )
-                  ),
-                ),
+                    ],
+                  )
               ):
-              Container(
-                width: 300,
-                height: 300,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/noDataFound.png")
-                    )
-                ),
+              Center(
+                  child:Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 300,
+                        height: 300,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/noDataFound.png")
+                            )
+                        ),
+                      ),
+                      MaterialButton(
+                          child: Text("Reload"),
+                          color: yellowColor,
+                          onPressed: (){
+                            setState(() {
+                              isListVisible=false;
+                              WidgetsBinding.instance
+                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                            });
+
+                          }
+                      )
+                    ],
+                  )
               ),
           )
         )
