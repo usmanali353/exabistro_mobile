@@ -5814,7 +5814,11 @@ class networksOperation{
       }
       else{
         pd.hide();
-        Utils.showError(context, "Please Try Again");
+        if(response.body!=null){
+          if(jsonDecode(response.body)["message"]!=null){
+            Utils.showError(context,jsonDecode(response.body)["message"].toString());
+          }
+        }
         return false;
       }
     }catch(e){

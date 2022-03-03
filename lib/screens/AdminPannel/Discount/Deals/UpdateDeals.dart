@@ -464,6 +464,21 @@ class _AddDiscountState extends State<UpdateDeals> {
                       //   Utils.showError(context, "Store Required");
                       // }
                       else{
+                        setState(() {
+                          if(widget.dealDetail["productDeals"].length==dealsItems.length){
+                            var tempList=[];
+                            for(int i=0;i<widget.dealDetail["productDeals"].length;i++){
+                              if(widget.dealDetail["productDeals"][i]["product"]["id"]==dealsItems[i]["ProductId"]){
+                                tempList.add(i);
+                              }
+                            }
+                            if(tempList.length==widget.dealDetail["productDeals"].length){
+                              dealsItems.clear();
+                            }
+                          }
+                        });
+
+
                         var addDeals = {
                           "id":widget.dealDetail['id'],
                           "name":dealsName.text,

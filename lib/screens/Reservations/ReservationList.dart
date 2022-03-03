@@ -42,17 +42,16 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
     _searchQuery = TextEditingController();
 
     Utils.check_connectivity().then((value) {
-      if (value) {
+
         SharedPreferences.getInstance().then((value) {
           setState(() {
             this.token = value.getString("token");
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
           });
         });
-        WidgetsBinding.instance
-            .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-      } else {
-        Utils.showError(context, "Please Check Internet Connection");
-      }
+
+
     });
 
     // TODO: implement initState
@@ -143,7 +142,7 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
                       padding: const EdgeInsets.all(8.0),
                       child: MaterialButton(onPressed: () {
                         Utils.check_connectivity().then((result){
-                          if(result){
+
                             networksOperation.getReservationList(context, token, widget.storeId,null,start_date,end_date).then((value) {
                               setState(() {
                                 if(reservationList!=null)
@@ -152,9 +151,6 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
                                 print(value);
                               });
                             });
-                          }else{
-                            Utils.showError(context, "Network Error");
-                          }
                         });
                       },
                         color: yellowColor,
@@ -194,12 +190,11 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
         ),
       ),
       appBar: AppBar(
-        leading: _isSearching ? const BackButton() : null,
+        leading: const BackButton(),
         title: _isSearching ? _buildSearchField() : _buildTitle(context),
         backgroundColor: BackgroundColor,
         actions: _buildActions(),
-        iconTheme: IconThemeData(color: yellowColor),
-
+        iconTheme: IconThemeData(color: yellowColor)
       ),
       // appBar: AppBar(
       //   iconTheme: IconThemeData(color: yellowColor),
@@ -385,6 +380,37 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 9),
+                                      child: FaIcon(
+                                        Icons.alternate_email,
+                                        color: PrimaryColor,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Email: ",
+                                      style: TextStyle(
+                                          color: yellowColor,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(reservationList[index]['customerEmail'].toString(),
+                                      style: TextStyle(
+                                          color: PrimaryColor,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 Row(
                                   children: [
                                     Padding(
@@ -409,6 +435,9 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
                                           fontWeight: FontWeight.bold),
                                     ),
                                   ],
+                                ),
+                                SizedBox(
+                                  height: 5,
                                 ),
                                 Row(
                                   children: [

@@ -105,7 +105,9 @@ class _CustomerReservationsState extends ResumableState<CustomerReservations> {
                   isListVisible=true;
                   reservationList.clear();
                   this.reservationList = value;
-                 // print(reservationList[5]);
+                  for(int i=0;i<reservationList.length;i++){
+                    debugPrint(reservationList[i].toString());
+                  }
                 });
               });
             }else{
@@ -139,8 +141,9 @@ class _CustomerReservationsState extends ResumableState<CustomerReservations> {
                           color: Colors.blue,
                           caption: 'Update',
                           onTap: () async {
-                            if(DateTime.parse(reservationList[index]['date'].toString()).isAfter(DateTime.now())){
-                               Navigator.push(context,MaterialPageRoute(builder: (context)=> UpdateReservations(reservationList[index])));
+                            var reservationDateComparison=DateFormat("yyyy-MM-dd").parse(reservationList[index]['date'].toString().substring(0,10)).compareTo(DateFormat("yyyy-MM-dd").parse(DateTime.now().toString().substring(0,10)));
+                            if(reservationDateComparison!=-1){
+                              push(context,MaterialPageRoute(builder: (context)=> UpdateReservations(reservationList[index])));
                             }else{
                               Utils.showError(context, "You Can't Update reservation After Due Date");
                             }

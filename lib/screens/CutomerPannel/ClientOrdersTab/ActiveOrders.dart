@@ -23,7 +23,6 @@ class _PastOrdersState extends State<ActiveOrders> {
   List<Categories> categoryList=[];
   List orderList = [];
   bool isListVisible = false;
-  List<Store> allStoreList=[];
 
   @override
   void initState() {
@@ -41,19 +40,6 @@ class _PastOrdersState extends State<ActiveOrders> {
     super.initState();
   }
 
-  String getStoreName(int id){
-    String storeName;
-    if(id != null && allStoreList!=null){
-      for(int i=0;i<allStoreList.length;i++){
-        if(allStoreList[i].id == id){
-          storeName = allStoreList[i].name;
-          return storeName;
-        }
-      }
-    }else
-      return "abc";
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -63,15 +49,6 @@ class _PastOrdersState extends State<ActiveOrders> {
         onRefresh: (){
           return Utils.check_connectivity().then((result){
             if(result){
-              var storeData={
-                "IsProduct":false
-              };
-              networksOperation.getAllStore(context, storeData).then((value) {
-                setState(() {
-                  isListVisible=true;
-                  allStoreList = value;
-                });
-              });
               networksOperation.getOrdersByCustomer(context, token).then((value) {
                 setState(() {
                   isListVisible=true;
@@ -192,7 +169,7 @@ class _PastOrdersState extends State<ActiveOrders> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [ Padding(
                                 padding: const EdgeInsets.only(top: 8, bottom: 0),
-                                child: Text(orderList[index]['storeId']!=null?getStoreName(orderList[index]['storeId']).toString():"",
+                                child: Text(orderList[index]['storeName']!=null?orderList[index]['storeName']:"",
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -374,26 +351,62 @@ class _PastOrdersState extends State<ActiveOrders> {
               size: 100.0,
             ),
           ):isListVisible==true&&orderList.length==0?Center(
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/noDataFound.png")
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/noDataFound.png")
+                        )
+                    ),
+                  ),
+                  MaterialButton(
+                      child: Text("Reload"),
+                      color: yellowColor,
+                      onPressed: (){
+                        setState(() {
+                          isListVisible=false;
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                        });
+
+                      }
                   )
-              ),
-            ),
+                ],
+              )
           ):
-          Container(
-            width: 300,
-            height: 300,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("assets/noDataFound.png")
-                )
-            ),
+          Center(
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/noDataFound.png")
+                        )
+                    ),
+                  ),
+                  MaterialButton(
+                      child: Text("Reload"),
+                      color: yellowColor,
+                      onPressed: (){
+                        setState(() {
+                          isListVisible=false;
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                        });
+
+                      }
+                  )
+                ],
+              )
           ),
         ),
       ),

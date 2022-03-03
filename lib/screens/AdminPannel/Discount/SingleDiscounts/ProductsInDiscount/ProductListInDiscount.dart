@@ -6,6 +6,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddProductToDiscount.dart';
 
@@ -20,7 +21,7 @@ class ProductListInDiscount extends StatefulWidget {
   _DiscountItemsListState createState() => _DiscountItemsListState();
 }
 
-class _DiscountItemsListState extends State<ProductListInDiscount> {
+class _DiscountItemsListState extends ResumableState<ProductListInDiscount> {
   final Color activeColor = Color.fromARGB(255, 52, 199, 89);
   bool value = false;
   String token;
@@ -29,6 +30,14 @@ class _DiscountItemsListState extends State<ProductListInDiscount> {
   List productList=[]; List<Products> allProduct=[];
   // bool isListVisible = false;
   List<Products> additionals = [];
+  @override
+  void onResume() {
+    setState(() {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+    super.onResume();
+  }
   @override
   void initState() {
     WidgetsBinding.instance
@@ -63,14 +72,6 @@ class _DiscountItemsListState extends State<ProductListInDiscount> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    setState(() {
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-    });
-  }
 
   String getProductName(int id){
     String name;
@@ -130,7 +131,7 @@ class _DiscountItemsListState extends State<ProductListInDiscount> {
 
           //Navigator.push(context, MaterialPageRoute(builder: (context)=> AddProductToDeals(discountId: widget.discountId,storeId: widget.storeId,token: token,)));
           if(additionals.length>0)
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> AddProductDiscount(discountId: widget.discountId,storeId: widget.storeId,token: token,)));
+            push(context, MaterialPageRoute(builder: (context)=> AddProductDiscount(discountId: widget.discountId,storeId: widget.storeId,token: token,)));
           else
             Utils.showError(context, "Products are loading ");
           //Navigator.push(context, MaterialPageRoute(builder: (context)=> AddMultiProduct(token)));

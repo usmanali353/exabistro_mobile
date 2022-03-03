@@ -12,7 +12,6 @@ import 'package:capsianfood/model/Tax.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/SecondryAddress.dart';
 import 'package:connectivity/connectivity.dart';
-// import 'package:filter_list/filter_list.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -781,6 +780,9 @@ class _CheckedoutDetailsState extends State<CheckedoutDetails> {
                     InkWell(
                       onTap: ()async{
                          if(orderType == "Dine In" ){
+                           if(formKey.currentState.validate()){
+                             formKey.currentState.save();
+                           }
                            if(tableId==null || tableId.isNaN){
                              Utils.showError(context, "Please Select Table");
                            }

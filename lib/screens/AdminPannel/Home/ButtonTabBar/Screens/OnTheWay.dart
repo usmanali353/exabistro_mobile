@@ -8,6 +8,7 @@ import 'package:capsianfood/screens/AdminPannel/Home/PayCashWithDelivery.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
@@ -22,7 +23,7 @@ OnTheWay(this.storeId);
   _PastOrdersState createState() => _PastOrdersState();
 }
 
-class _PastOrdersState extends State<OnTheWay> {
+class _PastOrdersState extends ResumableState<OnTheWay> {
   String token;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   // bool isVisible=false;
@@ -31,6 +32,14 @@ class _PastOrdersState extends State<OnTheWay> {
   bool isListVisible = false;
 
   FirebaseMessaging _firebaseMessaging;
+  @override
+  void onResume() {
+    setState(() {
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    });
+    super.onResume();
+  }
 
   @override
   void initState() {
@@ -263,18 +272,7 @@ class _PastOrdersState extends State<OnTheWay> {
                                         SizedBox(width: 5,),
                                         InkWell(
                                           onTap:(){
-                                            var orderStatusData={
-                                              "Id":orderList[index]['id'],
-                                              "status":7,
-                                            };
-                                            networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                              if(value){
-                                                setState(() {
-                                                  WidgetsBinding.instance
-                                                      .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                                });
-                                              }
-                                            });
+                                            push(context, MaterialPageRoute(builder: (context)=> PayCashWithDelivery(orderList[index],false)));
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.only(top: 10, bottom: 5, right: 5),

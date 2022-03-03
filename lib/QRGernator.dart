@@ -12,9 +12,9 @@ import 'package:pdf/pdf.dart';
 
 
 class GenerateScreen extends StatefulWidget {
-  String _dataString;
+  String _dataString,productName;
 
-  GenerateScreen(this._dataString);
+  GenerateScreen(this._dataString,this.productName);
 
   @override
   State<StatefulWidget> createState() => GenerateScreenState(_dataString);
@@ -27,6 +27,7 @@ class GenerateScreenState extends State<GenerateScreen> {
   static const double _topSectionHeight = 50.0;
 
   GenerateScreenState(this._dataString);
+
 
   GlobalKey globalKey = new GlobalKey();
   String _dataString = "Hello from this QR";
@@ -74,7 +75,7 @@ class GenerateScreenState extends State<GenerateScreen> {
                     return pw.Column(
                         children: [
                           pw.Center(
-                              child: pw.Text(widget._dataString.substring(0,5),style: pw.TextStyle(fontSize: 30,fontWeight: pw.FontWeight.bold))
+                              child: pw.Text(widget.productName,style: pw.TextStyle(fontSize: 30,fontWeight: pw.FontWeight.bold))
                           ),
                           pw.Padding(padding: pw.EdgeInsets.all(8.0)),
                           pw.Center(
@@ -110,7 +111,7 @@ class GenerateScreenState extends State<GenerateScreen> {
               child: RepaintBoundary(
                 key: globalKey,
                 child: QrImage(
-                  data: _dataString,
+                  data: "http://dev.exabistro.com/#/productDetails/"+widget._dataString,
                   size: 0.5 * bodyHeight,
                   // onError: (ex) {
                   //   print("[QR] ERROR - $ex");

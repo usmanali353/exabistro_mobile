@@ -7,6 +7,7 @@ import 'package:capsianfood/screens/AdminPannel/Home/OrderDetail.dart';
 import 'package:capsianfood/screens/AdminPannel/Home/PayCashWithDelivery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 
@@ -20,7 +21,7 @@ class Ready extends StatefulWidget {
   _PastOrdersState createState() => _PastOrdersState();
 }
 
-class _PastOrdersState extends State<Ready> {
+class _PastOrdersState extends ResumableState<Ready> {
   String token;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   // bool isVisible=false;
@@ -43,16 +44,15 @@ class _PastOrdersState extends State<Ready> {
     // TODO: implement initState
     super.initState();
   }
-
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void onResume() {
     setState(() {
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     });
+    // TODO: implement onResume
+    super.onResume();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,51 +225,99 @@ class _PastOrdersState extends State<Ready> {
                                           ),
                                         ),
                                         SizedBox(width: 5,),
-                                        InkWell(
-                                          onTap:(){
-                                            print("OrderType "+orderList[index]['orderType'].toString());
-                                            if(orderList!=null&&orderList[index]['orderType']!=null&&orderList[index]['orderType']!=3){
-                                              var orderStatusData={
-                                                "Id":orderList[index]['id'],
-                                                "status":7,
-                                              };
-                                              networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                                if(value){
-                                                  setState(() {
-                                                    WidgetsBinding.instance
-                                                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                                  });
-                                                }
-                                              });
-                                            }else{
-                                              var orderStatusData={
-                                                "Id":orderList[index]['id'],
-                                                "status":6,
-                                              };
-                                              networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
-                                                if(value){
-                                                  setState(() {
-                                                    WidgetsBinding.instance
-                                                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                                  });
-                                                }
-                                              });
-                                            }
-                                            print("abc");
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(top: 10, bottom: 5, right: 5),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(Radius.circular(10)) ,
-                                                color: yellowColor,
-                                                //border: Border.all(color: Colors.amberAccent)
-                                              ),
-                                              width: 105,
-                                              height: MediaQuery.of(context).size.height  * 0.05,
+                                        // InkWell(
+                                        //   onTap:(){
+                                        //     print("OrderType "+orderList[index]['orderType'].toString());
+                                        //     if(orderList!=null&&orderList[index]['orderType']!=null&&orderList[index]['orderType']!=3){
+                                        //       var orderStatusData={
+                                        //         "Id":orderList[index]['id'],
+                                        //         "status":7,
+                                        //       };
+                                        //       networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
+                                        //         if(value){
+                                        //           setState(() {
+                                        //             WidgetsBinding.instance
+                                        //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                        //           });
+                                        //         }
+                                        //       });
+                                        //     }else{
+                                        //       var orderStatusData={
+                                        //         "Id":orderList[index]['id'],
+                                        //         "status":6,
+                                        //       };
+                                        //       networksOperation.changeOrderStatus(context, token, orderStatusData).then((value) {
+                                        //         if(value){
+                                        //           setState(() {
+                                        //             WidgetsBinding.instance
+                                        //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                        //           });
+                                        //         }
+                                        //       });
+                                        //     }
+                                        //     print("abc");
+                                        //   },
+                                        //   child: Padding(
+                                        //     padding: const EdgeInsets.only(top: 10, bottom: 5, right: 5),
+                                        //     child: Container(
+                                        //       decoration: BoxDecoration(
+                                        //         borderRadius: BorderRadius.all(Radius.circular(10)) ,
+                                        //         color: yellowColor,
+                                        //         //border: Border.all(color: Colors.amberAccent)
+                                        //       ),
+                                        //       width: 105,
+                                        //       height: MediaQuery.of(context).size.height  * 0.05,
+                                        //
+                                        //       child: Center(
+                                        //         child: Text("Change Status",style: TextStyle(color: BackgroundColor,fontSize: 15,fontWeight: FontWeight.bold),),
+                                        //       ),
+                                        //     ),
+                                        //   ),
+                                        // ),
+                                        Visibility(
+                                          visible: orderList[index]['orderType']==3,
+                                          child: InkWell(
+                                            onTap:(){
+                                              push(context, MaterialPageRoute(builder: (context) => EditOrderForDelivery(orderDetails: orderList[index],token: token,),));
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top: 10, bottom: 5, right: 10),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)) ,
+                                                  color: yellowColor,
+                                                  //border: Border.all(color: PrimaryColor)
+                                                ),
+                                                width: MediaQuery.of(context).size.width / 3.5,
+                                                height: MediaQuery.of(context).size.height  * 0.05,
 
-                                              child: Center(
-                                                child: Text("Change Status",style: TextStyle(color: BackgroundColor,fontSize: 15,fontWeight: FontWeight.bold),),
+                                                child: Center(
+                                                  child: Text("Assign Delivery Boy",style: TextStyle(color: BackgroundColor,fontSize: 15,fontWeight: FontWeight.bold),),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: orderList[index]['orderType']!=3,
+                                          child: InkWell(
+                                            onTap:(){
+                                              push(context, MaterialPageRoute(builder: (context)=> PayCashWithDelivery(orderList[index],false)));
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top: 10, bottom: 5, right: 10),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.all(Radius.circular(10)) ,
+                                                  color: yellowColor,
+                                                  //border: Border.all(color: PrimaryColor)
+                                                ),
+                                                width: MediaQuery.of(context).size.width / 3.5,
+                                                height: MediaQuery.of(context).size.height  * 0.05,
+
+                                                child: Center(
+                                                  child: Text("Change Status",style: TextStyle(color: BackgroundColor,fontSize: 15,fontWeight: FontWeight.bold),),
+                                                ),
                                               ),
                                             ),
                                           ),

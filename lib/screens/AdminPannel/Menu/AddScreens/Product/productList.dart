@@ -187,7 +187,7 @@ class _categoryListPageState extends ResumableState<productListPage>{
                         caption: 'QR Code',
                         onTap: () async {
                           //print(discountList[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=> GenerateScreen("Product/"+productList[index].id.toString())));
+                          Navigator.push(context,MaterialPageRoute(builder: (context)=> GenerateScreen(productList[index].id.toString(),productList[index].name)));
                         },
                       ),
                     ],

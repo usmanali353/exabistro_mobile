@@ -4,7 +4,6 @@ import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Address.dart';
 import 'package:capsianfood/model/Tax.dart';
 import 'package:capsianfood/networks/network_operations.dart';
-// import 'package:filter_list/filter_list.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -531,7 +530,9 @@ class _CheckedoutDetailsState extends State<CheckedoutWithTable> {
                         networksOperation.placeOrder(context, widget.token, order).then((value) {
                           if(value){
                             SharedPreferences.getInstance().then((value) {
-                              value.remove("tableId");
+                              setState(() {
+                                value.remove("tableId");
+                              });
                             } );
                             Navigator.pushAndRemoveUntil(context,
                                 MaterialPageRoute(builder: (context) =>ClientNavBar()), (
