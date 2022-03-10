@@ -190,7 +190,7 @@ class _AddProductIngredientState extends State<UpdatePurhaseOrder> {
 //                               maxLines: 1,
 //                               // inputFormatters: [
 //                               //   LengthLimitingTextInputFormatter(2),
-//                               //   WhitelistingTextInputFormatter.digitsOnly,
+//                               //   
 //                               // ],
 //                               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
 //                               obscureText: false,

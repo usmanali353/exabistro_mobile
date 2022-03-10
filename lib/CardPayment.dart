@@ -74,7 +74,7 @@ class _MyHomePageState extends State<CardPayment> {
         width: MediaQuery.of(context).size.width,
         child: Form(
           key: _formKey,
-          autovalidate: _autoValidate,
+          
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<CardPayment> {
                         validator: (String value) =>
                         value.isEmpty ? "This field is Required" : null,
                         inputFormatters: [
-                          WhitelistingTextInputFormatter.digitsOnly,
+                          
                           new LengthLimitingTextInputFormatter(16),
                           new CardNumberInputFormatter()
                         ],
@@ -134,7 +134,7 @@ class _MyHomePageState extends State<CardPayment> {
                         validator: (String value) =>
                         value.isEmpty ? "This field is Requires" : null,
                         inputFormatters: [
-                          WhitelistingTextInputFormatter.digitsOnly,
+                          
                           new LengthLimitingTextInputFormatter(4),
                           new CardMonthInputFormatter()
                         ],
@@ -169,7 +169,7 @@ class _MyHomePageState extends State<CardPayment> {
                         validator: (String value) =>
                         value.isEmpty ? "This field is Required" : null,
                         inputFormatters: [
-                          WhitelistingTextInputFormatter.digitsOnly,
+                          
                           new LengthLimitingTextInputFormatter(3),
                         ],
                         //maxLength: 3,

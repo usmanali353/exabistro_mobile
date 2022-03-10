@@ -104,7 +104,7 @@ class _SplashScreenState extends State<AddStore> {
                 children: <Widget>[
                   Form(
                     key: _formKey,
-                    autovalidate: _autoValidate,
+                    
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -230,7 +230,7 @@ class _SplashScreenState extends State<AddStore> {
                             keyboardType: TextInputType.number,
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(12),
-                              WhitelistingTextInputFormatter.digitsOnly,
+                              
                             ],
                             style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
                             obscureText: false,

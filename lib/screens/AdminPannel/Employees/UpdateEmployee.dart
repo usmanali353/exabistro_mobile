@@ -193,7 +193,7 @@ class _SignUpScreenState extends State<UpdateEmployee> {
                       ),
                       child: Form(
                         key: _formKey,
-                        autovalidate: _autoValidate,
+                        
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -268,7 +268,7 @@ class _SignUpScreenState extends State<UpdateEmployee> {
                             //     keyboardType: TextInputType.text,
                             //     // inputFormatters: [
                             //     //   LengthLimitingTextInputFormatter(8),
-                            //     //   WhitelistingTextInputFormatter.digitsOnly,
+                            //     //   
                             //     // ],
                             //     style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
                             //     obscureText: false,
@@ -321,7 +321,7 @@ class _SignUpScreenState extends State<UpdateEmployee> {
                             //     keyboardType: TextInputType.number,
                             //     inputFormatters: [
                             //       LengthLimitingTextInputFormatter(8),
-                            //       WhitelistingTextInputFormatter.digitsOnly,
+                            //       
                             //     ],
                             //     style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
                             //     obscureText: false,
@@ -345,7 +345,7 @@ class _SignUpScreenState extends State<UpdateEmployee> {
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(12),
-                                  WhitelistingTextInputFormatter.digitsOnly,
+                                  
                                 ],
                                 validator: (String value) =>
                                 value.isEmpty ? "This field is Required" : null,

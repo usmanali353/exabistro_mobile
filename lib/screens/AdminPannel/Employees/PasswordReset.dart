@@ -93,7 +93,7 @@ class _SignUpScreenState extends State<ResetPassword> {
                     ),
                     child: Form(
                       key: _formKey,
-                      autovalidate: _autoValidate,
+                      
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[

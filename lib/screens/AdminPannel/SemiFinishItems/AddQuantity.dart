@@ -103,7 +103,7 @@ class _add_CategoryState extends State<AddQuatity> {
                     obscureText: false,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(3),
-                      WhitelistingTextInputFormatter.digitsOnly,
+                      
                     ],
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(

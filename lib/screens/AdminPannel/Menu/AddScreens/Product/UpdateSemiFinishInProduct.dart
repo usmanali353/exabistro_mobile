@@ -137,7 +137,7 @@ class _add_CategoryState extends State<UpdateSingleSemiFinishInProduct> {
                     obscureText: false,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(4),
-                      WhitelistingTextInputFormatter.digitsOnly,
+                      
                     ],
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(

@@ -122,7 +122,7 @@ class _AddTablesState extends State<AddTables> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(2),
-                      WhitelistingTextInputFormatter.digitsOnly,
+                      
                     ],
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(

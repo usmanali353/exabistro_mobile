@@ -1011,7 +1011,7 @@ class _MyCartScreenState extends State<CartForStaff> {
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(12),
-                                  WhitelistingTextInputFormatter.digitsOnly,
+                                  
                                 ],
                                 style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
                                 obscureText: false,

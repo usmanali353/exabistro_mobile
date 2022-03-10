@@ -167,7 +167,7 @@ class _DiscountItemsListState extends ResumableState<DiscountItemsList> {
                     maxLines: 1,
                     inputFormatters: [
                       LengthLimitingTextInputFormatter(2),
-                      WhitelistingTextInputFormatter.digitsOnly,
+                      
                     ],
                     style: TextStyle(
                         color: blueColor, fontWeight: FontWeight.bold),

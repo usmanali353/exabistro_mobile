@@ -221,7 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               keyboardType: TextInputType.number,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(12),
-                                WhitelistingTextInputFormatter.digitsOnly,
+                                
                               ],
                               style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
                               obscureText: false,

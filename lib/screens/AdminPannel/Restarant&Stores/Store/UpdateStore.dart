@@ -114,7 +114,7 @@ class _SplashScreenState extends State<UpdateStore> {
                     children: <Widget>[
                       Form(
                         key: _formKey,
-                        autovalidate: _autoValidate,
+                        
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -242,7 +242,7 @@ class _SplashScreenState extends State<UpdateStore> {
                                   keyboardType: TextInputType.number,
                                   inputFormatters: [
                                     LengthLimitingTextInputFormatter(12),
-                                    WhitelistingTextInputFormatter.digitsOnly,
+                                    
                                   ],                                  validator: (String value) =>
                                 value.isEmpty ? "This field is Required" : null,
                                   style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),

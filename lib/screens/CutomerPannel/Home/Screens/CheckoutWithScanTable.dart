@@ -237,7 +237,6 @@ class _CheckedoutDetailsState extends State<CheckedoutWithTable> {
                   child: Form(
                     key: formKey,
                     child: MultiSelectFormField(
-                      autovalidate: false,
                       dialogShapeBorder: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(12.0))),
                       title: Text(

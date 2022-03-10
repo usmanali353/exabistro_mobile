@@ -14,6 +14,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../QRGernator.dart';
+import 'IngredientConsumptionInProduct.dart';
 import 'ProductGraph.dart';
 import 'SpecificProductSizes.dart';
 import 'addProduct.dart';
@@ -389,6 +390,7 @@ class _categoryListPageState extends ResumableState<productListPage>{
         PopupMenuItem<String>(child: const Text('SemiFinish'), value: 'semi'),
         PopupMenuItem<String>(child: const Text('Ingredients'), value: 'ingredient'),
         PopupMenuItem<String>(child: const Text('Graph'), value: 'graph'),
+        PopupMenuItem<String>(child: const Text('Ingredients Consumption'), value: 'consumption'),
       ],
       elevation: 8.0,
     ).then((value){
@@ -406,6 +408,8 @@ class _categoryListPageState extends ResumableState<productListPage>{
         }else if(value == "graph"){
         print(productDetails.id);
         Navigator.push(context,MaterialPageRoute(builder: (context)=> ProductGraph(productDetails.id)));
+      }else if(value=="consumption"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> IngredientConsumptionInProduct(productId:productDetails.id)));
       }
     });
   }

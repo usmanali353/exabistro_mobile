@@ -142,7 +142,7 @@ class _SignUpScreenState extends State<AddEmployee> {
                       ),
                       child: Form(
                         key: _formKey,
-                        autovalidate: _autoValidate,
+                        
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -278,7 +278,7 @@ class _SignUpScreenState extends State<AddEmployee> {
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(8),
-                                  WhitelistingTextInputFormatter.digitsOnly,
+                                  
                                 ],
                                 style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
                                 obscureText: false,
@@ -306,7 +306,7 @@ class _SignUpScreenState extends State<AddEmployee> {
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   LengthLimitingTextInputFormatter(12),
-                                  WhitelistingTextInputFormatter.digitsOnly,
+                                  
                                 ],
                                 decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(

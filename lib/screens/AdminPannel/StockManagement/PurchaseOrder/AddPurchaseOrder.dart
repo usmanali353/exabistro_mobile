@@ -226,7 +226,7 @@ class _AddProductIngredientState extends State<AddPurhaseOrder> {
                               maxLines: 1,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(4),
-                                WhitelistingTextInputFormatter.digitsOnly,
+                                
                               ],
                               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
                               obscureText: false,

@@ -177,7 +177,7 @@ class _SplashScreenState extends State<RegisterRestaurant2> {
 
                                   ),
                                   inputFormatters: [
-                                    WhitelistingTextInputFormatter.digitsOnly,
+                                    
                                     new LengthLimitingTextInputFormatter(10),
                                   ],
                                   textInputAction: TextInputAction.next,

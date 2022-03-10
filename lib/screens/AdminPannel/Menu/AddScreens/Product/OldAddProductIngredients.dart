@@ -193,7 +193,7 @@ class _AddProductIngredientState extends State<AddProductIngredient> {
                               maxLines: 1,
                               inputFormatters: [
                                 LengthLimitingTextInputFormatter(3),
-                                WhitelistingTextInputFormatter.digitsOnly,
+                                
                               ],
                               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
                               obscureText: false,

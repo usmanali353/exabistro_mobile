@@ -8413,4 +8413,21 @@ class networksOperation{
       Utils.showError(context,"Unable to Fetch info due to some error Please Contact Support");
     }
   }
+  static Future<List<dynamic>> getStockConsumptionAndWastage(BuildContext context,String token,int productId,int lastDays)async{
+    try{
+      Map<String,String> headers = {'Authorization':'Bearer '+token};
+      var response=await http.get(Utils.baseUrl()+"itemStocks/StockPerProduct/"+productId.toString()+"/"+lastDays.toString(),headers: headers);
+      var data= jsonDecode(response.body);
+      if(response.statusCode==200){
+        return data;
+      }
+      else{
+        Utils.showError(context, "Please Try Again");
+        return null;
+      }
+    }catch(e){
+      Utils.showError(context, "Error Found: $e");
+    }
+    return null;
+  }
 }
