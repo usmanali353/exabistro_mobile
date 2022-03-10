@@ -955,7 +955,7 @@ class _StocksListPageState extends State<StocksList>{
       }else if(value == "usage"){
         Navigator.push(context,MaterialPageRoute(builder: (context)=> StockUsage(stockItems: stockObj,)));
       }else if(value=="consumption"){
-        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemConsumption(stockItemId: stockObj.id,)));
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemConsumption(stockItemId: stockObj.id,storeId: widget.storeId,)));
       }
     });
   }

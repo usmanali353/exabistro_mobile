@@ -1,3 +1,4 @@
+import 'package:capsianfood/model/ProductsInSemiFinish.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:json_table/json_table.dart';
@@ -5,11 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import '../../../Utils/Utils.dart';
 import '../../../components/constants.dart';
+import '../../../model/Products.dart';
 
 class StockItemConsumption extends StatefulWidget {
-var stockItemId;
+var stockItemId,storeId;
 
-StockItemConsumption({this.stockItemId});
+StockItemConsumption({this.stockItemId,this.storeId});
 
   @override
   _StockItemConsumptionState createState() => _StockItemConsumptionState();
@@ -20,7 +22,9 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
   String token;
   bool isTableVisible=false;
   var stockItemUsage=[],units=[];
-
+  List<Products> allProduct=[];
+  Products selectedProducts;
+  int productId=0;
   String getUnitName(id){
     String size="None";
     if(id!=null&&units!=null){
@@ -37,8 +41,19 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
     SharedPreferences.getInstance().then((prefs){
       setState(() {
         this.token=prefs.getString("token");
+        allProduct.add(Products(name: "All"));
         WidgetsBinding.instance
             .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+        networksOperation.getAllProducts(context,widget.storeId).then((value){
+          setState(() {
+            if(value!=null&&value.length>0){
+              for(int i=0;i<value.length;i++){
+                allProduct.add(value[i]);
+              }
+              selectedProducts=allProduct[0];
+            }
+          });
+        });
       });
     });
     super.initState();
@@ -48,66 +63,43 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
      return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Consumption',
+          'Usage',
           style: TextStyle(
               color: yellowColor,
               fontWeight: FontWeight.bold,
               fontSize: 22),
         ),
         actions: [
-          // Center(
-          //   child: DropdownButton(
-          //       isDense: true,
-          //
-          //       value: selectedDuration,
-          //       onChanged: (value) => setState(()
-          //       {
-          //         selectedDuration = value;
-          //         if(selectedDuration=="Today"){
-          //           setState(() {
-          //             lastDays=1;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //         if(selectedDuration=="Last 7 days"){
-          //           setState(() {
-          //             lastDays=7;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //         if(selectedDuration=="Last month"){
-          //           setState(() {
-          //             lastDays=30;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //         if(selectedDuration=="Last year"){
-          //           setState(() {
-          //             lastDays=365;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //       }),
-          //       items: chartDropdownItems.map((title)
-          //       {
-          //         return DropdownMenuItem
-          //           (
-          //           value: title,
-          //           child: Text(title, style: TextStyle(color: yellowColor, fontWeight: FontWeight.w400, fontSize: 14.0)),
-          //         );
-          //       }).toList()
-          //   ),
-          // )
+          Center(
+            child: DropdownButton(
+                value: selectedProducts,
+                onChanged: (value) => setState(()
+                {
+                  selectedProducts = value;
+                  if(selectedProducts!=null&&selectedProducts.name!="All"){
+                    productId=selectedProducts.id;
+                    isTableVisible=false;
+                    WidgetsBinding.instance
+                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                  }
+                  if(selectedProducts!=null&&selectedProducts.name=="All"){
+                    productId=0;
+                    isTableVisible=false;
+                    WidgetsBinding.instance
+                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                  }
+                }),
+                items: allProduct.map((title)
+                {
+                  return DropdownMenuItem
+                    (
+                    value: title,
+                    child: Text(title.name, style: TextStyle(color: yellowColor, fontWeight: FontWeight.w400, fontSize: 14.0)),
+                  );
+                }).toList()
+            ),
+          )
         ],
-        centerTitle: true,
         iconTheme: IconThemeData(
             color: blueColor
         ),
@@ -126,6 +118,7 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
           onRefresh:(){
             return Utils.check_connectivity().then((value){
               if(value){
+
                 networksOperation.getStockUnitsDropDown(context,token).then((units){
                   if(units!=null)
                   {
@@ -134,13 +127,14 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
                     });
                   }
                 });
-                networksOperation.getStockItemConsumptionAndWastage(context,token,widget.stockItemId,1).then((value){
+                networksOperation.getStockItemConsumptionAndWastage(context,token,widget.stockItemId,productId).then((value){
                   setState(() {
                     this.stockItemUsage=value;
                     isTableVisible=true;
                     print(stockItemUsage.toString());
                   });
                 });
+
               }
             });
           },
@@ -152,7 +146,7 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
                   child: JsonTable(
                     stockItemUsage,
                     columns: [
-                      JsonTableColumn("productName", label: "Item Name"),
+                      JsonTableColumn("productName", label: "Item"),
                       JsonTableColumn("qty", label: "Usage"),
                       JsonTableColumn("unit", label: "Unit",valueBuilder: getUnitName),
                       JsonTableColumn("itemSold", label: "Sold Qty"),
@@ -168,7 +162,7 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
                           child: Text(
                             header,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1.copyWith(fontWeight: FontWeight.w700, fontSize: 18.0,color: yellowColor),
+                            style: Theme.of(context).textTheme.headline1.copyWith(fontWeight: FontWeight.w700, fontSize: 14.0,color: yellowColor),
                           ),
                         ),
                       );
@@ -183,7 +177,7 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
                           child: Text(
                             value,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16.0, color: blueColor),
+                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12.0, color: blueColor),
                           ),
                         ),
                       );

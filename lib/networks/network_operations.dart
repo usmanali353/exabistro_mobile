@@ -8431,10 +8431,15 @@ class networksOperation{
     return null;
   }
 
-  static Future<List<dynamic>> getStockItemConsumptionAndWastage(BuildContext context,String token,int productId,int lastDays)async{
+  static Future<List<dynamic>> getStockItemConsumptionAndWastage(BuildContext context,String token,int stockItemId,int productId)async{
     try{
+      String url;
       Map<String,String> headers = {'Authorization':'Bearer '+token};
-      var response=await http.get(Utils.baseUrl()+"itemStocks/GetProductsbyStockItem/"+productId.toString(),headers: headers);
+      if(productId==0){
+        url=Utils.baseUrl()+"itemStocks/GetProductsbyStockItem/"+stockItemId.toString();
+      }else
+        url=Utils.baseUrl()+"itemStocks/GetProductsbyStockItem/"+stockItemId.toString()+"/"+productId.toString();
+      var response=await http.get(url,headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
         return data;
