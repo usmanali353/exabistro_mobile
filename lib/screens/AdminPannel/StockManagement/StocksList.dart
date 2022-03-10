@@ -17,6 +17,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'StockDetails/StocksDeatilsList.dart';
+import 'StockItemConsumption.dart';
 import 'StockUsage.dart';
 import 'StockVendor/VendorStockList.dart';
 import 'UpdateStock.dart';
@@ -944,6 +945,8 @@ class _StocksListPageState extends State<StocksList>{
             child: const Text('Detail'), value: 'detail'),
         PopupMenuItem<String>(
             child: const Text('Usage'), value: 'usage'),
+        PopupMenuItem<String>(
+            child: const Text('Consumption Details'), value: 'consumption'),
       ],
       elevation: 8.0,
     ).then((value){
@@ -951,6 +954,8 @@ class _StocksListPageState extends State<StocksList>{
         Navigator.push(context, MaterialPageRoute(builder: (context) => StockDetailList(widget.storeId,stockObj)));
       }else if(value == "usage"){
         Navigator.push(context,MaterialPageRoute(builder: (context)=> StockUsage(stockItems: stockObj,)));
+      }else if(value=="consumption"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemConsumption(stockItemId: stockObj.id,)));
       }
     });
   }

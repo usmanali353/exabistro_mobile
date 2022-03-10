@@ -72,10 +72,10 @@ class _StockUsageState extends State<StockUsage> {
   @override
   Widget build(BuildContext context) {
     var data = [
-      ClicksPerYear('Purchase', stockItemUsageList['itemPurchased']!=null?stockItemUsageList['itemPurchased']:0, yellowColor),
-      ClicksPerYear('Topping', stockItemUsageList['usageInOrderItemsTopping']!=null?stockItemUsageList['usageInOrderItemsTopping']:0, yellowColor),
-      ClicksPerYear('OrderItems', stockItemUsageList['usageInOrderItem']!=null?stockItemUsageList['usageInOrderItem']:0, yellowColor),
-      ClicksPerYear('Total', stockItemUsageList['totalUsage']!=null?stockItemUsageList['totalUsage']:0, yellowColor),
+      ClicksPerYear('Purchase', stockItemUsageList!=null?stockItemUsageList['itemPurchased']:0, yellowColor),
+      ClicksPerYear('Topping', stockItemUsageList!=null?stockItemUsageList['usageInOrderItemsTopping']:0, yellowColor),
+      ClicksPerYear('OrderItems', stockItemUsageList!=null?stockItemUsageList['usageInOrderItem']:0, yellowColor),
+      ClicksPerYear('Total', stockItemUsageList!=null?stockItemUsageList['totalUsage']:0, yellowColor),
     ];
 
     var series = [

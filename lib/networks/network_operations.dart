@@ -8430,4 +8430,22 @@ class networksOperation{
     }
     return null;
   }
+
+  static Future<List<dynamic>> getStockItemConsumptionAndWastage(BuildContext context,String token,int productId,int lastDays)async{
+    try{
+      Map<String,String> headers = {'Authorization':'Bearer '+token};
+      var response=await http.get(Utils.baseUrl()+"itemStocks/GetProductsbyStockItem/"+productId.toString(),headers: headers);
+      var data= jsonDecode(response.body);
+      if(response.statusCode==200){
+        return data;
+      }
+      else{
+        Utils.showError(context, "Please Try Again");
+        return null;
+      }
+    }catch(e){
+      Utils.showError(context, "Error Found: $e");
+    }
+    return null;
+  }
 }
