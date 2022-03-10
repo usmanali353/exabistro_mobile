@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
+import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/Inventory/InventoryListForTablet.dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/PreparingOrdersForKitchen(Tab).dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/ReadyOrdersForKitchen(Tab).dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/ReceivedOrdersForKitchen(Tab).dart';
@@ -49,7 +50,52 @@ class KitchenWidgetState extends State<KitchenTabsScreen> with SingleTickerProvi
     return DefaultTabController(
         length: 3,
         child: Scaffold(
+          drawer: Drawer(
+            child: ListView(
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  //height: 170,
+                  decoration: BoxDecoration(
+                    //color: blueColor
+                    //: Border.all(color: yellowColor)
+                  ),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 160,
+                        height: 160,
+                        child: Center(child: Image.asset(
+                          "assets/caspian11.png",
+                          fit: BoxFit.contain,
+                        ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text("Inventory",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: PrimaryColor
+                    ),
+                  ),
+                  trailing: FaIcon(FontAwesomeIcons.boxes, color: yellowColor, size: 30,),
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => InventoryListForTablet(widget.storeId)));
+                  },
+                ),
+
+
+              ],
+            ),
+
+          ),
           appBar: AppBar(
+
             centerTitle: true,
             actions: [
               IconButton(

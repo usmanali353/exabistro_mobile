@@ -1,21 +1,22 @@
+import 'package:capsianfood/Utils/Utils.dart';
+import 'package:capsianfood/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:json_table/json_table.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
-import '../../../Utils/Utils.dart';
-import '../../../components/constants.dart';
 
-class StockItemConsumption extends StatefulWidget {
-var stockItemId;
 
-StockItemConsumption({this.stockItemId});
+class StockItemConsumptionForTab extends StatefulWidget {
+  var stockItemId;
+
+  StockItemConsumptionForTab({this.stockItemId});
 
   @override
   _StockItemConsumptionState createState() => _StockItemConsumptionState();
 }
 
-class _StockItemConsumptionState extends State<StockItemConsumption> {
+class _StockItemConsumptionState extends State<StockItemConsumptionForTab> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String token;
   bool isTableVisible=false;
@@ -45,14 +46,14 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
   }
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text(
           'Consumption',
           style: TextStyle(
               color: yellowColor,
               fontWeight: FontWeight.bold,
-              fontSize: 22),
+              fontSize: 30),
         ),
         actions: [
           // Center(
@@ -145,54 +146,55 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
             });
           },
           child: isTableVisible&&stockItemUsage!=null&&stockItemUsage.length>0? Padding(
-            padding: const EdgeInsets.all(16.0),
-            child:Column(
-              children: [
-                Center(
-                  child: JsonTable(
-                    stockItemUsage,
-                    columns: [
-                      JsonTableColumn("productName", label: "Item Name"),
-                      JsonTableColumn("qty", label: "Usage"),
-                      JsonTableColumn("unit", label: "Unit",valueBuilder: getUnitName),
-                      JsonTableColumn("itemSold", label: "Sold Qty"),
-                      //JsonTableColumn("unit", label: "Unit",valueBuilder: getUnitName),
-                    ],
-                    tableHeaderBuilder: (String header) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width/4,
-                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                        decoration: BoxDecoration(border: Border.all(width: 0.5),color: Colors.grey[300]),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            header,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline1.copyWith(fontWeight: FontWeight.w700, fontSize: 18.0,color: yellowColor),
-                          ),
-                        ),
-                      );
-                    },
-                    tableCellBuilder: (value) {
-                      return Container(
-                        //width: MediaQuery.of(context).size.width/4,
-                        padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
-                        decoration: BoxDecoration(border: Border.all(width: 0.5, color: Colors.grey.withOpacity(0.5))),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            value,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 16.0, color: blueColor),
-                          ),
-                        ),
-                      );
-                    },
+              padding: const EdgeInsets.all(16.0),
+              child:Column(
+                children: [
+                  Center(
+                    child: JsonTable(
+                      stockItemUsage,
+                      columns: [
+                        JsonTableColumn("productName", label: "Item Name"),
+                        JsonTableColumn("qty", label: "Usage"),
+                        JsonTableColumn("unit", label: "Unit",valueBuilder: getUnitName),
+                        JsonTableColumn("itemSold", label: "Sold Qty"),
 
+                        //JsonTableColumn("unit", label: "Unit",valueBuilder: getUnitName),
+                      ],
+                      tableHeaderBuilder: (String header) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width/4,
+                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                          decoration: BoxDecoration(border: Border.all(width: 0.5),color: Colors.grey[300]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              header,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline1.copyWith(fontWeight: FontWeight.w700, fontSize: 25.0,color: yellowColor),
+                            ),
+                          ),
+                        );
+                      },
+                      tableCellBuilder: (value) {
+                        return Container(
+                          //width: MediaQuery.of(context).size.width/4,
+                          padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                          decoration: BoxDecoration(border: Border.all(width: 0.5, color: Colors.grey.withOpacity(0.5))),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              value,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 20.0, color: blueColor),
+                            ),
+                          ),
+                        );
+                      },
+
+                    ),
                   ),
-                ),
-              ],
-            )
+                ],
+              )
           ):isTableVisible==false?Center(
             child: SpinKitSpinningLines(
               lineWidth: 5,
