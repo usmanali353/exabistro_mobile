@@ -1,4 +1,5 @@
 import 'package:capsianfood/model/ProductsInSemiFinish.dart';
+import 'package:capsianfood/screens/AdminPannel/StockManagement/ProductIngredienConsumptionDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:json_table/json_table.dart';
@@ -182,7 +183,16 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
                         ),
                       );
                     },
+                     onRowSelect: (index,value){
+                      print(value);
+                      if(value["itemSold"]>0&&allProduct!=null&&allProduct.length>0){
+                        Products products= allProduct.where((element) => element.name==value["productName"]).toList()[0];
+                        Navigator.push(context, MaterialPageRoute(builder:(context)=>ProductIngredienConsumptionDetails(products.id)));
+                      }else{
+                        Utils.showError(context,"No Details Found");
+                      }
 
+                     },
                   ),
                 ),
               ],

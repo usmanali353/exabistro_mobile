@@ -8453,4 +8453,22 @@ class networksOperation{
     }
     return null;
   }
+  static Future<List<dynamic>> getStockItemConsumptionByProductAndDates(BuildContext context,String token,String startDate,String endDate,int productId)async{
+    try{
+      Map<String,String> headers = {'Authorization':'Bearer '+token};
+
+      var response=await http.get(Utils.baseUrl()+"itemStocks/GetSalesByProducts?ProductId=$productId&StartDate=$startDate&EndDate=$endDate",headers: headers);
+      var data= jsonDecode(response.body);
+      if(response.statusCode==200){
+        return data;
+      }
+      else{
+        Utils.showError(context, "Please Try Again");
+        return null;
+      }
+    }catch(e){
+      Utils.showError(context, "Error Found: $e");
+    }
+    return null;
+  }
 }
