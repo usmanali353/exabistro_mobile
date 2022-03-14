@@ -29,6 +29,17 @@ class _SemifinishedItemWastageState extends State<SemifinishedItemWastage> {
   String formatDate(date){
     return date.toString().split("T")[0];
   }
+  String getUnitName(id){
+    String size="None";
+    if(id!=null&&units!=null){
+      for(int i = 0;i < units.length;i++){
+        if(units[i]['id'] == id) {
+          size = units[i]['name'];
+        }
+      }
+    }
+    return size;
+  }
   @override
   void initState() {
     SharedPreferences.getInstance().then((prefs){
@@ -145,6 +156,7 @@ class _SemifinishedItemWastageState extends State<SemifinishedItemWastage> {
                           stockItemUsage,
                           columns: [
                             JsonTableColumn("wastageQuantity", label: "Wastage"),
+                            JsonTableColumn("unit", label: "Unit",valueBuilder: getUnitName),
                             JsonTableColumn("entryDate", label: "Date",valueBuilder: formatDate),
                           ],
                           tableHeaderBuilder: (String header) {
