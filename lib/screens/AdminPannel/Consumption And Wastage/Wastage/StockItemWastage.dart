@@ -5,19 +5,20 @@ import 'package:intl/intl.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:json_table/json_table.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../Utils/Utils.dart';
-import '../../../components/constants.dart';
+import '../../../../Utils/Utils.dart';
+import '../../../../components/constants.dart';
+import '../../../../model/StockItems.dart';
 
-class ProductIngredienConsumptionDetails extends StatefulWidget {
-var productId;
+class StockItemWastage extends StatefulWidget {
+  StockItems stockItemId;
 
-ProductIngredienConsumptionDetails(this.productId);
+ StockItemWastage({this.stockItemId});
 
   @override
-  _ProductIngredienConsumptionDetailsState createState() => _ProductIngredienConsumptionDetailsState();
+  _StockItemWastageState createState() => _StockItemWastageState();
 }
 
-class _ProductIngredienConsumptionDetailsState extends State<ProductIngredienConsumptionDetails> {
+class _StockItemWastageState extends State<StockItemWastage> {
   DateTime startDate=DateTime.now().subtract(Duration(days: 1));
   DateTime endDate=DateTime.now();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -25,9 +26,6 @@ class _ProductIngredienConsumptionDetailsState extends State<ProductIngredienCon
   bool isTableVisible=false;
   String token;
   var stockItemUsage=[],units=[];
-   String formatDate(date){
-    return date.toString().split("T")[0];
-   }
   @override
   void initState() {
     SharedPreferences.getInstance().then((prefs){
@@ -41,15 +39,28 @@ class _ProductIngredienConsumptionDetailsState extends State<ProductIngredienCon
   }
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
         appBar: AppBar(
           backgroundColor: BackgroundColor,
           automaticallyImplyLeading: true,
-          title:Text(DateFormat("dd-MM-yyyy").format(startDate)+" - "+DateFormat("dd-MM-yyyy").format(endDate),style: TextStyle(
+          title:Text(widget.stockItemId.name+" "+"Wastage",style: TextStyle(
               color: yellowColor,
-              fontSize: 15
+              fontSize: 20
           ),),
           centerTitle: true,
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(40),
+            child: Container(
+              alignment: Alignment.topCenter,
+
+              child:Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Text(DateFormat("yyyy-MM-dd").format(startDate)+" - "+DateFormat("yyyy-MM-dd").format(endDate),style: TextStyle(fontSize: 15),),
+                ),
+              ),
+            ),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           child: FaIcon(FontAwesomeIcons.filter),
@@ -92,7 +103,15 @@ class _ProductIngredienConsumptionDetailsState extends State<ProductIngredienCon
           onRefresh: (){
             return Utils.check_connectivity().then((value){
               if(value){
-                networksOperation.getStockItemConsumptionByProductAndDates(context,token,DateFormat("MM/dd/yyyy").format(startDate), DateFormat("MM/dd/yyyy").format(endDate),widget.productId).then((value){
+                networksOperation.getStockUnitsDropDown(context,token).then((units){
+                  if(units!=null)
+                  {
+                    setState(() {
+                      this.units=units;
+                    });
+                  }
+                });
+                networksOperation.getStockItemWastageByDates(context,DateFormat("MM/dd/yyyy").format(startDate), DateFormat("MM/dd/yyyy").format(endDate),widget.stockItemId.id).then((value){
                   setState(() {
                     this.stockItemUsage=value;
                     isTableVisible=true;
@@ -122,8 +141,10 @@ class _ProductIngredienConsumptionDetailsState extends State<ProductIngredienCon
                         child: JsonTable(
                           stockItemUsage,
                           columns: [
-                            JsonTableColumn("qty", label: "Usage"),
-                            JsonTableColumn("date", label: "Date",valueBuilder: formatDate),
+                            JsonTableColumn("wastageQuantity", label: "Wastage"),
+                            JsonTableColumn("unit", label: "Unit",valueBuilder: getUnitName),
+                            JsonTableColumn("entryDate", label: "Date",valueBuilder: formatDate),
+                            JsonTableColumn("type", label: "Type"),
                           ],
                           tableHeaderBuilder: (String header) {
                             return Container(
@@ -228,5 +249,19 @@ class _ProductIngredienConsumptionDetailsState extends State<ProductIngredienCon
           ),
         )
     );
+  }
+  String formatDate(date){
+    return date.toString().split("T")[0];
+  }
+  String getUnitName(id){
+    String size="None";
+    if(id!=null&&units!=null){
+      for(int i = 0;i < units.length;i++){
+        if(units[i]['id'] == id) {
+          size = units[i]['name'];
+        }
+      }
+    }
+    return size;
   }
 }

@@ -10,7 +10,7 @@ import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/AdminPannel/ItemBrands/ItemBrandWithStockVendor/ItemBrandWithStockVendorList.dart';
 import 'package:capsianfood/screens/AdminPannel/StockManagement/AddStock.dart';
 import 'package:capsianfood/screens/AdminPannel/StockManagement/StockDetails/StocksDeatilsList.dart';
-import 'package:capsianfood/screens/AdminPannel/StockManagement/StockItemConsumption.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/StockItemConsumption.dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/Inventory/StockItemConsumption(Tab).dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';

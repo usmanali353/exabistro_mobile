@@ -4,8 +4,8 @@ import 'package:json_table/json_table.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../../Utils/Utils.dart';
-import '../../../../../components/constants.dart';
+import '../../../Utils/Utils.dart';
+import '../../../components/constants.dart';
 
 class IngredientConsumptionInProduct extends StatefulWidget {
 var productId;

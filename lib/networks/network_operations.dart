@@ -8471,4 +8471,97 @@ class networksOperation{
     }
     return null;
   }
+  static Future<List<dynamic>> getStockItemWastageByDates(BuildContext context,String startDate,String endDate,int stockItemId)async{
+    try{
+      var response=await http.get(Utils.baseUrl()+"itemStocks/GetAllWastageRecord?stockItemId=$stockItemId&StartDate=$startDate&EndDate=$endDate");
+      var data= jsonDecode(response.body);
+      print(response.statusCode);
+      print(response.body);
+      if(response.statusCode==200){
+        return data;
+      }
+      else{
+        Utils.showError(context, "Please Try Again");
+        return null;
+      }
+    }catch(e){
+      print(e.toString());
+      Utils.showError(context, "Error Found: $e");
+    }
+    return null;
+  }
+  static Future<List<dynamic>> getProductWastageByDates(BuildContext context,String startDate,String endDate,int productId)async{
+    try{
+      var response=await http.get(Utils.baseUrl()+"itemStocks/GetAllWastageRecord?productId=$productId&StartDate=$startDate&EndDate=$endDate");
+      var data= jsonDecode(response.body);
+      print(response.statusCode);
+      print(response.body);
+      if(response.statusCode==200){
+        return data;
+      }
+      else{
+        Utils.showError(context, "Please Try Again");
+        return null;
+      }
+    }catch(e){
+      print(e.toString());
+      Utils.showError(context, "Error Found: $e");
+    }
+    return null;
+  }
+  static Future<List<dynamic>> getSemiFinishedWastageByDates(BuildContext context,String startDate,String endDate,int semifinishedId)async{
+    try{
+      var response=await http.get(Utils.baseUrl()+"itemStocks/GetAllWastageRecord?semiFinishedId=$semifinishedId&StartDate=$startDate&EndDate=$endDate");
+      var data= jsonDecode(response.body);
+      print(response.statusCode);
+      print(response.body);
+      if(response.statusCode==200){
+        return data;
+      }
+      else{
+        Utils.showError(context, "Please Try Again");
+        return null;
+      }
+    }catch(e){
+      print(e.toString());
+      Utils.showError(context, "Error Found: $e");
+    }
+    return null;
+  }
+  static Future<dynamic> addWastage(BuildContext context,String token,{int productId,int sizeId,int semiFinishedId,double wastageQuantity,DateTime EntryDate,int stockItemId,int unit})async{
+    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+    try{
+      pd.show();
+      var body={
+        "StockItemId":stockItemId,
+        "ProductId":productId,
+        "SizeId":sizeId,
+        "WastageQuantity":wastageQuantity,
+        "EntryDate":EntryDate.toIso8601String(),
+        "SemiFinishedId":semiFinishedId,
+         "Unit":unit
+      };
+
+      Map<String,String> headers = {'Content-Type':'application/json','Authorization':'Bearer '+token};
+      var response=await http.post(Utils.baseUrl()+"ItemStocks/AddWastageRecord",body: jsonEncode(body),headers: headers);
+      print(response.statusCode);
+      print(response.body);
+      print(body);
+      if(response.statusCode==200){
+        pd.hide();
+        Utils.showSuccess(context, "Stock Added Successfully");
+        return true;
+      }
+      else{
+        pd.hide();
+        Utils.showError(context, "${jsonDecode(response.body)['message']}");
+        return false;
+      }
+    }catch(e){
+      pd.hide();
+      print(e);
+      Utils.showError(context, "Error Found: $e");
+      return false;
+    }
+  }
 }

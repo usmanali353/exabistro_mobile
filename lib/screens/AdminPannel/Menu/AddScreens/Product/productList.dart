@@ -4,8 +4,10 @@ import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Products.dart';
 import 'package:capsianfood/networks/network_operations.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/Wastage/AddWastage.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Product/ProductIngredientsList.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Product/OldIngredientList.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/Wastage/ProductWastage.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Product/updateProduct.dart';
 import 'package:capsianfood/screens/AdminPannel/Menu/AddScreens/Toppings/ToppingList.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../QRGernator.dart';
-import 'IngredientConsumptionInProduct.dart';
+import '../../../Consumption And Wastage/IngredientConsumptionInProduct.dart';
 import 'ProductGraph.dart';
 import 'SpecificProductSizes.dart';
 import 'addProduct.dart';
@@ -391,6 +393,9 @@ class _categoryListPageState extends ResumableState<productListPage>{
         PopupMenuItem<String>(child: const Text('Ingredients'), value: 'ingredient'),
         PopupMenuItem<String>(child: const Text('Graph'), value: 'graph'),
         PopupMenuItem<String>(child: const Text('Ingredients Consumption'), value: 'consumption'),
+        PopupMenuItem<String>(child: const Text('Wastage Report'), value: 'wastage'),
+        PopupMenuItem<String>(child: const Text('Report Wastage'), value: 'AddWastage'),
+
       ],
       elevation: 8.0,
     ).then((value){
@@ -410,6 +415,10 @@ class _categoryListPageState extends ResumableState<productListPage>{
         Navigator.push(context,MaterialPageRoute(builder: (context)=> ProductGraph(productDetails.id)));
       }else if(value=="consumption"){
         Navigator.push(context,MaterialPageRoute(builder: (context)=> IngredientConsumptionInProduct(productId:productDetails.id)));
+      }else if(value=="wastage"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> ProductWastage(productDetails)));
+      }else if(value=="AddWastage"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> AddWastage("Product",widget.storeId,products:productDetails)));
       }
     });
   }

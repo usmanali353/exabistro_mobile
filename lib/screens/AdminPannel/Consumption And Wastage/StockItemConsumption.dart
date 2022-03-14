@@ -1,5 +1,5 @@
 import 'package:capsianfood/model/ProductsInSemiFinish.dart';
-import 'package:capsianfood/screens/AdminPannel/StockManagement/ProductIngredienConsumptionDetails.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/ProductIngredienConsumptionDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:json_table/json_table.dart';
@@ -8,10 +8,13 @@ import 'package:capsianfood/networks/network_operations.dart';
 import '../../../Utils/Utils.dart';
 import '../../../components/constants.dart';
 import '../../../model/Products.dart';
+import '../../../model/StockItems.dart';
+import 'Wastage/ProductWastage.dart';
+import 'Wastage/StockItemWastage.dart';
 
 class StockItemConsumption extends StatefulWidget {
-var stockItemId,storeId;
-
+var storeId;
+StockItems stockItemId;
 StockItemConsumption({this.stockItemId,this.storeId});
 
   @override
@@ -64,7 +67,7 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
      return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Usage',
+          widget.stockItemId.name+" "+"Usage",
           style: TextStyle(
               color: yellowColor,
               fontWeight: FontWeight.bold,
@@ -128,7 +131,7 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
                     });
                   }
                 });
-                networksOperation.getStockItemConsumptionAndWastage(context,token,widget.stockItemId,productId).then((value){
+                networksOperation.getStockItemConsumptionAndWastage(context,token,widget.stockItemId.id,productId).then((value){
                   setState(() {
                     this.stockItemUsage=value;
                     isTableVisible=true;
@@ -183,14 +186,39 @@ class _StockItemConsumptionState extends State<StockItemConsumption> {
                         ),
                       );
                     },
-                     onRowSelect: (index,value){
-                      print(value);
-                      if(value["itemSold"]>0&&allProduct!=null&&allProduct.length>0){
-                        Products products= allProduct.where((element) => element.name==value["productName"]).toList()[0];
-                        Navigator.push(context, MaterialPageRoute(builder:(context)=>ProductIngredienConsumptionDetails(products.id)));
-                      }else{
-                        Utils.showError(context,"No Details Found");
-                      }
+                     onRowSelect: (index,selectedValue)async{
+                       Products products= allProduct.where((element) => element.name==selectedValue["productName"]).toList()[0];
+                      await showMenu(
+                          context: context,
+                          position: RelativeRect.fromLTRB(100, 100, 0, 100),
+                       items: [
+                       PopupMenuItem<String>(
+                       child: const Text('Consumption Details'), value: 'consumption'),
+                       PopupMenuItem<String>(
+                       child: const Text('Wastage Details'), value: 'wastage'),
+                       ],
+                       elevation: 8.0,
+                       ).then((value){
+                         if(value=="consumption"){
+                           if(allProduct.length==1){
+                             Utils.showError(context,"Wait...");
+                           }else if(selectedValue["itemSold"]>0&&allProduct!=null&&allProduct.length>0){
+
+                             Navigator.push(context, MaterialPageRoute(builder:(context)=>ProductIngredienConsumptionDetails(products)));
+                           }else{
+                             Utils.showError(context,"No Details Found");
+                           }
+                       }else if(value=="wastage"){
+                           if(allProduct.length==1){
+                             Utils.showError(context,"Wait...");
+                           }else if(selectedValue["itemSold"]>0&&allProduct!=null&&allProduct.length>0){
+                             Navigator.push(context, MaterialPageRoute(builder:(context)=>ProductWastage(products)));                           }else{
+
+                           }
+
+                       }
+                       });
+
 
                      },
                   ),

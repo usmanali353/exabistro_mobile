@@ -4,12 +4,14 @@ import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/model/SemiFinishItems.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:capsianfood/screens/AdminPannel/SemiFinishItems/AddSemiFinish.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/Wastage/SemiFinishedWastage.dart';
 import 'package:capsianfood/screens/AdminPannel/SemiFinishItems/UpdateSemiFinish.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Consumption And Wastage/Wastage/AddWastage.dart';
 import 'OrderMakingSemiFinish/Adding.dart';
 import 'OrderMakingSemiFinish/MakingOrders.dart';
 import 'SemiFinishUsage.dart';
@@ -724,6 +726,10 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
             child: const Text('Usage'), value: 'usage'),
         PopupMenuItem<String>(
             child: const Text('Menu Items'), value: 'products'),
+        PopupMenuItem<String>(
+            child: const Text('Wastage'), value: 'wastage'),
+        PopupMenuItem<String>(
+            child: const Text('Report Wastage'), value: 'AddWastage'),
       ],
       elevation: 8.0,
     ).then((value){
@@ -733,6 +739,10 @@ class _SemiFinishItemListState extends State<SemiFinishItemList>{
         Navigator.push(context,MaterialPageRoute(builder: (context)=> SemiItemUsage(storeId: storeId,itemId: itemId,token: token,)));
       }else if(value == "products"){
         Navigator.push(context,MaterialPageRoute(builder: (context)=> ProductsInSemiFinishPage(storeId,finishItems.id)));
+      }else if(value == "wastage"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> SemifinishedItemWastage(finishItems)));
+      }else if(value=="AddWastage"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> AddWastage("SemiFinished",widget.storeId,semiFinishedItem:finishItems)));
       }
     });
   }

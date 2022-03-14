@@ -7,8 +7,10 @@ import 'package:capsianfood/model/ItemBrand.dart';
 import 'package:capsianfood/model/StockItems.dart';
 import 'package:capsianfood/model/Vendors.dart';
 import 'package:capsianfood/networks/network_operations.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/Wastage/AddWastage.dart';
 import 'package:capsianfood/screens/AdminPannel/ItemBrands/ItemBrandWithStockVendor/ItemBrandWithStockVendorList.dart';
 import 'package:capsianfood/screens/AdminPannel/StockManagement/AddStock.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/Wastage/StockItemWastage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -17,7 +19,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'StockDetails/StocksDeatilsList.dart';
-import 'StockItemConsumption.dart';
+import '../Consumption And Wastage/StockItemConsumption.dart';
 import 'StockUsage.dart';
 import 'StockVendor/VendorStockList.dart';
 import 'UpdateStock.dart';
@@ -947,6 +949,10 @@ class _StocksListPageState extends State<StocksList>{
             child: const Text('Usage'), value: 'usage'),
         PopupMenuItem<String>(
             child: const Text('Consumption Details'), value: 'consumption'),
+        PopupMenuItem<String>(
+            child: const Text('Wastage Details'), value: 'wastage'),
+        PopupMenuItem<String>(
+            child: const Text('Report Wastage'), value: 'AddWastage'),
       ],
       elevation: 8.0,
     ).then((value){
@@ -955,7 +961,11 @@ class _StocksListPageState extends State<StocksList>{
       }else if(value == "usage"){
         Navigator.push(context,MaterialPageRoute(builder: (context)=> StockUsage(stockItems: stockObj,)));
       }else if(value=="consumption"){
-        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemConsumption(stockItemId: stockObj.id,storeId: widget.storeId,)));
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemConsumption(stockItemId: stockObj,storeId: widget.storeId,)));
+      }else if(value=="wastage"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemWastage(stockItemId: stockObj)));
+      }else if(value=="AddWastage"){
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> AddWastage("StockItem",widget.storeId,stockItem: stockObj)));
       }
     });
   }
