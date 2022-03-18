@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../components/constants.dart';
 
@@ -10,6 +11,34 @@ class InventoryValuationTechnique extends StatefulWidget {
 
 class _InventoryValuationTechniqueState extends State<InventoryValuationTechnique> {
   var toggle1=true,toggle2=false,toggle3=false;
+  String selectedPreference;
+  @override
+  void initState() {
+    SharedPreferences.getInstance().then((prefs){
+      setState(() {
+        this.selectedPreference=prefs.getString("selected_valuation_method");
+        if(selectedPreference!=null){
+          if(selectedPreference=="wac"){
+            toggle1=true;
+            toggle2=false;
+            toggle3=false;
+          }
+          if(selectedPreference=="fifo"){
+            toggle1=false;
+            toggle2=true;
+            toggle3=false;
+          }
+          if(selectedPreference=="lifo"){
+            toggle1=false;
+            toggle2=false;
+            toggle3=true;
+          }
+        }
+
+      });
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +77,9 @@ class _InventoryValuationTechniqueState extends State<InventoryValuationTechniqu
                            toggle1=value;
                            toggle2=false;
                            toggle3=false;
+                           SharedPreferences.getInstance().then((prefs){
+                             prefs.setString("selected_valuation_method","wac");
+                           });
                          });
                       }
                   ),
@@ -62,6 +94,9 @@ class _InventoryValuationTechniqueState extends State<InventoryValuationTechniqu
                           toggle2=value;
                           toggle1=false;
                           toggle3=false;
+                          SharedPreferences.getInstance().then((prefs){
+                            prefs.setString("selected_valuation_method","fifo");
+                          });
                         });
                       }
                   ),
@@ -76,6 +111,9 @@ class _InventoryValuationTechniqueState extends State<InventoryValuationTechniqu
                           toggle3=value;
                           toggle2=false;
                           toggle1=false;
+                          SharedPreferences.getInstance().then((prefs){
+                            prefs.setString("selected_valuation_method","lifo");
+                          });
                         });
                       }
                   ),

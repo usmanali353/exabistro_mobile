@@ -33,14 +33,14 @@ class StockDetailList extends StatefulWidget {
 class _StocksListPageState extends State<StockDetailList>{
   String token,selectedDuration="Today";
   int days;
-  double wac=0.0;
+  double wac=0.0,lifo=0.0,fifo=0.0;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<StockItems> stockList = [];
   List allUnitList=[];
   static final List<String> chartDropdownItems = [ 'Today','Last 7 days', 'Last month', 'Last year' ];
   bool isListVisible = false;
   List<ItemBrand> itemBrandList =[];
-
+  String selectedCalculationType="wac";
 
   String getUnitName(int id){
     String size="";
@@ -70,6 +70,7 @@ class _StocksListPageState extends State<StockDetailList>{
     SharedPreferences.getInstance().then((value) {
       setState(() {
         this.token = value.getString("token");
+        this.selectedCalculationType=value.getString("selected_valuation_method");
       });
     });
     print(token);
@@ -103,7 +104,15 @@ class _StocksListPageState extends State<StockDetailList>{
               child:Center(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: Text("Average Inventory Cost: "+wac.toStringAsFixed(1),style: TextStyle(fontSize: 15),),
+                  child: Text((){
+                    if(selectedCalculationType=="wac"){
+                      return "Average Inventory Cost: "+wac.toStringAsFixed(1);
+                    }
+                    if(selectedCalculationType=="fifo"){
+                      return "Inventory Cost (FIFO): "+fifo.toStringAsFixed(1);
+                    }
+                      return "Inventory Cost (LIFO): "+lifo.toStringAsFixed(1);
+                  }(),style: TextStyle(fontSize: 15),),
                 ),
               ),
             ),
@@ -178,8 +187,19 @@ class _StocksListPageState extends State<StockDetailList>{
                     if(value!=null){
                       if(jsonDecode(value)["stockDetailList"].length>0){
                         wac=jsonDecode(value)["wac"];
+                        if(jsonDecode(value)["lifo"]!=null){
+                          lifo=jsonDecode(value)["lifo"];
+                          print("lifo "+jsonDecode(value)["lifo"].toString());
+                        }
+                        if(jsonDecode(value)["fifo"]!=null){
+                          fifo=jsonDecode(value)["fifo"];
+                          print("fifo "+jsonDecode(value)["fifo"].toString());
+                        }
+
                       }else{
                         wac=0.0;
+                        lifo=0.0;
+                        fifo=0.0;
                       }
 
                      stockList= StockItems.StockItemsDetailsListFromJson(jsonEncode(jsonDecode(value)["stockDetailList"]));
