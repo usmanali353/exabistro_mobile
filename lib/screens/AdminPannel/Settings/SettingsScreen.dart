@@ -14,6 +14,7 @@ import 'package:capsianfood/screens/AdminPannel/OrderPriority/PriorityList.dart'
 import 'package:capsianfood/screens/AdminPannel/SalariesRecord/SalaryRecorsList.dart';
 import 'package:capsianfood/screens/AdminPannel/SemiFinishItems/SemiFinishItemList.dart';
 import 'package:capsianfood/screens/AdminPannel/SemiFinishItems/SemiProductsList.dart';
+import 'package:capsianfood/screens/AdminPannel/StockManagement/InventoryValuationTechnique.dart';
 import 'package:capsianfood/screens/AdminPannel/StockManagement/StocksList.dart';
 import 'package:capsianfood/screens/AdminPannel/Taxes/TaxesList.dart';
 import 'package:capsianfood/screens/AdminPannel/Vouchers/VoucherList.dart';
@@ -726,6 +727,59 @@ class _SettingsState extends State<SettingsPage> {
                           padding: const EdgeInsets.all(11.0),
                           child: Text(
                             'Complaint Types',
+                            style: TextStyle(
+                              color: blueColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              //fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: (){
+                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> NewExtraExpensesList()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => InventoryValuationTechnique()));
+
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 65,
+                  decoration: BoxDecoration(
+                    //color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    //border: Border.all(color: Colors.orange, width: 5)
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 5,),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: yellowColor,
+                          borderRadius: BorderRadius.circular(8),
+                          //border: Border.all(color: Colors.orange, width: 5)
+                        ),
+                        child: Center(child: FaIcon(FontAwesomeIcons.calculator, size: 25, color: blueColor,)),
+                      ),
+                      SizedBox(width: 5,),
+                      Container(
+                        width: MediaQuery.of(context).size.width- 85,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: yellowColor, width: 1)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(11.0),
+                          child: Text(
+                            'Inventory Valuation Method',
                             style: TextStyle(
                               color: blueColor,
                               fontSize: 20,

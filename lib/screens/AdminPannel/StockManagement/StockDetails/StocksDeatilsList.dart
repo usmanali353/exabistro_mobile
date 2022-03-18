@@ -31,10 +31,13 @@ class StockDetailList extends StatefulWidget {
 
 
 class _StocksListPageState extends State<StockDetailList>{
-  String token;
+  String token,selectedDuration="Today";
+  int days;
+  double wac=0.0;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   List<StockItems> stockList = [];
   List allUnitList=[];
+  static final List<String> chartDropdownItems = [ 'Today','Last 7 days', 'Last month', 'Last year' ];
   bool isListVisible = false;
   List<ItemBrand> itemBrandList =[];
 
@@ -92,14 +95,72 @@ class _StocksListPageState extends State<StockDetailList>{
           iconTheme: IconThemeData(
               color: yellowColor
           ),
-          // actions: [
-          //   IconButton(
-          //     icon: Icon(Icons.add, color: PrimaryColor,size:25),
-          //     onPressed: (){
-          //       Navigator.push(context, MaterialPageRoute(builder: (context)=> AddStockDetails(storeId: widget.storeId,stockItemId: widget.stockItems.id,token: token,)));
-          //     },
-          //   ),
-          // ],
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(40),
+            child: Container(
+              alignment: Alignment.topCenter,
+
+              child:Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Text("Average Inventory Cost: "+wac.toStringAsFixed(1),style: TextStyle(fontSize: 15),),
+                ),
+              ),
+            ),
+          ),
+          actions: [
+            Center(
+              child: DropdownButton(
+                  isDense: true,
+
+                  value: selectedDuration,
+                  onChanged: (value) => setState(()
+                  {
+                    selectedDuration = value;
+                    if(selectedDuration=="Today"){
+                      setState(() {
+                        days=null;
+                        isListVisible=false;
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                      });
+                    }
+                    if(selectedDuration=="Last 7 days"){
+                      setState(() {
+                        days=7;
+                        isListVisible=false;
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                      });
+                    }
+                    if(selectedDuration=="Last month"){
+                      setState(() {
+                        days=30;
+                        isListVisible=false;
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                      });
+                    }
+                    if(selectedDuration=="Last year"){
+                      setState(() {
+                        days=365;
+                        isListVisible=false;
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                      });
+                    }
+                  }),
+                  items: chartDropdownItems.map((title)
+                  {
+                    return DropdownMenuItem
+                      (
+                      value: title,
+                      child: Text(title, style: TextStyle(color: yellowColor, fontWeight: FontWeight.w400, fontSize: 14.0)),
+                    );
+                  }).toList()
+              ),
+            ),
+          ],
           backgroundColor:  BackgroundColor,
           title: Text("Inventory Details", style: TextStyle(
               color: yellowColor, fontSize: 22, fontWeight: FontWeight.bold
@@ -111,10 +172,18 @@ class _StocksListPageState extends State<StockDetailList>{
           onRefresh: (){
             return Utils.check_connectivity().then((result){
               if(result){
-                networksOperation.getStockItemsDetailListByStockId(context, token,widget.stockItems.id).then((value) {
+                networksOperation.getStockItemDetailsWithStockIdAndDays(context, token,widget.stockItems.id,days: days).then((value) {
                   setState(() {
                     stockList.clear();
-                    stockList = value;
+                    if(value!=null){
+                      if(jsonDecode(value)["stockDetailList"].length>0){
+                        wac=jsonDecode(value)["wac"];
+                      }else{
+                        wac=0.0;
+                      }
+
+                     stockList= StockItems.StockItemsDetailsListFromJson(jsonEncode(jsonDecode(value)["stockDetailList"]));
+                    }
                   });
                 });
                 networksOperation.getStockUnitsDropDown(context,token).then((value) {

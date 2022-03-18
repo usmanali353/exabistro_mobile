@@ -8564,4 +8564,29 @@ class networksOperation{
       return false;
     }
   }
+  static Future<String> getStockItemDetailsWithStockIdAndDays(BuildContext context,String token,int stockItemId,{int days})async{
+    try{
+      Map<String,String> headers = {'Authorization':'Bearer '+token};
+      String url;
+      if(days!=null){
+        url=Utils.baseUrl()+"itemStocks/WAC/$stockItemId/$days";
+      }else{
+        url=Utils.baseUrl()+"itemStocks/WAC/$stockItemId";
+      }
+      var response=await http.get(url,headers: headers);
+      print(response.statusCode);
+      print(response.body);
+      if(response.statusCode==200){
+        return response.body;
+      }
+      else{
+        Utils.showError(context, "Please Try Again");
+        return null;
+      }
+    }catch(e){
+      print(e.toString());
+      Utils.showError(context, "Error Found: $e");
+    }
+    return null;
+  }
 }

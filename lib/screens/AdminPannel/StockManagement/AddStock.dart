@@ -156,7 +156,7 @@ class _add_SizesState extends State<AddStocks> {
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
                         ),
-                        labelText: "Total Price",
+                        labelText: "Price",
                         labelStyle: TextStyle(color:yellowColor, fontWeight: FontWeight.bold),
 
                       ),

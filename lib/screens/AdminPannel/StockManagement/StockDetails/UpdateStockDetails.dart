@@ -333,11 +333,11 @@ class _UpdateStocksState extends State<UpdateStocksDetails> {
                       padding: EdgeInsets.all(8),
                       child:FormBuilderDateTimePicker(
                         name: "Expiry Date",
-                        initialValue: DateTime.now(),
+                        initialValue: widget.stockItemsDetail.expiryDate,
                         style: Theme.of(context).textTheme.bodyText1,
                         inputType: InputType.date,
                         validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
-                        format: DateFormat("dd-MM-yyyy"),
+                        format: DateFormat("yyyy-MM-dd"),
                         decoration: InputDecoration(labelText: "Expiry Date",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(9.0),
