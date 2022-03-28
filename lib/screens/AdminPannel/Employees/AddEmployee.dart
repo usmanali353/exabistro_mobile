@@ -473,40 +473,44 @@ class _SignUpScreenState extends State<AddEmployee> {
                                 }).toList(),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child:  Card(
-                                elevation: 6,
-                                child: MultiSelectFormField(
-                                    errorText: "",
-                                    okButtonLabel: 'Ok',
-                                    cancelButtonLabel: 'Cancel',
-                                    textField: 'display',
-                                    valueField: 'value',
-                                    title: Text("Select Holidays",style: TextStyle(color: yellowColor,fontWeight: FontWeight.w400,fontSize: 16),),
-                                    fillColor: Colors.white12,
-                                    onSaved: (value) {
-                                      // if (value == null) return;
-                                      setState(() {
-                                        selectedHolidays.clear();
-                                        if(value!=null)
-                                          for(int i=0;i<value.length;i++){
-                                            selectedHolidays.add({
-                                              "Day":value[i]
-                                            });
-                                          }
-                                      });
-                                      print(selectedHolidays);
-                                    },
-                                    dataSource: [
-                                      {'display': "Sunday", 'value':0},
-                                      {'display': "Monday", 'value':1},
-                                      {'display': "Tuesday", 'value':2},
-                                      {'display': "Wednesday", 'value':3},
-                                      {'display': "Thursday", 'value':4},
-                                      {'display': "Friday", 'value':5},
-                                      {'display': "Saturday", 'value':6}
-                                    ]
+
+                            Visibility(
+                              visible: roles_type!=null&&roles_type!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child:  Card(
+                                  elevation: 6,
+                                  child: MultiSelectFormField(
+                                      errorText: "",
+                                      okButtonLabel: 'Ok',
+                                      cancelButtonLabel: 'Cancel',
+                                      textField: 'display',
+                                      valueField: 'value',
+                                      title: Text("Select Holidays",style: TextStyle(color: yellowColor,fontWeight: FontWeight.w400,fontSize: 16),),
+                                      fillColor: Colors.white12,
+                                      onSaved: (value) {
+                                        // if (value == null) return;
+                                        setState(() {
+                                          selectedHolidays.clear();
+                                          if(value!=null)
+                                            for(int i=0;i<value.length;i++){
+                                              selectedHolidays.add({
+                                                "Day":value[i]
+                                              });
+                                            }
+                                        });
+                                        print(selectedHolidays);
+                                      },
+                                      dataSource: [
+                                        {'display': "Sunday", 'value':0},
+                                        {'display': "Monday", 'value':1},
+                                        {'display': "Tuesday", 'value':2},
+                                        {'display': "Wednesday", 'value':3},
+                                        {'display': "Thursday", 'value':4},
+                                        {'display': "Friday", 'value':5},
+                                        {'display': "Saturday", 'value':6}
+                                      ]
+                                  ),
                                 ),
                               ),
                             ),
@@ -552,66 +556,74 @@ class _SignUpScreenState extends State<AddEmployee> {
                             //     ),
                             //   ),
                             // ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                            Visibility(
+                              visible:roles_type!=null&&roles_type!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
 
-                                decoration: BoxDecoration(
-                                    color: Colors.white12,
-                                    borderRadius: BorderRadius.circular(9)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FormBuilderDateTimePicker(
-                                    name: "Start Duty Time",
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    inputType: InputType.time,
-                                    validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
-                                    format: DateFormat("hh:mm:ss"),
-                                    decoration: InputDecoration(labelText: "Start Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(9.0),
-                                          borderSide: BorderSide(color: yellowColor, width: 2.0)
-                                      ),),
-                                    onChanged: (value){
-                                      setState(() {
-                                        this.start_time=value;
-                                      });
-                                    },
+                                  decoration: BoxDecoration(
+                                      color: Colors.white12,
+                                      borderRadius: BorderRadius.circular(9)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: FormBuilderDateTimePicker(
+                                      name: "Start Duty Time",
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      inputType: InputType.time,
+                                      validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
+                                      format: DateFormat("hh:mm:ss"),
+                                      decoration: InputDecoration(labelText: "Start Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(9.0),
+                                            borderSide: BorderSide(color: yellowColor, width: 2.0)
+                                        ),),
+                                      onChanged: (value){
+                                        setState(() {
+                                          this.start_time=value;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                            Visibility(
+                              visible:roles_type!=null&& roles_type!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
 
-                                decoration: BoxDecoration(
-                                    color: Colors.white12,
-                                    borderRadius: BorderRadius.circular(9)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FormBuilderDateTimePicker(
-                                    name: "End Duty Time",
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    inputType: InputType.time,
-                                    validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
-                                    format: DateFormat("hh:mm:ss"),
-                                    decoration: InputDecoration(labelText: "End Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(9.0),
-                                          borderSide: BorderSide(color: yellowColor, width: 2.0)
-                                      ),),
-                                    onChanged: (value){
-                                      setState(() {
-                                        this.end_time=value;
-                                      });
-                                    },
-                                  )
+                                  decoration: BoxDecoration(
+                                      color: Colors.white12,
+                                      borderRadius: BorderRadius.circular(9)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: FormBuilderDateTimePicker(
+                                      name: "End Duty Time",
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      inputType: InputType.time,
+                                      validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
+                                      format: DateFormat("hh:mm:ss"),
+                                      decoration: InputDecoration(labelText: "End Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(9.0),
+                                            borderSide: BorderSide(color: yellowColor, width: 2.0)
+                                        ),),
+                                      onChanged: (value){
+                                        setState(() {
+                                          this.end_time=value;
+                                        });
+                                      },
+                                    )
+                                  ),
                                 ),
                               ),
                             ),
+
+
                             Visibility(
                               visible: roles_type=="Rider",
                               child: Padding(
@@ -660,66 +672,72 @@ class _SignUpScreenState extends State<AddEmployee> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelText: "Salary Type",
-                                  alignLabelWithHint: true,
-                                  labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 16, color: yellowColor),
-                                  enabledBorder: OutlineInputBorder(
-                                  ),
-                                  focusedBorder:  OutlineInputBorder(
-                                    borderSide: BorderSide(color:
-                                    yellowColor),
-                                  ),
-                                ),
-                                validator: (value) => value == null
-                                    ? 'Please fill this field' : null,
-                                value: selectedSalaryType,
-                                onChanged: (Value) {
-                                  setState(() {
-                                  selectedSalaryType = Value;
-                                  });
-                                },
-                                items: salarytype.map((value) {
-                                  return  DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          value,
-                                          style:  TextStyle(color: yellowColor,fontSize: 15, fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                            Visibility(
+                              visible:roles_type!=null&&roles_type!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    labelText: "Salary Type",
+                                    alignLabelWithHint: true,
+                                    labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 16, color: yellowColor),
+                                    enabledBorder: OutlineInputBorder(
                                     ),
-                                  );
-                                }).toList(),
+                                    focusedBorder:  OutlineInputBorder(
+                                      borderSide: BorderSide(color:
+                                      yellowColor),
+                                    ),
+                                  ),
+                                  validator: (value) => value == null
+                                      ? 'Please fill this field' : null,
+                                  value: selectedSalaryType,
+                                  onChanged: (Value) {
+                                    setState(() {
+                                    selectedSalaryType = Value;
+                                    });
+                                  },
+                                  items: salarytype.map((value) {
+                                    return  DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            value,
+                                            style:  TextStyle(color: yellowColor,fontSize: 15, fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                controller: perHourSalary,
+                            Visibility(
+                              visible:roles_type!=null&& roles_type!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  controller: perHourSalary,
 
-                                style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
-                                obscureText: false,
-                                decoration: InputDecoration(
+                                  style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
 
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: yellowColor, width: 1.0)
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: yellowColor, width: 1.0)
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
+                                    ),
+                                    labelText: "Salary",
+                                    labelStyle: TextStyle(color:yellowColor, fontWeight: FontWeight.bold),
+
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
-                                  ),
-                                  labelText: "Salary",
-                                  labelStyle: TextStyle(color:yellowColor, fontWeight: FontWeight.bold),
-
+                                  validator: (String value) =>
+                                  value.isEmpty ? "This field is Required" : null,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
                                 ),
-                                validator: (String value) =>
-                                value.isEmpty ? "This field is Required" : null,
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.next,
                               ),
                             ),
                             Visibility(

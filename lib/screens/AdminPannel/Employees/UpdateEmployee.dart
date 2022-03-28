@@ -601,66 +601,72 @@ class _SignUpScreenState extends State<UpdateEmployee> {
                             //     ),
                             //   ),
                             // ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                            Visibility(
+                              visible: widget.userDetail['roles'][0]['name']!=null&&widget.userDetail['roles'][0]['name']!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
 
-                                decoration: BoxDecoration(
-                                    color: Colors.white12,
-                                    borderRadius: BorderRadius.circular(9)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FormBuilderDateTimePicker(
-                                    initialValue: start_time,
-                                    name: "Start Duty Time",
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    inputType: InputType.time,
-                                    validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
-                                    // initialValue: DateTime.parse(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.parse("0000-00-00 "+widget.userDetail['dutyStartTime']))),
-                                    format: DateFormat("hh:mm:ss"),
-                                    decoration: InputDecoration(labelText: "Start Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(9.0),
-                                          borderSide: BorderSide(color: yellowColor, width: 2.0)
-                                      ),),
-                                    onChanged: (value){
-                                      setState(() {
-                                        this.start_time=value;
-                                      });
-                                    },
+                                  decoration: BoxDecoration(
+                                      color: Colors.white12,
+                                      borderRadius: BorderRadius.circular(9)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: FormBuilderDateTimePicker(
+                                      initialValue: start_time,
+                                      name: "Start Duty Time",
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      inputType: InputType.time,
+                                      validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
+                                      // initialValue: DateTime.parse(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.parse("0000-00-00 "+widget.userDetail['dutyStartTime']))),
+                                      format: DateFormat("hh:mm:ss"),
+                                      decoration: InputDecoration(labelText: "Start Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(9.0),
+                                            borderSide: BorderSide(color: yellowColor, width: 2.0)
+                                        ),),
+                                      onChanged: (value){
+                                        setState(() {
+                                          this.start_time=value;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
+                            Visibility(
+                              visible: widget.userDetail['roles'][0]['name']!=null&&widget.userDetail['roles'][0]['name']!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
 
-                                decoration: BoxDecoration(
-                                    color: Colors.white12,
-                                    borderRadius: BorderRadius.circular(9)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FormBuilderDateTimePicker(
-                                    initialValue: end_time,
-                                    name: "End Duty Time",
-                                    style: Theme.of(context).textTheme.bodyText1,
-                                    inputType: InputType.time,
-                                    //initialValue: DateTime.parse(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.parse("0000-00-00 "+widget.userDetail['dutyEndTime']))),
-                                    validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
-                                    format: DateFormat("hh:mm:ss"),
-                                    decoration: InputDecoration(labelText: "End Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(9.0),
-                                          borderSide: BorderSide(color: yellowColor, width: 2.0)
-                                      ),),
-                                    onChanged: (value){
-                                      setState(() {
-                                        this.end_time=value;
-                                      });
-                                    },
+                                  decoration: BoxDecoration(
+                                      color: Colors.white12,
+                                      borderRadius: BorderRadius.circular(9)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: FormBuilderDateTimePicker(
+                                      initialValue: end_time,
+                                      name: "End Duty Time",
+                                      style: Theme.of(context).textTheme.bodyText1,
+                                      inputType: InputType.time,
+                                      //initialValue: DateTime.parse(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.parse("0000-00-00 "+widget.userDetail['dutyEndTime']))),
+                                      validator: FormBuilderValidators.compose( [FormBuilderValidators.required(context)]),
+                                      format: DateFormat("hh:mm:ss"),
+                                      decoration: InputDecoration(labelText: "End Duty time",labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
+                                        border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(9.0),
+                                            borderSide: BorderSide(color: yellowColor, width: 2.0)
+                                        ),),
+                                      onChanged: (value){
+                                        setState(() {
+                                          this.end_time=value;
+                                        });
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -713,65 +719,71 @@ class _SignUpScreenState extends State<UpdateEmployee> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DropdownButtonFormField<String>(
-                                decoration: InputDecoration(
-                                  labelText: "Salary Type",
-                                  alignLabelWithHint: true,
-                                  labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 16, color: yellowColor),
-                                  enabledBorder: OutlineInputBorder(
-                                  ),
-                                  focusedBorder:  OutlineInputBorder(
-                                    borderSide: BorderSide(color:
-                                    yellowColor),
-                                  ),
-                                ),
-                                validator: (value) => value == null
-                                    ? 'Please fill this field' : null,
-                                value: selectedSalaryType,
-                                onChanged: (Value) {
-                                  setState(() {
-                                    selectedSalaryType = Value;
-                                  });
-                                },
-                                items: salarytype.map((value) {
-                                  return  DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          value,
-                                          style:  TextStyle(color: yellowColor,fontSize: 15, fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                            Visibility(
+                              visible: widget.userDetail['roles'][0]['name']!=null&&widget.userDetail['roles'][0]['name']!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    labelText: "Salary Type",
+                                    alignLabelWithHint: true,
+                                    labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 16, color: yellowColor),
+                                    enabledBorder: OutlineInputBorder(
                                     ),
-                                  );
-                                }).toList(),
+                                    focusedBorder:  OutlineInputBorder(
+                                      borderSide: BorderSide(color:
+                                      yellowColor),
+                                    ),
+                                  ),
+                                  validator: (value) => value == null
+                                      ? 'Please fill this field' : null,
+                                  value: selectedSalaryType,
+                                  onChanged: (Value) {
+                                    setState(() {
+                                      selectedSalaryType = Value;
+                                    });
+                                  },
+                                  items: salarytype.map((value) {
+                                    return  DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Text(
+                                            value,
+                                            style:  TextStyle(color: yellowColor,fontSize: 15, fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
-                                controller: perHourSalary,
+                            Visibility(
+                              visible: widget.userDetail['roles'][0]['name']!=null&&widget.userDetail['roles'][0]['name']!="Vendor",
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                  controller: perHourSalary,
 
-                                style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
-                                obscureText: false,
-                                decoration: InputDecoration(
+                                  style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
+                                  obscureText: false,
+                                  decoration: InputDecoration(
 
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: yellowColor, width: 1.0)
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: yellowColor, width: 1.0)
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
+                                    ),
+                                    labelText: "Salary",
+                                    labelStyle: TextStyle(color:yellowColor, fontWeight: FontWeight.bold),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
-                                  ),
-                                  labelText: "Salary",
-                                  labelStyle: TextStyle(color:yellowColor, fontWeight: FontWeight.bold),
+                                  validator: (String value) =>
+                                  value.isEmpty ? "This field is Required" : null,
+                                  keyboardType: TextInputType.number,
+                                  textInputAction: TextInputAction.next,
                                 ),
-                                validator: (String value) =>
-                                value.isEmpty ? "This field is Required" : null,
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.next,
                               ),
                             ),
                             Visibility(

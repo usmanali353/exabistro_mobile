@@ -5152,7 +5152,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -8009,7 +8008,6 @@ class networksOperation{
       print("Semifinished Item json "+data[0]["semiFinishedItem"].toString());
       if(response.statusCode==200){
         return SemiFinishedDetail.semiFinishedDetailListFromJson(response.body);
-
       }
       else{
         Utils.showError(context, "Please Try Again");
@@ -8032,7 +8030,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{

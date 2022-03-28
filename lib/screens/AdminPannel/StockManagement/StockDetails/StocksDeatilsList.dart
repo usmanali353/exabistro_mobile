@@ -39,13 +39,14 @@ class _StocksListPageState extends State<StockDetailList>{
   List allUnitList=[];
   static final List<String> chartDropdownItems = [ 'Today','Last 7 days', 'Last month', 'Last year' ];
   bool isListVisible = false;
+  String currencyCode="-";
   List<ItemBrand> itemBrandList =[];
   String selectedCalculationType="wac";
 
   String getUnitName(int id){
     String size="";
     if(id!=null&&allUnitList!=null){
-      for(int i = 0;i < 5;i++){
+      for(int i = 0;i < allUnitList.length;i++){
         if(allUnitList[i]['id'] == id) {
             size = allUnitList[i]['name'];
         }
@@ -71,6 +72,13 @@ class _StocksListPageState extends State<StockDetailList>{
       setState(() {
         this.token = value.getString("token");
         this.selectedCalculationType=value.getString("selected_valuation_method");
+        networksOperation.getStoreById(context, token, widget.storeId).then((value){
+          setState(() {
+            if(value!=null){
+              currencyCode=value.currencyCode;
+            }
+          });
+        });
       });
     });
     print(token);
@@ -106,12 +114,12 @@ class _StocksListPageState extends State<StockDetailList>{
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Text((){
                     if(selectedCalculationType=="wac"){
-                      return "Average Inventory Cost: "+wac.toStringAsFixed(1);
+                      return "WAC: "+currencyCode+" "+wac.toStringAsFixed(1)+" Per "+getUnitName(widget.stockItems.unit);
                     }
                     if(selectedCalculationType=="fifo"){
-                      return "Inventory Cost (FIFO): "+fifo.toStringAsFixed(1);
+                      return "FIFO: "+currencyCode+" "+fifo.toStringAsFixed(1)+" Per "+getUnitName(widget.stockItems.unit);
                     }
-                      return "Inventory Cost (LIFO): "+lifo.toStringAsFixed(1);
+                      return "LIFO: "+currencyCode+" "+lifo.toStringAsFixed(1)+" Per "+getUnitName(widget.stockItems.unit);
                   }(),style: TextStyle(fontSize: 15),),
                 ),
               ),

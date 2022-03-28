@@ -38,7 +38,7 @@ Store _store;
   String getUnitName(int id){
     String size="";
     if(id!=null&&allUnitList!=null){
-      for(int i = 0;i < 5;i++){
+      for(int i = 0;i < allUnitList.length;i++){
         if(allUnitList[i]['id'] == id) {
           size = allUnitList[i]['name'];
         }

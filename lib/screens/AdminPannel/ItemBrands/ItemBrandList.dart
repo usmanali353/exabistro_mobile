@@ -91,7 +91,7 @@ class _ItemBrandListState extends ResumableState<ItemBrandList>{
           backgroundColor: yellowColor,
           isExtended: true,
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>  AddItemBrand(widget.storeId)));
+            push(context, MaterialPageRoute(builder: (context)=>  AddItemBrand(widget.storeId)));
           },
         ),
         // appBar: AppBar(
@@ -161,7 +161,7 @@ class _ItemBrandListState extends ResumableState<ItemBrandList>{
                         caption: 'Update',
                         onTap: () async {
                           //print(barn_lists[index]);
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateItemBrand(itemBrandList[index])));
+                          push(context,MaterialPageRoute(builder: (context)=>UpdateItemBrand(itemBrandList[index])));
                         },
                       ),
                     ],

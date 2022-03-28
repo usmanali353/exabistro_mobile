@@ -269,7 +269,7 @@ class _AddPriorityState extends State<AddVoucher> {
                           networksOperation.addVoucher(context, token, data)
                               .then((value){
                             if(value){
-                              Navigator.of(context).pop();
+                              // Navigator.of(context).pop();
                               Navigator.pop(context);
                               Utils.showSuccess(context, "Successfully Added");
                             }

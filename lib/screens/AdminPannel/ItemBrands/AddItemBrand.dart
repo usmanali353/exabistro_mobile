@@ -152,7 +152,6 @@ class _AddItemBrandState extends State<AddItemBrand> {
                           )).then((value){
                             if(value){
                               Navigator.of(context).pop();
-                              Navigator.pop(context);
                               Utils.showSuccess(context, "Added Successfully");
                              // Navigator.pop(context);
                             }
