@@ -142,6 +142,7 @@ class _SalaryExpenseListState extends ResumableState<SalaryExpenseList> {
         key: _refreshIndicatorKey,
         onRefresh: (){
           return Utils.check_connectivity().then((result){
+
             // if(result){
               networksOperation.getAllSalaryExpense(context, token,widget.storeId,chartDropdownValue[selectedDays])
                   .then((value) {
@@ -234,6 +235,7 @@ class _SalaryExpenseListState extends ResumableState<SalaryExpenseList> {
                                       ),
                                     ),
                                     Text(
+
                                       //'Rasheed Ahmed',
                                       salaryExpenseList[index].user.firstName+" "+salaryExpenseList[index].user.lastName,
                                       style: TextStyle(

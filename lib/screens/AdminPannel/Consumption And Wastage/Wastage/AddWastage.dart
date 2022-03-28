@@ -129,6 +129,7 @@ class _AddWastageState extends State<AddWastage> {
                       }).toList(),
                     ),
                   ):Container(),
+                  SizedBox(height: 8,),
 
                   InkWell(
                     onTap: (){
@@ -165,7 +166,7 @@ class _AddWastageState extends State<AddWastage> {
                             borderRadius: BorderRadius.circular(4),
                             color: yellowColor
                         ),
-                        child: Center(child: Text("Proceed",style: TextStyle(color: BackgroundColor, fontWeight: FontWeight.bold, fontSize: 30),)),
+                        child: Center(child: Text("Save",style: TextStyle(color: BackgroundColor, fontWeight: FontWeight.bold, fontSize: 30),)),
                       ),
                     ),
                   )

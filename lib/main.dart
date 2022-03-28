@@ -114,7 +114,9 @@ class MyApp extends StatelessWidget {
           supportedLocales: localizationDelegate.supportedLocales,
           locale: localizationDelegate.currentLocale,
           theme: ThemeData(primarySwatch: Colors.amber),
-          home: SplashScreen(),
+          home:
+          //SimpleTable()
+          SplashScreen(),
           //AwesomeCard()// MainPage()
 
         ),

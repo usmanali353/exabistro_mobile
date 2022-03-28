@@ -169,10 +169,13 @@ String getUnitName(id){
                     width: MediaQuery.of(context).size.width/4,
                     padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                     decoration: BoxDecoration(border: Border.all(width: 0.5),color: Colors.grey[300]),
-                    child: Text(
-                      header,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline1.copyWith(fontWeight: FontWeight.w700, fontSize: 14.0,color: Colors.black87),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        header,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline1.copyWith(fontWeight: FontWeight.w700, fontSize: 14.0,color: yellowColor),
+                      ),
                     ),
                   );
                 },
@@ -181,10 +184,13 @@ String getUnitName(id){
                       width: MediaQuery.of(context).size.width/4,
                     padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
                     decoration: BoxDecoration(border: Border.all(width: 0.5, color: Colors.grey.withOpacity(0.5))),
-                    child: Text(
-                      value,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 14.0, color: Colors.grey[900]),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        value,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12.5, fontWeight: FontWeight.bold, color: blueColor),
+                      ),
                     ),
                   );
                 },

@@ -525,6 +525,31 @@ class _DiscountItemsListState extends ResumableState<Reservations> {
                                     ),
                                   ],
                                 ),
+                                // Row(
+                                //   children: [
+                                //     Padding(
+                                //       padding: const EdgeInsets.only(right: 9),
+                                //       child: FaIcon(
+                                //         FontAwesomeIcons.userTie,
+                                //         color: PrimaryColor,
+                                //         size: 20,
+                                //       ),
+                                //     ),
+                                //     Text(
+                                //       "Email: ",
+                                //       style: TextStyle(
+                                //           color: yellowColor,
+                                //           fontSize: 17,
+                                //           fontWeight: FontWeight.bold),
+                                //     ),
+                                //     Text(reservationList[index]['email'].toString(),
+                                //       style: TextStyle(
+                                //           color: PrimaryColor,
+                                //           fontSize: 15,
+                                //           fontWeight: FontWeight.bold),
+                                //     ),
+                                //   ],
+                                // ),
                                 Row(
                                   children: [
                                     Padding(

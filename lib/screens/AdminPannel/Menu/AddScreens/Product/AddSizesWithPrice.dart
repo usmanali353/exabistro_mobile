@@ -128,85 +128,82 @@ class _AddToopingsState extends State<AddSisezWithPrice> {
           )),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: new BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: new ListView.builder(
-                itemCount: additionals.length != null ? additionals.length : 0,
-                itemBuilder: (BuildContext context, int index) {
-                  if (_counter.length < additionals.length) {
-                    _counter.add(0);
-                  }
-                  return new Card(
-                    color: Colors.white24,
-                    child: new Container(
-                      padding: new EdgeInsets.all(10.0),
-                      child: new Column(
-                        children: <Widget>[
-                          new CheckboxListTile(
-                              value: inputs[index],
-                              title: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  new Text(
-                                    additionals[index].name,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  Container(
-                                    //color: Colors.black12,
-                                    height: 30,
-                                    width: 100,
+          child: new ListView.builder(
+              itemCount: additionals.length != null ? additionals.length : 0,
+              itemBuilder: (BuildContext context, int index) {
+                if (_counter.length < additionals.length) {
+                  _counter.add(0);
+                }
+                return new Card(
+                  color: Colors.white24,
+                  child: new Container(
+                    padding: new EdgeInsets.all(10.0),
+                    child: new Column(
+                      children: <Widget>[
+                        new CheckboxListTile(
+                            value: inputs[index],
+                            title: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                new Text(
+                                  additionals[index].name,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Container(
+                                  //color: Colors.black12,
+                                  height: 30,
+                                  width: 100,
 
-                                    child:
-                                        Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text(
-                                          "x" + _counter[index].toString(),
-                                          style: TextStyle(color: Colors.white),
+                                  child:
+                                      Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        "x" + _counter[index].toString(),
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      SizedBox(
+                                        width: 25,
+                                        height: 25,
+                                        child: FloatingActionButton(
+                                          onPressed: () {
+                                            if (inputs[index]) {
+                                              _showDialog(index);
+                                            }
+                                          },
+                                          elevation: 2,
+                                          heroTag: "qwe$index",
+                                          tooltip: 'Add',
+                                          child: Icon(Icons.add),
+                                          backgroundColor: Color(0xFF172a3a),
                                         ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        SizedBox(
-                                          width: 25,
-                                          height: 25,
-                                          child: FloatingActionButton(
-                                            onPressed: () {
-                                              if (inputs[index]) {
-                                                _showDialog(index);
-                                              }
-                                            },
-                                            elevation: 2,
-                                            heroTag: "qwe$index",
-                                            tooltip: 'Add',
-                                            child: Icon(Icons.add),
-                                            backgroundColor: Color(0xFF172a3a),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              controlAffinity: ListTileControlAffinity.leading,
-                              onChanged: (bool val) {
-                                ItemChange(val, index);
-                                print(inputs[index].toString() +
-                                    index.toString());
-                                setState(() {
-                                  if (!inputs[index]) {
-                                    _counter[index] = 0;
-                                  }
-                                });
-                              })
-                        ],
-                      ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            onChanged: (bool val) {
+                              ItemChange(val, index);
+                              print(inputs[index].toString() +
+                                  index.toString());
+                              setState(() {
+                                if (!inputs[index]) {
+                                  _counter[index] = 0;
+                                }
+                              });
+                            })
+                      ],
                     ),
-                  );
-                }),
-          )),
+                  ),
+                );
+              })),
     );
   }
 }

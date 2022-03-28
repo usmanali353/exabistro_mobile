@@ -274,7 +274,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             children: <Widget>[
                               SlideInLeft(
                                 child: IconButton(
-                                  icon:  FaIcon(FontAwesomeIcons.language, color: yellowColor, size: 40,),
+                                  icon:  FaIcon(FontAwesomeIcons.language, color: Colors.transparent, size: 40,),
                                   onPressed: () => _onActionSheetPress(context),
                                 ),
                               ),

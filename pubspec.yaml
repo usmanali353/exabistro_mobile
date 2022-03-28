@@ -108,6 +108,7 @@ dependencies:
   #flutter_bluetooth_basic: ^0.1.5
   #image: ^2.1.4
   flutter_switch: ^0.3.2
+  json_table: ^2.0.1
 
 
 
@@ -133,11 +134,9 @@ flutter:
     - assets/
     - assets/newnotfounds.jpg
     - assets/i18n/
-    - assets/logo9.png
     - assets/emptycart.png
     - assets/noDataFound.png
     - assets/caspian11.png
-    - assets/image.jpg
     - assets/gifimage2.gif
     - assets/deliveryBoygif.gif
 
