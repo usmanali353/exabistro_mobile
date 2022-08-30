@@ -247,8 +247,7 @@ class _MainPageState extends State<MainPage>
                                         Card(
                                           color: yellowColor,
                                           elevation: 8,
-                                          child: DropdownButton
-                                            (
+                                          child: DropdownButton(
                                               isDense: true,
 
                                               value: actualDropdown==null?chartDropdownItems[0]:actualDropdown,//actualDropdown,

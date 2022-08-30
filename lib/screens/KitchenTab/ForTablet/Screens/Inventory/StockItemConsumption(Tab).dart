@@ -1,5 +1,8 @@
 import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
+import 'package:capsianfood/model/Products.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/ProductIngredienConsumptionDetails.dart';
+import 'package:capsianfood/screens/AdminPannel/Consumption%20And%20Wastage/Wastage/ProductWastage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:json_table/json_table.dart';
@@ -8,9 +11,9 @@ import 'package:capsianfood/networks/network_operations.dart';
 
 
 class StockItemConsumptionForTab extends StatefulWidget {
-  var stockItemId;
+  var stockItemId, name, storeId;
 
-  StockItemConsumptionForTab({this.stockItemId});
+  StockItemConsumptionForTab({this.stockItemId, this.name, this.storeId});
 
   @override
   _StockItemConsumptionState createState() => _StockItemConsumptionState();
@@ -21,7 +24,9 @@ class _StockItemConsumptionState extends State<StockItemConsumptionForTab> {
   String token;
   bool isTableVisible=false;
   var stockItemUsage=[],units=[];
-
+  List<Products> allProduct=[];
+  Products selectedProducts;
+  int productId=0;
   String getUnitName(id){
     String size="None";
     if(id!=null&&units!=null){
@@ -38,75 +43,66 @@ class _StockItemConsumptionState extends State<StockItemConsumptionForTab> {
     SharedPreferences.getInstance().then((prefs){
       setState(() {
         this.token=prefs.getString("token");
+        allProduct.add(Products(name: "All"));
         WidgetsBinding.instance
             .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+        networksOperation.getAllProducts(context,widget.storeId).then((value){
+          setState(() {
+            if(value!=null&&value.length>0){
+              for(int i=0;i<value.length;i++){
+                allProduct.add(value[i]);
+              }
+              selectedProducts=allProduct[0];
+            }
+          });
+        });
       });
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Consumption',
+         widget.name+""  + ' Consumption',
           style: TextStyle(
               color: yellowColor,
               fontWeight: FontWeight.bold,
               fontSize: 30),
         ),
-        actions: [
-          // Center(
-          //   child: DropdownButton(
-          //       isDense: true,
-          //
-          //       value: selectedDuration,
-          //       onChanged: (value) => setState(()
-          //       {
-          //         selectedDuration = value;
-          //         if(selectedDuration=="Today"){
-          //           setState(() {
-          //             lastDays=1;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //         if(selectedDuration=="Last 7 days"){
-          //           setState(() {
-          //             lastDays=7;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //         if(selectedDuration=="Last month"){
-          //           setState(() {
-          //             lastDays=30;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //         if(selectedDuration=="Last year"){
-          //           setState(() {
-          //             lastDays=365;
-          //             isTableVisible=false;
-          //             WidgetsBinding.instance
-          //                 .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-          //           });
-          //         }
-          //       }),
-          //       items: chartDropdownItems.map((title)
-          //       {
-          //         return DropdownMenuItem
-          //           (
-          //           value: title,
-          //           child: Text(title, style: TextStyle(color: yellowColor, fontWeight: FontWeight.w400, fontSize: 14.0)),
-          //         );
-          //       }).toList()
-          //   ),
-          // )
+          actions: [
+            Center(
+              child: DropdownButton(
+                  value: selectedProducts,
+                  onChanged: (value) => setState(()
+                  {
+                    selectedProducts = value;
+                    if(selectedProducts!=null&&selectedProducts.name!="All"){
+                      productId=selectedProducts.id;
+                      isTableVisible=false;
+                      WidgetsBinding.instance
+                          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                    }
+                    if(selectedProducts!=null&&selectedProducts.name=="All"){
+                      productId=0;
+                      isTableVisible=false;
+                      WidgetsBinding.instance
+                          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                    }
+                  }),
+                  items: allProduct.map((title)
+                  {
+                    return DropdownMenuItem
+                      (
+                      value: title,
+                      child: Text(title.name, style: TextStyle(color: yellowColor, fontWeight: FontWeight.w400, fontSize: 14.0)),
+                    );
+                  }).toList()
+              ),
+            )
+
         ],
         centerTitle: true,
         iconTheme: IconThemeData(
@@ -190,7 +186,42 @@ class _StockItemConsumptionState extends State<StockItemConsumptionForTab> {
                           ),
                         );
                       },
+                      onRowSelect: (index,selectedValue)async{
+                        Products products= allProduct.where((element) => element.name==selectedValue["productName"]).toList()[0];
+                        await showMenu(
+                          context: context,
+                          position: RelativeRect.fromLTRB(100, 100, 0, 100),
+                          items: [
+                            PopupMenuItem<String>(
+                                child: const Text('Consumption Details'), value: 'consumption'),
+                            PopupMenuItem<String>(
+                                child: const Text('Wastage Details'), value: 'wastage'),
+                          ],
+                          elevation: 8.0,
+                        ).then((value){
+                          if(value=="consumption"){
+                            if(allProduct.length==1){
+                              Utils.showError(context,"Wait...");
+                            }else if(selectedValue["itemSold"]>0&&allProduct!=null&&allProduct.length>0){
 
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=>ProductIngredienConsumptionDetails(products)));
+                            }else{
+                              Utils.showError(context,"No Details Found");
+                            }
+                          }else if(value=="wastage"){
+                            if(allProduct.length==1){
+                              Utils.showError(context,"Wait...");
+                            }else if(selectedValue["itemSold"]>0&&allProduct!=null&&allProduct.length>0){
+                              Navigator.push(context, MaterialPageRoute(builder:(context)=>ProductWastage(products)));
+                            }else{
+
+                            }
+
+                          }
+                        });
+
+
+                      },
                     ),
                   ),
                 ],

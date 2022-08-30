@@ -526,7 +526,7 @@ class _StocksListPageState extends State<StocksList>{
                                         Row(
                                           children: [
                                             Text(
-                                              'Quantity: ',
+                                              'On-Hand Qty.: ',
                                               style: TextStyle(
                                                 color: blueColor,
                                                 fontSize: 15,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -165,7 +166,7 @@ class _ProductIngredienConsumptionDetailsState extends State<ProductIngredienCon
                                 child: Text(
                                   value,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12.0, color: blueColor),
+                                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12.0, fontWeight: FontWeight.bold, color: blueColor),
                                 ),
                               ),
                             );

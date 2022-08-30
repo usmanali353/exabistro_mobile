@@ -3,8 +3,10 @@ import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Categories.dart';
 import 'package:capsianfood/screens/AdminPannel/Home/OrderDetail.dart';
+import 'package:capsianfood/screens/WelcomeScreens/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 
@@ -48,6 +50,19 @@ class _PastOrdersState extends State<RiderDeliveryHistory> {
 
     return Scaffold(
      appBar: AppBar(
+       actions: [
+         IconButton(
+           icon:  FaIcon(FontAwesomeIcons.signOutAlt, color: PrimaryColor, size: 25,),
+           onPressed: (){
+             SharedPreferences.getInstance().then((value) {
+               value.remove("token");
+               value.remove("reviewToken");
+               value.remove("login_response");
+               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
+             } );
+           },
+         ),
+       ],
        backgroundColor: BackgroundColor ,
        title: Text('History', style: TextStyle(
            color: yellowColor,

@@ -18,6 +18,7 @@ import 'package:capsianfood/screens/AdminPannel/StockManagement/InventoryValuati
 import 'package:capsianfood/screens/AdminPannel/StockManagement/StocksList.dart';
 import 'package:capsianfood/screens/AdminPannel/Taxes/TaxesList.dart';
 import 'package:capsianfood/screens/AdminPannel/Vouchers/VoucherList.dart';
+import 'package:capsianfood/screens/AdminPannel/WeightedAverageAnalysis/WeightedAnalysisTypesList.dart';
 import 'package:capsianfood/screens/Tables/TablesList.dart';
 import 'package:capsianfood/screens/WelcomeScreens/SplashScreen.dart';
 import 'package:flutter/cupertino.dart';

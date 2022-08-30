@@ -8470,7 +8470,7 @@ class networksOperation{
         "StockItemId":stockItemId,
         "ProductId":productId,
         "SizeId":sizeId,
-        "WastageQuantity":wastageQuantity,
+        "WastageQuanity":wastageQuantity,
         "EntryDate":EntryDate.toIso8601String(),
         "SemiFinishedId":semiFinishedId,
          "Unit":unit
@@ -8523,4 +8523,6 @@ class networksOperation{
     }
     return null;
   }
+
+  
 }

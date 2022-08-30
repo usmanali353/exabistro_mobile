@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -853,21 +854,33 @@ class _InventoryListForTabletState extends State<InventoryListForTablet> {
       position: RelativeRect.fromLTRB(100, 100, 0, 100),
       items: [
         PopupMenuItem<String>(
-            child: const Text('Add Wastage',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: blueColor,
-                  fontSize: 16
-              ),
+            child: Row(
+              children: [
+                FaIcon(FontAwesomeIcons.trashAlt, color: yellowColor, size: 20,),
+                SizedBox(width: 6,),
+                const Text('Add Wastage',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: blueColor,
+                      fontSize: 16
+                  ),
+                )
+              ],
             ), value: 'wastage'),
         PopupMenuItem<String>(
-            child: const Text('Usage',
-              style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: blueColor,
-              fontSize: 16
-            ),
-            ), value: 'usage', ),
+            child: Row(
+              children: [
+                FaIcon(FontAwesomeIcons.chartPie, color: yellowColor, size: 20,),
+                SizedBox(width: 6,),
+                Text('Usage',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: blueColor,
+                      fontSize: 16
+                  ),
+                ),
+              ],
+            ),value: 'usage', ),
       ],
       elevation: 8.0,
     ).then((value){
@@ -875,7 +888,7 @@ class _InventoryListForTabletState extends State<InventoryListForTablet> {
         Navigator.push(context, MaterialPageRoute(builder: (context) => StockDetailList(widget.storeId,stockObj)));
       }
       else if(value == "usage"){
-        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemConsumptionForTab(stockItemId: stockObj.id,)));
+        Navigator.push(context,MaterialPageRoute(builder: (context)=> StockItemConsumptionForTab(stockItemId: stockObj.id, name:stockObj.name,storeId:stockObj.storeId)));
       }
     });
   }

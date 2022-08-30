@@ -164,7 +164,7 @@ class _ProductWastageState extends State<ProductWastage> {
                                 child: Text(
                                   value,
                                   textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyText1.copyWith(fontSize: 12.0, color: blueColor),
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0, color: blueColor),
                                 ),
                               ),
                             );
