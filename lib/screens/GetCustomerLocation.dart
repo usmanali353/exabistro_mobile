@@ -26,6 +26,7 @@ class _DirectionMapScreenState extends State<GetCutomerLocation> {
   GoogleMapController mapController;
  //Location _location = Location();
   final Geolocator _geolocator = Geolocator();
+
   List<Marker> myMarker = [];
   Address address;
   Position _currentPosition;
