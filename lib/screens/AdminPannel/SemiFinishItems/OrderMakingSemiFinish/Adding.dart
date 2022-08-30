@@ -539,7 +539,7 @@ class _AddSemiFinishStockState extends State<AddSemiFinishDetail> {
                               }
                             });
                             Navigator.pop(context);
-                            Navigator.of(context).pop();
+                            Utils.showSuccess(context, "Added Successfully");
                           }
                         });
 

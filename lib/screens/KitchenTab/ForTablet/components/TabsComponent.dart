@@ -3,6 +3,9 @@ import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/Inventory/InventoryListForTablet.dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/PreparingOrdersForKitchen(Tab).dart';
+import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/ReDesigned_Screens/KitchenDisplayForPreparing.dart';
+import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/ReDesigned_Screens/KitchenDisplayForReady.dart';
+import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/ReDesigned_Screens/KitchenDisplayForReceived.dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/ReadyOrdersForKitchen(Tab).dart';
 import 'package:capsianfood/screens/KitchenTab/ForTablet/Screens/ReceivedOrdersForKitchen(Tab).dart';
 import 'package:capsianfood/screens/WelcomeScreens/SplashScreen.dart';
@@ -232,9 +235,12 @@ class KitchenWidgetState extends State<KitchenTabsScreen> with SingleTickerProvi
                 ]),
           ),
           body: TabBarView(children: [
-            ReceivedOrdersScreenForTab(widget.storeId),
-            PreparingOrdersScreenForTab(widget.storeId),
-            ReadyOrdersScreenForTab(widget.storeId),
+            KitchenDisplayForReceived(widget.storeId),
+            //ReceivedOrdersScreenForTab(widget.storeId),
+            KitchenDisplayForPreparing(widget.storeId),
+            //PreparingOrdersScreenForTab(widget.storeId),
+            //ReadyOrdersScreenForTab(widget.storeId),
+            KitchenDisplayForReady(widget.storeId)
           ]),
         )
     );

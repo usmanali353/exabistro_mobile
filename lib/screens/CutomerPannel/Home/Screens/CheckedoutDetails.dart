@@ -817,6 +817,7 @@ class _CheckedoutDetailsState extends State<CheckedoutDetails> {
                                "ExpiryDate": cardData!=null?cardData['ExpiryDate']:null,
                                "OrderTaxes":orderTaxList,
                                "VoucherCode": widget.voucher,
+                               "CreatedOn":DateTime.now()
                                // "MobileNo": "03123456789",
                                // "CnicLast6Digits": "345678"
 

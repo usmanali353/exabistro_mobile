@@ -149,62 +149,72 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                       //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              //color: Colors.white12,
-                              child: _buildChips()
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Card(
-                                    elevation:8,
-                                    child: Container(
-                                      width: 200,
+                          Row(
+                            mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width,
                                       height: 50,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: yellowColor, width: 2),
-                                        //color: yellowColor,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 14, right: 14),
-                                        child: Row(
-                                          children: [
-                                            Text("Total Orders: ",
-                                              style: TextStyle(
-                                                  fontSize: 25,
-                                                  color: yellowColor,
-                                                  fontWeight: FontWeight.bold
+                                      //color: Colors.white12,
+                                      child: _buildChips()
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Card(
+                                          elevation:8,
+                                          child: Container(
+                                            width: 200,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: yellowColor, width: 2),
+                                              //color: yellowColor,
+                                              borderRadius: BorderRadius.circular(4),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 14, right: 14),
+                                              child: Row(
+                                                children: [
+                                                  Text("Total Orders: ",
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: yellowColor,
+                                                        fontWeight: FontWeight.bold
+                                                    ),
+                                                  ),
+                                                  Text(orderList!=null?orderList.length.toString():"0",
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: PrimaryColor,
+                                                        fontWeight: FontWeight.bold
+                                                    ),
+                                                  )
+                                                ],
                                               ),
                                             ),
-                                            Text(orderList!=null?orderList.length.toString():"0",
-                                              style: TextStyle(
-                                                  fontSize: 25,
-                                                  color: PrimaryColor,
-                                                  fontWeight: FontWeight.bold
-                                              ),
-                                            )
-                                          ],
+                                            //child:  _buildChips()
+                                          ),
                                         ),
-                                      ),
-                                      //child:  _buildChips()
-                                    ),
-                                  ),
-                                ],
-                              )
+                                      ],
+                                    )
+                                ),
+                              ),
+                            ],
                           ),
+
                           Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Container(
-                              height: MediaQuery.of(context).size.height / 1.45,
+                              height: 550,
                               width: MediaQuery.of(context).size.width,
                               child:Scrollbar(
                                 child: ListView.builder(
@@ -227,13 +237,13 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                                               child: Column(
                                                 children: [
                                                   Stack(
-                                                    overflow: Overflow.visible,
+                                                    clipBehavior: Clip.none,
                                                     children: <Widget>[
                                                       Padding(
                                                         padding: const EdgeInsets.all(8.0),
                                                         child: Container(
                                                           width: MediaQuery.of(context).size.width,
-                                                          height: MediaQuery.of(context).size.height / 5,
+                                                          height: 137,
                                                           //color: Colors.white12,
                                                           child: Column(
                                                             children: [
@@ -373,31 +383,31 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                                                                   ],
                                                                 ),
                                                               ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.only(top: 8, bottom: 2, left: 5, right: 5),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        Text("Status: ", style: TextStyle(
-                                                                            fontSize: 20,
-                                                                            color: yellowColor,
-                                                                            fontWeight: FontWeight.bold
-                                                                        ),
-                                                                        ),
-                                                                        Text( getStatus(orderList!=null?orderList[index]['orderStatus']:null),
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              color: PrimaryColor,
-                                                                              fontWeight: FontWeight.bold
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
+                                                              // Padding(
+                                                              //   padding: const EdgeInsets.only(top: 8, bottom: 2, left: 5, right: 5),
+                                                              //   child: Row(
+                                                              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              //     children: [
+                                                              //       Row(
+                                                              //         children: [
+                                                              //           Text("Status: ", style: TextStyle(
+                                                              //               fontSize: 20,
+                                                              //               color: yellowColor,
+                                                              //               fontWeight: FontWeight.bold
+                                                              //           ),
+                                                              //           ),
+                                                              //           Text( getStatus(orderList!=null?orderList[index]['orderStatus']:null),
+                                                              //             style: TextStyle(
+                                                              //                 fontSize: 20,
+                                                              //                 color: PrimaryColor,
+                                                              //                 fontWeight: FontWeight.bold
+                                                              //             ),
+                                                              //           ),
+                                                              //         ],
+                                                              //       ),
+                                                              //     ],
+                                                              //   ),
+                                                              // ),
                                                               Padding(
                                                                 padding: const EdgeInsets.only(left: 5, top: 5),
                                                                 child: Row(
@@ -432,7 +442,7 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                                                   Padding(
                                                     padding: const EdgeInsets.all(4),
                                                     child: Container(
-                                                      height: MediaQuery.of(context).size.height /3.5,
+                                                      height: 250,
                                                       //color: Colors.transparent,
                                                       child: ListView.builder(
                                                           padding: EdgeInsets.all(4),
@@ -528,7 +538,7 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                                                                               SizedBox(width: 90,),
                                                                               Visibility(
                                                                                 visible: orderList[index]['orderItems'][i]['orderItemStatus']==1,
-                                                                                  child: SpinKitPouringHourGlass(color: yellowColor)
+                                                                                  child: SpinKitPouringHourGlass(color: blueColor)
                                                                               ),
                                                                               Row(
                                                                                 children: [
@@ -536,15 +546,15 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                                                                                     visible: orderList[index]['orderItems'][i]['orderItemStatus']==2,
                                                                                     child: FaIcon(FontAwesomeIcons.checkDouble, color: Colors.green, size: 25,),
                                                                                   ),
-                                                                                  Visibility(
-                                                                                    visible: orderList[index]['orderItems'][i]['orderItemStatus']==2,
-                                                                                    child: Text("Done", style: TextStyle(
-                                                                                        color: yellowColor,
-                                                                                        fontSize: 18,
-                                                                                        fontWeight: FontWeight.bold
-                                                                                    ),
-                                                                                    ),
-                                                                                  ),
+                                                                                  // Visibility(
+                                                                                  //   visible: orderList[index]['orderItems'][i]['orderItemStatus']==2,
+                                                                                  //   child: Text("Done", style: TextStyle(
+                                                                                  //       color: blueColor,
+                                                                                  //       fontSize: 18,
+                                                                                  //       fontWeight: FontWeight.bold
+                                                                                  //   ),
+                                                                                  //   ),
+                                                                                  // ),
                                                                                 ],
                                                                               ),
                                                                             ],
@@ -700,6 +710,7 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
                                                                   fontSize: 25
                                                               ),),
                                                               Countdown(
+                                                                minutes:orderList[index]["estimatedTime"],
                                                                 animation: StepTween(
                                                                   begin: levelClock,
                                                                   // orderList[index]['estimatedPrepareTime']
@@ -899,9 +910,9 @@ class _KitchenTabViewState extends State<PreparingOrdersScreenForTab> with Ticke
 }
 
 class Countdown extends AnimatedWidget {
-  Countdown({Key key, this.animation}) : super(key: key, listenable: animation);
+  Countdown({Key key, this.animation,this.minutes}) : super(key: key, listenable: animation);
   Animation<int> animation;
-
+  int minutes;
   @override
   build(BuildContext context) {
     Duration clockTimer = Duration(seconds: animation.value);

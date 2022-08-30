@@ -237,9 +237,8 @@ class _AddPriorityState extends State<AddTaxes> {
                           networksOperation.addTax(context, token, data)
                               .then((value){
                             if(value!=null){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
-                              Utils.showSuccess(context, "Successfully Added");
+                              Utils.showSuccess(context, "Tax successfully Added");
                             }
                           });
                         }else{

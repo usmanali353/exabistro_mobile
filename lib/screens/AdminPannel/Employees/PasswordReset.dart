@@ -222,8 +222,8 @@ class _SignUpScreenState extends State<ResetPassword> {
       print(jsonEncode(data));
       networksOperation.resetPassword(context, token,data).then((value) {
         if(value){
-          Navigator.of(context).pop();
           Navigator.pop(context);
+          Utils.showSuccess(context,"Password is Reset");
         }
       });
     }

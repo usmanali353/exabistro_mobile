@@ -165,7 +165,6 @@ class _UpdateItemBrandState extends State<UpdateItemBrand> {
                             brandLogo: picked_image
                           )).then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                              Utils.showSuccess(context, "Update Successfully");
                             }

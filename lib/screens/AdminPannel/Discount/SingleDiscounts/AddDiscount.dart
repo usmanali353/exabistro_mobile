@@ -321,7 +321,6 @@ class _AddDiscountState extends State<AddDiscount> {
                           if(result){
                             networksOperation.addDiscount(context, token, discount).then((value) {
                               if(value){
-                                Navigator.of(context).pop();
                                 Navigator.pop(context);
                                 Utils.showSuccess(context, "Successfully Added");
 

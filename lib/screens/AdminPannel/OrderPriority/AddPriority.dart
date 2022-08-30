@@ -197,7 +197,6 @@ class _AddPriorityState extends State<AddPriority> {
                           networksOperation.addOrderPriority(context, token, data)
                               .then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                               Utils.showSuccess(context, "Successfully Added");
                             }

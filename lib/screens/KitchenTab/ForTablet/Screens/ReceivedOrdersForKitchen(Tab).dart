@@ -131,543 +131,545 @@ class _KitchenTabViewState extends State<ReceivedOrdersScreenForTab>{
                       //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
                       child: Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              //color: Colors.black38,
-                              child: Center(
-                                child: _buildChips(),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.all(3.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Card(
-                                    elevation:8,
-                                    child: Container(
-                                      width: 200,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: yellowColor, width: 2),
-                                        //color: yellowColor,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(left: 14, right: 14),
-                                        child: Row(
-                                          children: [
-                                            Text("Total Orders: ",
-                                              style: TextStyle(
-                                                  fontSize: 25,
-                                                  color: yellowColor,
-                                                  fontWeight: FontWeight.bold
-                                              ),
-                                            ),
-                                            Text(orderList!=null?orderList.length.toString():"0",
-                                              style: TextStyle(
-                                                  fontSize: 25,
-                                                  color: PrimaryColor,
-                                                  fontWeight: FontWeight.bold
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      //child:  _buildChips()
+                          Row(
+                            mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    //color: Colors.black38,
+                                    child: Center(
+                                      child: _buildChips(),
                                     ),
                                   ),
-                                ],
-                              )
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height / 1.45,
-                              width: MediaQuery.of(context).size.width,
-                              child:Scrollbar(
-                                child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: orderList!=null?orderList.length:0,
-                                    itemBuilder: (context,int index){
-                                      return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Card(
-                                            elevation: 8,
-                                            color: Colors.white,
-                                            child: Container(
-                                              height: MediaQuery.of(context).size.height / 1.2,
-                                              width: MediaQuery.of(context).size.width / 3.2,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                //border: Border.all(color: yellowColor, width: 2),
-                                                  color: BackgroundColor,
+                                ),
+                              ),
 
-                                              ),
-                                              //color: Colors.black38,
-                                              child: Column(
+                              Expanded(
+                                child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Card(
+                                          elevation:8,
+                                          child: Container(
+                                            width: 200,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: yellowColor, width: 2),
+                                              //color: yellowColor,
+                                              borderRadius: BorderRadius.circular(4),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 14, right: 14),
+                                              child: Row(
                                                 children: [
-                                                  Stack(
-                                                    overflow: Overflow.visible,
-                                                    children: <Widget>[
-                                                      Padding(
-                                                        padding: const EdgeInsets.all(8.0),
-                                                        child: Container(
-                                                          width: MediaQuery.of(context).size.width,
-                                                          height: MediaQuery.of(context).size.height / 5,
-                                                          //color: Colors.white12,
-                                                          child: Column(
-                                                            children: [
-                                                              Card(
-                                                                elevation:6,
-                                                                color: yellowColor,
-                                                                child: Container(
-                                                                  width: MediaQuery.of(context).size.width,
-                                                                  height: 40,
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius: BorderRadius.circular(4),
-                                                                      color: yellowColor
-                                                                  ),
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                                    children: [
-                                                                      Row(
-                                                                        children: [
-                                                                          Text('Order ID: ',
-                                                                            style: TextStyle(
-                                                                                fontSize: 35,
-                                                                                fontWeight: FontWeight.bold,
-                                                                                color: Colors.white
-                                                                            ),
-                                                                          ),
-                                                                          Text(orderList[index]['id']!=null?'ORDER ID: '+orderList[index]['id'].toString():"",
-                                                                            style: TextStyle(
-                                                                                fontSize: 35,
-                                                                                color: blueColor,
-                                                                                fontWeight: FontWeight.bold
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              // Padding(
-                                                              //   padding: const EdgeInsets.only(top: 10, bottom: 2, left: 5, right: 5),
-                                                              //   child: Row(
-                                                              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                              //     children: [
-                                                              //       Row(
-                                                              //         children: [
-                                                              //           Text(orderList[index]['id']!=null?'ORDER ID: '+orderList[index]['id'].toString():"", style: TextStyle(
-                                                              //               fontSize: 25,
-                                                              //               color: yellowColor,
-                                                              //               fontWeight: FontWeight.bold
-                                                              //           ),
-                                                              //           ),
-                                                              //         ],
-                                                              //       ),
-                                                              //     ],
-                                                              //   ),
-                                                              // ),
-                                                              Container(
-                                                                width: MediaQuery.of(context).size.width,
-                                                                height: 1,
-                                                                color: yellowColor,
-                                                              ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.all(2),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Visibility(
-                                                                      visible: orderList[index]['orderType']==1,
-                                                                      child: Row(
-                                                                        children: [
-                                                                          Text('Table No#: ',
-                                                                            style: TextStyle(
-                                                                                fontSize: 20,
-                                                                                fontWeight: FontWeight.bold,
-                                                                                color: yellowColor
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: EdgeInsets.only(left: 2.5),
-                                                                          ),
-                                                                          Text(orderList[index]['tableId']!=null?getTableName(orderList[index]['tableId']).toString():" - ",
-                                                                            style: TextStyle(
-                                                                                fontSize: 20,
-                                                                                fontWeight: FontWeight.bold,
-                                                                                color: PrimaryColor
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        Text('Priority: ',
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: yellowColor
-                                                                          ),
-                                                                        ),
-                                                                        Text(getOrderPriority(orderList[index]['orderPriorities']),
-                                                                          //orderList[index]['orderItems'].length.toString(),
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: PrimaryColor
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.only(top: 5, bottom: 2, left: 5, right: 5),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        Text('Items: ',
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: yellowColor
-                                                                          ),
-                                                                        ),
-                                                                        Padding(
-                                                                          padding: EdgeInsets.only(left: 2.5),
-                                                                        ),
-                                                                        Text(orderList[index]['orderItems'].length.toString(),
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: PrimaryColor
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding: const EdgeInsets.only(right: 5),
-                                                                          child: FaIcon(FontAwesomeIcons.calendarAlt, color: yellowColor, size: 20,),
-                                                                        ),
-                                                                        Text(orderList[index]['createdOn'].toString().replaceAll("T", " || ").substring(0,19), style: TextStyle(
-                                                                            fontSize: 20,
-                                                                            color: PrimaryColor,
-                                                                            fontWeight: FontWeight.bold
-                                                                        ),
-                                                                        ),
-                                                                      ],
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.only(top: 8, bottom: 2, left: 5, right: 5),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        Text("Status: ", style: TextStyle(
-                                                                            fontSize: 20,
-                                                                            color: yellowColor,
-                                                                            fontWeight: FontWeight.bold
-                                                                        ),
-                                                                        ),
-                                                                        Text( getStatus(orderList!=null?orderList[index]['orderStatus']:null),
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              color: PrimaryColor,
-                                                                              fontWeight: FontWeight.bold
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              Padding(
-                                                                padding: const EdgeInsets.only(left: 5, top: 5),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        Text('Order Type: ',
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: yellowColor
-                                                                          ),
-                                                                        ),
-                                                                        Text(getOrderType(orderList[index]['orderType']),
-                                                                          style: TextStyle(
-                                                                              fontSize: 20,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              color: PrimaryColor
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      )
-
-                                                    ],
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.all(5),
-                                                    child: Container(
-                                                      height: 215,
-                                                      //color: Colors.transparent,
-                                                      child: ListView.builder(
-                                                          padding: EdgeInsets.all(4),
-                                                          scrollDirection: Axis.vertical,
-                                                          itemCount:orderList == null ? 0:orderList[index]['orderItems'].length,
-                                                          itemBuilder: (context,int i){
-                                                            topping=[];
-
-                                                            for(var items in orderList[index]['orderItems'][i]['orderItemsToppings']){
-                                                              topping.add(items==[]?"-":items['additionalItem']['stockItemName']+" x${items['quantity'].toString()} \n");
-                                                            }
-                                                            return InkWell(
-                                                              onTap: () {
-                                                                if(orderList[index]['orderItems'][i]['isDeal'] == true){
-                                                                  print(orderList[index]['id']);
-                                                                  showAlertDialog(context,orderList[index]['id']);
-                                                                }
-                                                              },
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(8),
-                                                                child: Card(
-                                                                  elevation: 8,
-                                                                  child: Container(
-                                                                    decoration: BoxDecoration(
-                                                                      color: BackgroundColor,
-                                                                      borderRadius: BorderRadius.circular(4),
-                                                                       border: Border.all(color: yellowColor, width: 2),
-                                                                      // boxShadow: [
-                                                                      //   BoxShadow(
-                                                                      //     color: Colors.grey.withOpacity(0.5),
-                                                                      //     spreadRadius: 5,
-                                                                      //     blurRadius: 5,
-                                                                      //     offset: Offset(0, 3), // changes position of shadow
-                                                                      //   ),
-                                                                      // ],
-                                                                    ),
-                                                                    width: MediaQuery.of(context).size.width,
-                                                                    child: Padding(
-                                                                      padding: const EdgeInsets.all(6.0),
-                                                                      child: Column(
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        children: <Widget>[
-                                                                          Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                            children: <Widget>[
-                                                                              Row(
-                                                                                children: <Widget>[
-                                                                                  Text(orderList[index]['orderItems']!=null?orderList[index]['orderItems'][i]['name']:"", style: TextStyle(
-                                                                                      color: yellowColor,
-                                                                                      fontSize: 22,
-                                                                                      fontWeight: FontWeight.bold
-                                                                                  ),
-                                                                                  ),
-                                                                                  //SizedBox(width: 195,),
-                                                                                  // Text("-"+foodList1[index]['sizeName'].toString()!=null?foodList1[index]['sizeName'].toString():"empty", style: TextStyle(
-                                                                                  //     color: yellowColor,
-                                                                                  //     fontSize: 20,
-                                                                                  //     fontWeight: FontWeight.bold
-                                                                                  // ),)
-                                                                                ],
-                                                                              ),
-
-                                                                            ],
-                                                                          ),
-                                                                          SizedBox(height: 10,),
-                                                                          Row(
-                                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                            children: [
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(left: 15),
-                                                                                child: Row(
-                                                                                  children: [
-                                                                                    Text("Size: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: yellowColor,),),
-                                                                                    Text(orderList[index]['orderItems'][i]['sizeName']!=null?orderList[index]['orderItems'][i]['sizeName'].toString():"Deal",
-                                                                                      //"-"+foodList1[index]['sizeName'].toString()!=null?foodList1[index]['sizeName'].toString():"empty",
-                                                                                      style: TextStyle(
-                                                                                          color: PrimaryColor,
-                                                                                          fontSize: 20,
-                                                                                          fontWeight: FontWeight.bold
-                                                                                      ),),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                              Padding(
-                                                                                padding: const EdgeInsets.only(right: 15),
-                                                                                child: Row(
-                                                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                                  children: [
-                                                                                    Text("Qty: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: yellowColor,),),
-                                                                                    //SizedBox(width: 10,),
-                                                                                    Text(orderList[index]['orderItems'][i]['quantity'].toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor,),),
-
-                                                                                  ],
-                                                                                ),
-                                                                              )
-                                                                            ],
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: const EdgeInsets.only(left: 35),
-                                                                          ),
-                                                                          SizedBox(height: 10,),
-                                                                          Padding(
-                                                                            padding: const EdgeInsets.only(left: 15),
-                                                                            child: Text("Additional Toppings", style: TextStyle(
-                                                                                color: PrimaryColor,
-                                                                                fontSize: 20,
-                                                                                fontWeight: FontWeight.bold
-                                                                            ),
-                                                                            ),
-                                                                          ),
-                                                                          Padding(
-                                                                            padding: const EdgeInsets.only(left: 35),
-                                                                            child: Text(topping.toString().replaceAll("[", "-").replaceAll(",", "").replaceAll("]", "")
-                                                                            //       (){
-                                                                            //   topping.clear();
-                                                                            //   topping = (orderList[index]['orderItems'][i]['orderItemsToppings']);
-                                                                            //   print(topping.toString());
-                                                                            //
-                                                                            //   if(topping.length == 0){
-                                                                            //     return "-";
-                                                                            //   }
-                                                                            //   for(int i=0;i<topping.length;i++) {
-                                                                            //     if(topping[i].length==0){
-                                                                            //       return "-";
-                                                                            //     }else{
-                                                                            //       return (topping==[]?"-":topping[i]['name'] + "   x" +
-                                                                            //           topping[i]['quantity'].toString() + "   -\$ "+topping[i]['price'].toString() + "\n");
-                                                                            //     }
-                                                                            //
-                                                                            //   }
-                                                                            //   return "";
-                                                                            // }()
-                                                                             // toppingName!=null?toppingName.toString().replaceAll("[", "- ").replaceAll(",", "- ").replaceAll("]", ""):""
-                                                                              , style: TextStyle(
-                                                                              color: yellowColor,
-                                                                              fontSize: 16,
-                                                                              fontWeight: FontWeight.bold
-                                                                              //fontWeight: FontWeight.bold
-                                                                            ),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
+                                                  Text("Total Orders: ",
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: yellowColor,
+                                                        fontWeight: FontWeight.bold
                                                     ),
                                                   ),
-                                                  Container(
-                                                    // width: MediaQuery.of(context).size.width,
-                                                    // height: MediaQuery.of(context).size.height /8,
-                                                    // color: Colors.white12,
-                                                    child: Column(
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: (){
-                                                             //  _showDialog(orderList[index]['id']);
-                                                            var orderStatusData={
-                                                              "Id":orderList[index]['id'],
-                                                              "status":4,
-                                                              "EstimatedPrepareTime":10,
-                                                            };
-                                                            print(orderStatusData);
-                                                            networksOperation.changeOrderStatus(context, token, orderStatusData).then((res) {
-                                                              if(res){
-                                                                WidgetsBinding.instance
-                                                                    .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                                              }
-                                                              //print(value);
-                                                            });
-                                                                 },
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.all(10.0),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                border: Border.all(color: yellowColor),
-                                                                borderRadius: BorderRadius.all(Radius.circular(10)) ,
-                                                                color: yellowColor,
-                                                              ),
-                                                              width: MediaQuery.of(context).size.width,
-                                                              height: 40,
-
-                                                              child: Center(
-                                                                child: Text('Mark as Preparing',style: TextStyle(color: BackgroundColor,fontSize: 25,fontWeight: FontWeight.bold),),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        InkWell(
-                                                          onTap: (){
-                                                            Utils.urlToFile(context,_store.image).then((value){
-                                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>PDFLaout(orderList[index]['id'],orderList[index]['orderItems'],orderList[index]['orderType'],orderList[index]['storeName'],value.readAsBytesSync())));
-                                                            });
-                                                            //Navigator.push(context, MaterialPageRoute(builder: (context)=>PDFLaout(orderList[index]['id'],orderList[index]['orderItems'],orderList[index]['orderType'],orderList[index]['storeName'])));
-                                                            //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
-                                                          },
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.all(10.0),
-                                                            child: Container(
-                                                              decoration: BoxDecoration(
-                                                                border: Border.all(color: yellowColor),
-                                                                borderRadius: BorderRadius.all(Radius.circular(10)) ,
-                                                                color: yellowColor,
-                                                              ),
-                                                              width: MediaQuery.of(context).size.width,
-                                                              height: 40,
-
-                                                              child: Center(
-                                                                child: Text('Print',style: TextStyle(color: BackgroundColor,fontSize: 25,fontWeight: FontWeight.bold),),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
+                                                  Text(orderList!=null?orderList.length.toString():"0",
+                                                    style: TextStyle(
+                                                        fontSize: 25,
+                                                        color: PrimaryColor,
+                                                        fontWeight: FontWeight.bold
                                                     ),
                                                   )
                                                 ],
                                               ),
                                             ),
-                                          ));
-                                    }),
+                                            //child:  _buildChips()
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                ),
                               ),
-                            ),
-                          )
+                            ],
+                          ),
 
+                          Container(
+                            height: 550,
+                            width: MediaQuery.of(context).size.width,
+                            child:Scrollbar(
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: orderList!=null?orderList.length:0,
+                                  itemBuilder: (context,int index){
+                                    return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Card(
+                                          elevation: 8,
+                                          color: Colors.white,
+                                          child: Container(
+                                            height: MediaQuery.of(context).size.height / 1.2,
+                                            width: MediaQuery.of(context).size.width / 3.2,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8),
+                                              //border: Border.all(color: yellowColor, width: 2),
+                                                color: BackgroundColor,
+
+                                            ),
+                                            //color: Colors.black38,
+                                            child: Column(
+                                              children: [
+                                                Stack(
+                                                  clipBehavior: Clip.none,
+                                                  children: <Widget>[
+                                                    Container(
+                                                      width: MediaQuery.of(context).size.width,
+                                                      height: 135,
+                                                      //color: Colors.white12,
+                                                      child: Column(
+                                                        children: [
+                                                          Card(
+                                                            elevation:6,
+                                                            color: yellowColor,
+                                                            child: Container(
+                                                              width: MediaQuery.of(context).size.width,
+                                                              height: 40,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(4),
+                                                                  color: yellowColor
+                                                              ),
+                                                              child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      Text('Order ID: ',
+                                                                        style: TextStyle(
+                                                                            fontSize: 35,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            color: Colors.white
+                                                                        ),
+                                                                      ),
+                                                                      Text(orderList[index]['id']!=null?orderList[index]['id'].toString():"",
+                                                                        style: TextStyle(
+                                                                            fontSize: 35,
+                                                                            color: blueColor,
+                                                                            fontWeight: FontWeight.bold
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          // Padding(
+                                                          //   padding: const EdgeInsets.only(top: 10, bottom: 2, left: 5, right: 5),
+                                                          //   child: Row(
+                                                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //     children: [
+                                                          //       Row(
+                                                          //         children: [
+                                                          //           Text(orderList[index]['id']!=null?'ORDER ID: '+orderList[index]['id'].toString():"", style: TextStyle(
+                                                          //               fontSize: 25,
+                                                          //               color: yellowColor,
+                                                          //               fontWeight: FontWeight.bold
+                                                          //           ),
+                                                          //           ),
+                                                          //         ],
+                                                          //       ),
+                                                          //     ],
+                                                          //   ),
+                                                          // ),
+                                                          Container(
+                                                            width: MediaQuery.of(context).size.width,
+                                                            height: 1,
+                                                            color: yellowColor,
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(2),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Visibility(
+                                                                  visible: orderList[index]['orderType']==1,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      Text('Table No#: ',
+                                                                        style: TextStyle(
+                                                                            fontSize: 20,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            color: yellowColor
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: EdgeInsets.only(left: 2.5),
+                                                                      ),
+                                                                      Text(orderList[index]['tableId']!=null?getTableName(orderList[index]['tableId']).toString():" - ",
+                                                                        style: TextStyle(
+                                                                            fontSize: 20,
+                                                                            fontWeight: FontWeight.bold,
+                                                                            color: PrimaryColor
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    Text('Priority: ',
+                                                                      style: TextStyle(
+                                                                          fontSize: 20,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: yellowColor
+                                                                      ),
+                                                                    ),
+                                                                    Text(getOrderPriority(orderList[index]['orderPriorities']),
+                                                                      //orderList[index]['orderItems'].length.toString(),
+                                                                      style: TextStyle(
+                                                                          fontSize: 20,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: PrimaryColor
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(top: 5, bottom: 2, left: 5, right: 5),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    Text('Items: ',
+                                                                      style: TextStyle(
+                                                                          fontSize: 20,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: yellowColor
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: EdgeInsets.only(left: 2.5),
+                                                                    ),
+                                                                    Text(orderList[index]['orderItems'].length.toString(),
+                                                                      style: TextStyle(
+                                                                          fontSize: 20,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: PrimaryColor
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.only(right: 5),
+                                                                      child: FaIcon(FontAwesomeIcons.calendarAlt, color: yellowColor, size: 20,),
+                                                                    ),
+                                                                    Text(orderList[index]['createdOn'].toString().replaceAll("T", " || ").substring(0,19), style: TextStyle(
+                                                                        fontSize: 20,
+                                                                        color: PrimaryColor,
+                                                                        fontWeight: FontWeight.bold
+                                                                    ),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          // Padding(
+                                                          //   padding: const EdgeInsets.only(top: 8, bottom: 2, left: 5, right: 5),
+                                                          //   child: Row(
+                                                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          //     children: [
+                                                          //       Row(
+                                                          //         children: [
+                                                          //           Text("Status: ", style: TextStyle(
+                                                          //               fontSize: 20,
+                                                          //               color: yellowColor,
+                                                          //               fontWeight: FontWeight.bold
+                                                          //           ),
+                                                          //           ),
+                                                          //           Text( getStatus(orderList!=null?orderList[index]['orderStatus']:null),
+                                                          //             style: TextStyle(
+                                                          //                 fontSize: 20,
+                                                          //                 color: PrimaryColor,
+                                                          //                 fontWeight: FontWeight.bold
+                                                          //             ),
+                                                          //           ),
+                                                          //         ],
+                                                          //       ),
+                                                          //     ],
+                                                          //   ),
+                                                          // ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(left: 5, top: 5),
+                                                            child: Row(
+                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                              children: [
+                                                                Row(
+                                                                  children: [
+                                                                    Text('Order Type: ',
+                                                                      style: TextStyle(
+                                                                          fontSize: 20,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: yellowColor
+                                                                      ),
+                                                                    ),
+                                                                    Text(getOrderType(orderList[index]['orderType']),
+                                                                      style: TextStyle(
+                                                                          fontSize: 20,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          color: PrimaryColor
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+
+                                                  ],
+                                                ),
+                                                Container(
+                                                  height: 255
+                                                  ,
+                                                  //color: Colors.transparent,
+                                                  child: ListView.builder(
+
+                                                      scrollDirection: Axis.vertical,
+                                                      itemCount:orderList == null ? 0:orderList[index]['orderItems'].length,
+                                                      itemBuilder: (context,int i){
+                                                        topping=[];
+
+                                                        for(var items in orderList[index]['orderItems'][i]['orderItemsToppings']){
+                                                          topping.add(items==[]?"-":items['additionalItem']['stockItemName']+" x${items['quantity'].toString()} \n");
+                                                        }
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            if(orderList[index]['orderItems'][i]['isDeal'] == true){
+                                                              print(orderList[index]['id']);
+                                                              showAlertDialog(context,orderList[index]['id']);
+                                                            }
+                                                          },
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.all(8),
+                                                            child: Card(
+                                                              elevation: 8,
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                  color: BackgroundColor,
+                                                                  borderRadius: BorderRadius.circular(4),
+                                                                   border: Border.all(color: yellowColor, width: 2),
+                                                                  // boxShadow: [
+                                                                  //   BoxShadow(
+                                                                  //     color: Colors.grey.withOpacity(0.5),
+                                                                  //     spreadRadius: 5,
+                                                                  //     blurRadius: 5,
+                                                                  //     offset: Offset(0, 3), // changes position of shadow
+                                                                  //   ),
+                                                                  // ],
+                                                                ),
+                                                                width: MediaQuery.of(context).size.width,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.all(6.0),
+                                                                  child: Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: <Widget>[
+                                                                      Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: <Widget>[
+                                                                          Row(
+                                                                            children: <Widget>[
+                                                                              Text(orderList[index]['orderItems']!=null?orderList[index]['orderItems'][i]['name']:"", style: TextStyle(
+                                                                                  color: yellowColor,
+                                                                                  fontSize: 22,
+                                                                                  fontWeight: FontWeight.bold
+                                                                              ),
+                                                                              ),
+                                                                              //SizedBox(width: 195,),
+                                                                              // Text("-"+foodList1[index]['sizeName'].toString()!=null?foodList1[index]['sizeName'].toString():"empty", style: TextStyle(
+                                                                              //     color: yellowColor,
+                                                                              //     fontSize: 20,
+                                                                              //     fontWeight: FontWeight.bold
+                                                                              // ),)
+                                                                            ],
+                                                                          ),
+
+                                                                        ],
+                                                                      ),
+                                                                      SizedBox(height: 10,),
+                                                                      Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.only(left: 15),
+                                                                            child: Row(
+                                                                              children: [
+                                                                                Text("Size: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: yellowColor,),),
+                                                                                Text(orderList[index]['orderItems'][i]['sizeName']!=null?orderList[index]['orderItems'][i]['sizeName'].toString():"Deal",
+                                                                                  //"-"+foodList1[index]['sizeName'].toString()!=null?foodList1[index]['sizeName'].toString():"empty",
+                                                                                  style: TextStyle(
+                                                                                      color: PrimaryColor,
+                                                                                      fontSize: 20,
+                                                                                      fontWeight: FontWeight.bold
+                                                                                  ),),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.only(right: 15),
+                                                                            child: Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                              children: [
+                                                                                Text("Qty: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: yellowColor,),),
+                                                                                //SizedBox(width: 10,),
+                                                                                Text(orderList[index]['orderItems'][i]['quantity'].toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: PrimaryColor,),),
+
+                                                                              ],
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.only(left: 35),
+                                                                      ),
+                                                                      SizedBox(height: 10,),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.only(left: 15),
+                                                                        child: Text("Additional Toppings", style: TextStyle(
+                                                                            color: PrimaryColor,
+                                                                            fontSize: 20,
+                                                                            fontWeight: FontWeight.bold
+                                                                        ),
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.only(left: 35),
+                                                                        child: Text(topping.toString().replaceAll("[", "-").replaceAll(",", "").replaceAll("]", "")
+                                                                        //       (){
+                                                                        //   topping.clear();
+                                                                        //   topping = (orderList[index]['orderItems'][i]['orderItemsToppings']);
+                                                                        //   print(topping.toString());
+                                                                        //
+                                                                        //   if(topping.length == 0){
+                                                                        //     return "-";
+                                                                        //   }
+                                                                        //   for(int i=0;i<topping.length;i++) {
+                                                                        //     if(topping[i].length==0){
+                                                                        //       return "-";
+                                                                        //     }else{
+                                                                        //       return (topping==[]?"-":topping[i]['name'] + "   x" +
+                                                                        //           topping[i]['quantity'].toString() + "   -\$ "+topping[i]['price'].toString() + "\n");
+                                                                        //     }
+                                                                        //
+                                                                        //   }
+                                                                        //   return "";
+                                                                        // }()
+                                                                         // toppingName!=null?toppingName.toString().replaceAll("[", "- ").replaceAll(",", "- ").replaceAll("]", ""):""
+                                                                          , style: TextStyle(
+                                                                          color: yellowColor,
+                                                                          fontSize: 16,
+                                                                          fontWeight: FontWeight.bold
+                                                                          //fontWeight: FontWeight.bold
+                                                                        ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }),
+                                                ),
+                                                Container(
+                                                  // width: MediaQuery.of(context).size.width,
+                                                  // height: MediaQuery.of(context).size.height /8,
+                                                  // color: Colors.white12,
+                                                  child: Column(
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: (){
+                                                           //  _showDialog(orderList[index]['id']);
+                                                          var orderStatusData={
+                                                            "Id":orderList[index]['id'],
+                                                            "status":4,
+                                                            "EstimatedPrepareTime":10,
+                                                          };
+                                                          print(orderStatusData);
+                                                          networksOperation.changeOrderStatus(context, token, orderStatusData).then((res) {
+                                                            if(res){
+                                                              WidgetsBinding.instance
+                                                                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                                            }
+                                                            //print(value);
+                                                          });
+                                                               },
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(10.0),
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                              border: Border.all(color: yellowColor),
+                                                              borderRadius: BorderRadius.all(Radius.circular(10)) ,
+                                                              color: yellowColor,
+                                                            ),
+                                                            width: MediaQuery.of(context).size.width,
+                                                            height: 40,
+
+                                                            child: Center(
+                                                              child: Text('Mark as Preparing',style: TextStyle(color: BackgroundColor,fontSize: 25,fontWeight: FontWeight.bold),),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: (){
+                                                          Utils.urlToFile(context,_store.image).then((value){
+                                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>PDFLaout(orderList[index]['id'],orderList[index]['orderItems'],orderList[index]['orderType'],orderList[index]['storeName'],value.readAsBytesSync())));
+                                                          });
+                                                          //Navigator.push(context, MaterialPageRoute(builder: (context)=>PDFLaout(orderList[index]['id'],orderList[index]['orderItems'],orderList[index]['orderType'],orderList[index]['storeName'])));
+                                                          //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SplashScreen()), (route) => false);
+                                                        },
+                                                        child: Padding(
+                                                          padding: const EdgeInsets.all(10.0),
+                                                          child: Container(
+                                                            decoration: BoxDecoration(
+                                                              border: Border.all(color: yellowColor),
+                                                              borderRadius: BorderRadius.all(Radius.circular(10)) ,
+                                                              color: yellowColor,
+                                                            ),
+                                                            width: MediaQuery.of(context).size.width,
+                                                            height: 40,
+
+                                                            child: Center(
+                                                              child: Text('Print',style: TextStyle(color: BackgroundColor,fontSize: 25,fontWeight: FontWeight.bold),),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ));
+                                  }),
+                            ),
+                          ),
                         ],
-                      )
+                      ),
 
                   )
               ),
@@ -737,7 +739,6 @@ class _KitchenTabViewState extends State<ReceivedOrdersScreenForTab>{
       return "";
     }
   }
-
   int _showDialog(int orderId) {
     showDialog<int>(
         context: context,

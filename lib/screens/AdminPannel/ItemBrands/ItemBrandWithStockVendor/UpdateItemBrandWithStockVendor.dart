@@ -229,7 +229,6 @@ class _UpdateItemBrandState extends State<UpdateItemBrandWithStockVendor> {
                               isVisible: true
                           )).then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                               Utils.showSuccess(context, "Added Successfully");
                               // Navigator.pop(context);

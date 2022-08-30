@@ -604,8 +604,9 @@ class _SplashScreenState extends State<AddStore> {
       };
       networksOperation.addStore(context, token, storeData).then((value) {
         if(value!=null){
-          Utils.showSuccess(context, "Successfully Added");
+
           Navigator.pop(context);
+          Utils.showSuccess(context, "Successfully Added");
         }else{
           Utils.showError(context, "Not Added");
         }

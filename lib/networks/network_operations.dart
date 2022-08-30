@@ -94,7 +94,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Register Successfully");
         return true;
       }
       // else if(response.body!=null){
@@ -125,7 +124,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       }
       else{
@@ -151,7 +149,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Reset Password Successfully");
         return true;
       }
       else{
@@ -677,7 +674,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],orderCount: data[i]['orderCount'],totalQuantityOrdered: data[i]['totalQuantityOrdered'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -720,7 +717,7 @@ class networksOperation{
             for(int i=0;i<data.length;i++){
               list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
                   subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],orderCount: data[i]['orderCount'],totalQuantityOrdered: data[i]['totalQuantityOrdered'],
-                  description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+                  description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
             }
             return list;
           }
@@ -762,7 +759,7 @@ class networksOperation{
           for(int i=0;i<data.length;i++){
             list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
                 subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-                description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],isFavourite: data[i]['isFavourite'],productSizes: data[i]['productSizes']));
+                description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],isFavourite: data[i]['isFavourite'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
           }
           return list;
         }
@@ -803,7 +800,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],isFavourite: data[i]['isFavourite'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],isFavourite: data[i]['isFavourite'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -829,7 +826,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],storeName: data[i]['storeName'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],isFavourite: data[i]['isFavourite'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],isFavourite: data[i]['isFavourite'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -888,7 +885,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -912,7 +909,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -936,7 +933,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['product']['name'],id: data[i]['product']['id'],image: data[i]['product']['image'],storeName: data[i]['product']['store']['name'],
               subCategoryId: data[i]['product']['subCategoryId'],isVisible: data[i]['product']['isVisible'],
-              description: data[i]['product']['description'],storeId: data[i]['product']['storeId'],categoryId: data[i]['product']['categoryId'],productSizes: data[i]['product']['productSizes']));
+              description: data[i]['product']['description'],storeId: data[i]['product']['storeId'],categoryId: data[i]['product']['categoryId'],productSizes: data[i]['product']['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -959,7 +956,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -983,7 +980,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -1025,7 +1022,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -1072,7 +1069,7 @@ class networksOperation{
         for(int i=0;i<data.length;i++){
           list.add(Products(name: data[i]['name'],id: data[i]['id'],image: data[i]['image'],
               subCategoryId: data[i]['subCategoryId'],isVisible: data[i]['isVisible'],
-              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes']));
+              description: data[i]['description'],storeId: data[i]['storeId'],categoryId: data[i]['categoryId'],productSizes: data[i]['productSizes'],isVeg:data[i]["isVeg"],allergic_description:data[i]["allergic_description"]));
         }
         return list;
       }
@@ -1378,10 +1375,10 @@ class networksOperation{
   }
 
   /// Rider & Location
-  static Future<bool> updateDriverLocation(BuildContext context,String token,int orderId,int driverId,String address,String latitude,String longitude)async {
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+  static Future<bool> updateDriverLocation(String token,int orderId,int driverId,String address,String latitude,String longitude)async {
+    // ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
     try{
-      pd.show();
+    //  pd.show();
       Map<String,String> headers = {'Content-Type':'application/json','Authorization':'Bearer '+token};
 
       var body=jsonEncode({
@@ -1395,17 +1392,16 @@ class networksOperation{
       );
       var response=await http.post(Utils.baseUrl()+"orders/UpdateDriverLocation",headers: headers,body: body);
       if(response.statusCode==200){
-        pd.hide();
-        Utils.showSuccess(context, "Location Updated");
+        //pd.hide();
+        print("Location Updated: ${response.statusCode}");
         return true;
       }
       else{
-        pd.hide();
-        Utils.showError(context, "Please Try Again");
+        //pd.hide();
+        print("Location Updated: ${response.statusCode}");
         return false;
       }
     }catch(e){
-      Utils.showError(context, "Error Found: $e");
       return false;
     }
     //return null;
@@ -1523,7 +1519,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"dailysession/Add",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Daily Session Added");
         sqlite_helper().deletecart();
         return true;
       }
@@ -1641,6 +1636,7 @@ class networksOperation{
 
       var body=jsonEncode(
           orderData
+          ,toEncodable: Utils.myEncode
       );
       print(body);
       var response=await http.post(Utils.baseUrl()+"orders/Add",headers: headers,body: body);
@@ -1725,6 +1721,7 @@ class networksOperation{
       Map<String,String> header = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"orders/UpdateOrderItemStatus/"+orderItemId.toString()+"/"+statusId.toString()+"/$chefId",headers: header);
       var data= jsonDecode(response.body);
+      print(response.statusCode.toString());
       if(response.statusCode==200){
         return data;
       }
@@ -1839,7 +1836,6 @@ class networksOperation{
       );
       var response=await http.post(Utils.baseUrl()+"orders/paycash",headers: headers,body: body);
       if(response.statusCode==200){
-        Utils.showSuccess(context, "Order Delivered & Cash Paid");
         return true;
       }
       else{
@@ -2069,16 +2065,16 @@ class networksOperation{
 
   }
   static Future<dynamic> getAllOrdersWithItemsByOrderStatusId(BuildContext context,String token,int orderStatusId,int storeId)async{
-    ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
+   // ProgressDialog pd = ProgressDialog(context,type: ProgressDialogType.Normal);
 
     try{
-      pd.show();
+    //  pd.show();
       List list=[];
       Map<String,String> headers = {'Authorization':'Bearer '+token};
       var response=await http.get(Utils.baseUrl()+"orders/getallbasicorderswithitems/"+orderStatusId.toString()+"?StoreId="+storeId.toString(),headers: headers);
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
-        pd.hide();
+        //pd.hide();
         if(data!=[])
           list=List.from(data.reversed);
         return list;
@@ -2087,14 +2083,14 @@ class networksOperation{
       //   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
       // }
       else{
-        pd.hide();
+       // pd.hide();
         Utils.showError(context, "Please Try Again");
       }
     }catch(e){
-      pd.hide();
+     // pd.hide();
       Utils.showError(context, "Error Found: $e");
     }
-    pd.hide();
+   // pd.hide();
     return null;
   }
   static Future<dynamic> getAllOrdersWithItemsByOrderStatusIdCategorized(BuildContext context,String token,int orderStatusId,int categoryId,int storeId)async{
@@ -2365,7 +2361,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"OrderPriority/Add",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "OrderPriority Added");
         return true;
       }
       else{
@@ -2391,8 +2386,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"OrderPriority/Update",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Order Priority Updated");
-        sqlite_helper().deletecart();
         return true;
       }
       else{
@@ -2529,7 +2522,6 @@ class networksOperation{
       final response = await http.post(Utils.baseUrl()+'categories/Add', headers: headers, body: body);
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       } else {
         pd.hide();
@@ -2559,7 +2551,6 @@ class networksOperation{
       );
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "${jsonDecode(response.body)['message']}");
         return true;
       } else {
         pd.hide();
@@ -2678,7 +2669,6 @@ class networksOperation{
       );
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       } else {
         pd.hide();
@@ -2788,7 +2778,6 @@ class networksOperation{
       );
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       } else {
         pd.hide();
@@ -2821,7 +2810,6 @@ class networksOperation{
       );
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       } else {
         pd.hide();
@@ -2927,7 +2915,6 @@ class networksOperation{
       );
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       } else {
         pd.hide();
@@ -2961,7 +2948,6 @@ class networksOperation{
       );
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       } else {
         pd.hide();
@@ -3071,7 +3057,6 @@ class networksOperation{
       final response = await http.post(Utils.baseUrl()+'additionalitems/Add', headers: headers, body: body);
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       } else {
         pd.hide();
@@ -3100,7 +3085,6 @@ class networksOperation{
       );
       if (response.statusCode == 200) {
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       } else {
         pd.hide();
@@ -3132,7 +3116,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"discounts/Add",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Discount Offer Added");
         return true;
       }
       else{
@@ -3160,7 +3143,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"discounts/Update",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Discount Offer Added");
         return true;
       }
       else{
@@ -3300,7 +3282,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"discounts/AssignDiscountToProductSizes",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "products Added in Discounts");
         return true;
       }
       else{
@@ -3421,7 +3402,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"deals/Add",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Deals Added Successfully");
         return response.body;
       }
       else{
@@ -3450,7 +3430,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"deals/Update",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Deals Updated Successfully");
         return true;
       }
       else{
@@ -3606,7 +3585,6 @@ class networksOperation{
       var data = json.decode(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Table Added Successfully");
         return true;
       }
       else{
@@ -3635,7 +3613,6 @@ class networksOperation{
       var data = json.decode(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Table Updated Successfully");
         return true;
       }
       else{
@@ -3835,7 +3812,6 @@ class networksOperation{
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Table Added Successfully");
         return true;
       }
       else{
@@ -3866,7 +3842,6 @@ class networksOperation{
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Table Updated Successfully");
         return true;
       }
       else{
@@ -3973,7 +3948,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"reservation/Add",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "reservation Added Successfully");
         return response.body;
       }
       else{
@@ -4004,7 +3978,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"reservation/Update",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "reservation Updated Successfully");
         return true;
       }
       else{
@@ -4695,7 +4668,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Store/Add",body: body,headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Store Added Successfully");
         return response.body;
       }
       else{
@@ -4723,7 +4695,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Store/Update",headers: headers,body: body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Store Update Successfully");
         return response.body;
       }
       else{
@@ -4979,7 +4950,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Taxes/Add",body: taxBody,headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Tax Added Successfully");
         return response.body;
       }
       else{
@@ -5007,7 +4977,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Taxes/Update",headers: headers,body: taxBody);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Tax Update Successfully");
         return true;
       }
       else{
@@ -5174,7 +5143,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Vouchers/Update",headers: headers,body: taxBody);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Voucher Update Successfully");
         return true;
       }
       else{
@@ -5309,7 +5277,6 @@ class networksOperation{
       print(body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Stock Added Successfully");
         return true;
       }
       else{
@@ -5332,7 +5299,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Voucher Update Successfully");
         return true;
       }
       else{
@@ -5732,7 +5698,6 @@ class networksOperation{
       print(Body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Stock Added Successfully");
         return true;
       }
       else{
@@ -5756,7 +5721,6 @@ class networksOperation{
       print(response.statusCode);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Stock Added Successfully");
         return true;
       }
       else{
@@ -5808,7 +5772,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Purchase Order Created Successfully");
         return true;
       }
       else{
@@ -5837,7 +5800,6 @@ class networksOperation{
       print(response.statusCode);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Purchase Order Created Successfully");
         return true;
       }
       else{
@@ -5863,7 +5825,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Voucher Update Successfully");
         return true;
       }
       else{
@@ -6024,7 +5985,7 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"ItemStocks/AddStockRecoveryRequest",body: StockRecovery.stockRecoveryToJson(stockRecovery),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Request Created Successfully");
+
         return true;
       }
       else{
@@ -6047,7 +6008,7 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"ItemStocks/UpdateRecoverRequest",headers: headers,body: StockRecovery.updateStockRecoveryToJson(stockRecovery));
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Voucher Update Successfully");
+
         return true;
       }
       else{
@@ -6182,7 +6143,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Complaint/AddComplaintType",body: ComplaintType.ComplaintTypeToJson(complaintType),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Stock Added Successfully");
         return true;
       }
       else{
@@ -6206,7 +6166,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Complaint/UpdateComplaintType",headers: headers,body: ComplaintType.updateComplaintTypeToJson(complaintType));
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Voucher Update Successfully");
         return true;
       }
       else{
@@ -6268,7 +6227,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"predefinedReasons/AddPredefinedReason",body: PredefinedReasons.PredefinedReasonsToJson(predefinedReason),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Reason Added Successfully");
         return true;
       }
       else{
@@ -6292,7 +6250,6 @@ class networksOperation{
       var data= jsonDecode(response.body);
       if(response.statusCode==200){
         return PredefinedReasons.ListPredefinedReasonsFromJson(response.body);
-
       }
       else{
         Utils.showError(context, "Please Try Again");
@@ -6312,7 +6269,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"predefinedReasons/UpdatePredefinedReason",body: PredefinedReasons.updatePredefinedReasonsToJson(predefinedReason),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Reason Updated Successfully");
         return true;
       }
       else{
@@ -6338,7 +6294,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Complaint/Add",body: Complaint.ComplaintToJson(complaint),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Stock Added Successfully");
         return true;
       }
       else{
@@ -6361,7 +6316,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Complaint/Update",headers: headers,body: Complaint.updateComplaintToJson(complaint));
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Voucher Update Successfully");
         return true;
       }
       else{
@@ -6749,7 +6703,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"account/AddHoliday",body: body,headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -6850,7 +6803,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"Store/AddExtraExpenses",body: ExtraExpense.extraExpenseToJson(extraExpense),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -6875,7 +6827,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       }
       else{
@@ -6983,7 +6934,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -7007,7 +6957,7 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"account/UpdateSalaryRecord",headers: headers,body: SalaryExpense.updateSalaryExpenseToJson(salaryExpense));
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
+
         return true;
       }
       else{
@@ -7156,7 +7106,6 @@ class networksOperation{
 
       if(response.statusCode==200){
         return data;
-
       }
       else{
         Utils.showError(context, "Please Try Again");
@@ -7271,7 +7220,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -7326,7 +7274,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -7350,7 +7297,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"SemiFinishedItems/UpdateSemiFinishedItems",headers: headers,body: SemiFinishItems.updateSemiFinishItemsToJson(semiFinishItems));
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       }
       else{
@@ -7570,7 +7516,7 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
+
         return true;
       }
       else{
@@ -7594,7 +7540,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"SemiFinishedItems/UpdateSemiFinishedItemsIngredients",headers: headers,body: SemiFinishedItemIngredient.updateSemiFinishedItemIngredientToJson(semiFinishItems));
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       }
       else{
@@ -7706,7 +7651,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -7731,7 +7675,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       }
       else{
@@ -7755,7 +7698,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"SemiFinishedItems/AddSemiFinishedItemsListInProduct",body: SemiFinishedInProduct.semiFinishedInProductListToJson(semiFinishedInProduct),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -7893,7 +7835,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"SemiFinishedItems/AddSemiFinishedItemDetails",body: SemiFinishedDetail.semiFinishedDetailToJson(semiFinishedInProduct),headers: headers);
       Utils.showError(context, "${response.body}");
       if(response.statusCode==200){
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -7919,7 +7860,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -8054,7 +7994,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       }
       else{
@@ -8136,7 +8075,6 @@ class networksOperation{
       var response=await http.post(Utils.baseUrl()+"ItemBrand/AddItemBrandWithVendor",body: ItemBrandWithStockVendor.ItemBrandWithStockVendorToJson(itemBrand),headers: headers);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Added Successfully");
         return true;
       }
       else{
@@ -8162,7 +8100,6 @@ class networksOperation{
       print(response.body);
       if(response.statusCode==200){
         pd.hide();
-        Utils.showSuccess(context, "Update Successfully");
         return true;
       }
       else{

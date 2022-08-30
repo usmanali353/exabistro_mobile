@@ -447,7 +447,6 @@ class _add_SizesState extends State<AddStocks> {
                           if(result){
                             networksOperation.addStockItem(context, token,data).then((value) {
                               if(value){
-                                Navigator.of(context).pop();
                                 Navigator.pop(context);
                                 Utils.showSuccess(context, "Successfully Added");
                               }

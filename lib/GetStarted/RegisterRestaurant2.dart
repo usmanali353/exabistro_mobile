@@ -8,11 +8,14 @@ import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/components/customButtonAnimation.dart';
 import 'package:capsianfood/model/Address.dart';
 import 'package:capsianfood/networks/network_operations.dart';
+import 'package:capsianfood/screens/WelcomeScreens/LoginScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../screens/WelcomeScreens/SplashScreen.dart';
 
 class RegisterRestaurant2 extends StatefulWidget {
   var restaurantName,restaurantEmail,contactNo,website,restaurantImage;
@@ -42,14 +45,6 @@ class _SplashScreenState extends State<RegisterRestaurant2> {
     this.cellNo=TextEditingController();
     this.country=TextEditingController();
     this.city=TextEditingController();
-    networksOperation.getCountries(context).then((value) {
-      setState(() {
-        countryList = value;
-        print("No Of Country" +
-            countryList[169]['currencies'][0]['name'].toString());
-      });
-      // print(value);
-    });
     SharedPreferences.getInstance().then((value) {
       setState(() {
         this.token = value.getString("token");
@@ -410,11 +405,10 @@ class _SplashScreenState extends State<RegisterRestaurant2> {
                                   },
                                   "image":picked_image,
                                 };
-                                print(jsonEncode(restaurantData));
                                 networksOperation.addRestaurant(context, restaurantData).then((value) {
                                   if(value){
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen()), (route) => false);
                                     Utils.showSuccess(context, "Request Added Successfully");
-                                    //Navigator.pop(context);
                                   }
                                   // else{
                                   //   Utils.showError(context, "Please Try Again");

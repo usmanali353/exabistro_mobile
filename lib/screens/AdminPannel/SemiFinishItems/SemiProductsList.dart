@@ -199,15 +199,14 @@ class _categoryListPageState extends ResumableState<SemiProductsList>{
                                     Row(
                                       children: [
                                         Text("Size: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: yellowColor),),
-                                        Text(productList[index].productSizes!=null?getSizeName(productList[index].productSizes[0]['sizeId']):"0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: blueColor),),
+                                        Text(productList[index].productSizes!=null&&productList[index].productSizes.length>0?getSizeName(productList[index].productSizes[0]['sizeId']):"N/A",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: blueColor),),
 
                                       ],
                                     ),
                                     Row(
                                       children: [
                                         Text("Price: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: yellowColor),),
-                                        Text(productList[index].productSizes!=null?productList[index].productSizes[0]['price'].toString():"0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: blueColor),),
-
+                                        Text(productList[index].productSizes!=null&&productList[index].productSizes.length>0?productList[index].productSizes[0]['price'].toString():"N/A",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17,color: blueColor),),
                                       ],
                                     ),
                                   ],

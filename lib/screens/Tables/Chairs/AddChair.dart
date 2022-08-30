@@ -103,6 +103,7 @@ class _AddChairsState extends State<AddChairs> {
                        };
                        networksOperation.addChair(context, token, chairData).then((value) {
                          if(value){
+                           Navigator.pop(context);
                            Utils.showSuccess(context, "Added Successfully");
                          }
                        });

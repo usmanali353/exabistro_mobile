@@ -181,7 +181,7 @@ class _categoryListPageState extends ResumableState<productListPage>{
                         color: Colors.blue,
                         caption: 'Update',
                         onTap: () async {
-                          Navigator.push(context,MaterialPageRoute(builder: (context)=>UpdateProduct( widget.storeId,widget.categoryId, widget.subCategoryId, productList[index],)));
+                          push(context,MaterialPageRoute(builder: (context)=>UpdateProduct( widget.storeId,widget.categoryId, widget.subCategoryId, productList[index],)));
                         },
                       ),
                       IconSlideAction(
@@ -233,6 +233,13 @@ class _categoryListPageState extends ResumableState<productListPage>{
                                       children: [
                                         Row(
                                           children: [
+                                            Text("Type: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: yellowColor),),
+                                            Text(productList[index].isVeg!=null&&productList[index].isVeg?"Veg":"Non-Veg",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: blueColor),),
+
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
                                             Text("Orders: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: yellowColor),),
                                             Text(productList[index].orderCount!=null?productList[index].orderCount.toString():"0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: blueColor),),
 
@@ -242,7 +249,6 @@ class _categoryListPageState extends ResumableState<productListPage>{
                                           children: [
                                             Text("Ordered Quantity: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: yellowColor),),
                                             Text(productList[index].totalQuantityOrdered!=null?productList[index].totalQuantityOrdered.toString():"0",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: blueColor),),
-
                                           ],
                                         ),
                                       ],
@@ -395,7 +401,7 @@ class _categoryListPageState extends ResumableState<productListPage>{
         PopupMenuItem<String>(child: const Text('Ingredients Consumption'), value: 'consumption'),
         PopupMenuItem<String>(child: const Text('Wastage Report'), value: 'wastage'),
         PopupMenuItem<String>(child: const Text('Report Wastage'), value: 'AddWastage'),
-
+        PopupMenuItem<String>(child: const Text('Allergic Description'), value: 'allergicDescription'),
       ],
       elevation: 8.0,
     ).then((value){
@@ -419,6 +425,20 @@ class _categoryListPageState extends ResumableState<productListPage>{
         Navigator.push(context,MaterialPageRoute(builder: (context)=> ProductWastage(productDetails)));
       }else if(value=="AddWastage"){
         Navigator.push(context,MaterialPageRoute(builder: (context)=> AddWastage("Product",widget.storeId,products:productDetails)));
+      }else if(value=="allergicDescription"){
+        if(productDetails.allergic_description!=null&&productDetails.allergic_description.isNotEmpty){
+          showDialog(
+            context: context,
+            builder: (BuildContext context){
+              return AlertDialog(
+                title: Text("Allergic Description"),
+                content: Text(productDetails.allergic_description),
+              );
+            }
+          );
+        }else{
+          Utils.showError(context,"No Allergic Description Found for this Product");
+        }
       }
     });
   }

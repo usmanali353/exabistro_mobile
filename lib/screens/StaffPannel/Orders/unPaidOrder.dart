@@ -200,7 +200,7 @@ class _PastOrdersState extends State<UnPaidOrders> {
                                   child:Padding(
                                     padding: const EdgeInsets.all(0),
                                     child: Stack(
-                                      overflow: Overflow.visible,
+                                      clipBehavior: Clip.none,
                                       children: <Widget>[
                                         Padding(
                                           padding: const EdgeInsets.only(top: 0),

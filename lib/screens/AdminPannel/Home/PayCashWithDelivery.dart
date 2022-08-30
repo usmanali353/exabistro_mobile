@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:capsianfood/Utils/Utils.dart';
-import 'package:background_fetch/background_fetch.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/CartItems.dart';
 import 'package:capsianfood/model/Categories.dart';
@@ -8,6 +7,9 @@ import 'package:capsianfood/model/Orderitems.dart';
 import 'package:capsianfood/model/Orders.dart';
 import 'package:capsianfood/model/orderItemTopping.dart';
 import 'package:capsianfood/networks/network_operations.dart';
+import 'package:capsianfood/screens/AdminPannel/AdminNavBar/AdminNavBar.dart';
+import 'package:capsianfood/screens/DeliveryBoyPannel/DeliveryBoyNavBar/DeliveryBoyNavBar.dart';
+import 'package:capsianfood/wighets/TabBar/components/TabsComponent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -268,29 +270,16 @@ class _AddDiscountState extends State<PayCashWithDelivery> {
                             "OrderStatus": 7,
                             //"ActualDeliveryTime": DateTime.now().toString().substring(11,16)
                           };
-                          Utils.check_connectivity().then((result){
-                            if(result){
-                              networksOperation.payCashOrder(context, token,payCashWithDelivery).then((value) {
-                                if(value) {
-                                  if (widget.isDelivery) {
-                                    BackgroundFetch.stop().then((value) {
-                                      print("Background working has Stopped");
-                                      Navigator.pop(context);
-                                      Navigator.of(context).pop();
-                                      // Utils.showSuccess(context, "Stop has run");
-                                    });
-                                    // Utils.showSuccess(
-                                    //     context, "Successfully Paid");
-                                    //Navigator.of(context).pop();
-
-                                  }
-                                  Navigator.pop(context);
-                                  Navigator.of(context).pop();
-                                }
-                              });
-
-                            }else{
-                              Utils.showError(context, "Network Error");
+                          networksOperation.payCashOrder(context, token,payCashWithDelivery).then((value) {
+                            if(value) {
+                              if(widget.isDelivery){
+                                Navigator.pop(context);
+                                Navigator.of(context).pop();
+                              //  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>DeliveryBoyNavBar(widget.orderDetails['storeId'], widget.orderDetails['id'])), (route) => false)
+                              }else{
+                                Navigator.pop(context);
+                              }
+                              //Navigator.pop(context);
                             }
                           });
                         //}

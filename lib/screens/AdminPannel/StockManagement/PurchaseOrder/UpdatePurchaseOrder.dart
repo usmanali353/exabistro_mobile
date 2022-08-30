@@ -510,7 +510,7 @@ class _AddProductIngredientState extends State<UpdatePurhaseOrder> {
                             }
                           });
                           Navigator.pop(context);
-                          Navigator.of(context).pop();
+                          Utils.showSuccess(context,"Purchase Order Updated");
                         }
                       });
                       //Navigator.pop(context,productInDeals);

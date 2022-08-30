@@ -11,6 +11,7 @@ import 'package:capsianfood/screens/AdminPannel/Restarant&Stores/Restaurant/Rest
 import 'package:capsianfood/screens/CutomerPannel/ClientNavBar/ClientNavBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animator/flutter_animator.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -77,6 +78,10 @@ class _SplashScreenState extends State<SplashScreen> {
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth > 600) {
+            SystemChrome.setPreferredOrientations([
+              DeviceOrientation.landscapeRight,
+              DeviceOrientation.landscapeLeft,
+            ]);
             return _buildWideContainers();
           } else {
             return _buildNormalContainer();
@@ -260,110 +265,92 @@ class _SplashScreenState extends State<SplashScreen> {
         child: SingleChildScrollView(
           child: new Container(
             //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20, left:10),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              SlideInLeft(
-                                child: IconButton(
-                                  icon:  FaIcon(FontAwesomeIcons.language, color: yellowColor, size: 40,),
-                                  onPressed: () => _onActionSheetPress(context),
+            child: Padding(
+              padding: const EdgeInsets.only(top:70.0),
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Container(
+                      child: Column(
+                        children: <Widget>[
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 20, left:10),
+                          //   child: Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.end,
+                          //     children: <Widget>[
+                          //       SlideInLeft(
+                          //         child: IconButton(
+                          //           icon:  FaIcon(FontAwesomeIcons.language, color: yellowColor, size: 40,),
+                          //           onPressed: () => _onActionSheetPress(context),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          Container(
+                            child: Padding(
+                              padding: EdgeInsets.only(top:15, bottom: 40),
+                              child: Center(
+                                child: FadeAnimation(2.4,
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.8,
+                                    height: MediaQuery.of(context).size.height / 2.8,
+                                    child: Center(child: Image.asset(
+                                      "assets/caspian11.png",
+                                      fit: BoxFit.fill,
+                                    ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: Padding(
-                            padding: EdgeInsets.only(top:15, bottom: 40),
-                            child: Center(
-                              child: FadeAnimation(2.4,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 100, bottom: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 0.8,
-                                  height: MediaQuery.of(context).size.height / 2.8,
-                                  child: Center(child: Image.asset(
-                                    "assets/caspian11.png",
-                                    fit: BoxFit.fill,
-                                  ),
+                                  height: 80,
+                                  width: 500,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: FadeAnimation(2.8,CustomButton(
+                                      label: translate('Change Language'),
+                                      background: Colors.transparent,
+                                      fontColor: yellowColor,
+                                      borderColor: yellowColor,
+                                      onTap:(){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpScreen()));
+                                      } ,
+                                    )),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 100, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                height: 80,
-                                width: 500,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: FadeAnimation(2.8,CustomButton(
-                                    label: translate('buttons.signUp'),
-                                    background: Colors.transparent,
-                                    fontColor: yellowColor,
-                                    borderColor: yellowColor,
-                                    onTap:(){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> SignUpScreen()));
-                                    } ,
-                                  )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: 80,
-                          width: 500,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: FadeAnimation(3.2,CustomButtonAnimation(
-                              label: translate("buttons.signIn"),
-                              backbround: yellowColor,
-                              borderColor: yellowColor,
-                              fontColor: Color(0xFFFFFFFF),
-                              child: LoginScreen(),
-                            )),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 70, top: 10),
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.push(context,MaterialPageRoute(builder: (context)=>AddRequest()));
-                            },
-
-                            child: Center(
-                              child:  FadeAnimation(3.4,
-                                Text("Register Restaurant",
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: PrimaryColor,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
+                          Container(
+                            height: 80,
+                            width: 500,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: FadeAnimation(3.2,CustomButtonAnimation(
+                                label: translate("buttons.signIn"),
+                                backbround: yellowColor,
+                                borderColor: yellowColor,
+                                fontColor: Color(0xFFFFFFFF),
+                                child: LoginScreen(),
+                              )),
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 5),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

@@ -106,7 +106,7 @@ class _KitchenTabViewState extends State<DeliveredOrdersHistoryScreenForTab> {
                                               child: Column(
                                                 children: [
                                                   Stack(
-                                                    overflow: Overflow.visible,
+                                                    clipBehavior: Clip.none,
                                                     children: <Widget>[
                                                       Padding(
                                                         padding: const EdgeInsets.all(8.0),

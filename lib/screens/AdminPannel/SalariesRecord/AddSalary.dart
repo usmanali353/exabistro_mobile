@@ -196,9 +196,8 @@ class _AddSalaryExpenseState extends State<AddSalaryExpense> {
                         )).then((value) {
                           if(value){
                             Navigator.pop(context);
-                            Navigator.pop(context);
                             // Navigator.pop(context);
-                            // Utils.showSuccess(context, "Added Successfully");
+                             Utils.showSuccess(context, "Salary Expense Added Successfully");
                           }
                         });
                       }

@@ -151,9 +151,7 @@ class _AddExtraExpenseState extends State<AddExtraExpense> {
                         )).then((value) {
                           if(value){
                             Navigator.pop(context);
-                            Navigator.pop(context);
-                            // Navigator.pop(context);
-                            // Utils.showSuccess(context, "Added Successfully");
+                             Utils.showSuccess(context, "Added Successfully");
                           }
                         });
                       }

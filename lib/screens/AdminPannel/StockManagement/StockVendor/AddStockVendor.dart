@@ -348,9 +348,8 @@ class _add_SizesState extends State<AddStockVendors> {
                           if(result){
                             networksOperation.addVendorByStockId(context, token,data).then((value) {
                               if(value){
-                                Navigator.of(context).pop();
                                 Navigator.pop(context);
-                                Utils.showSuccess(context, "Successfully Added");
+                                Utils.showSuccess(context, "Vendor Successfully Added");
                               }else{
                                 Utils.showError(context, "Please Try Again");
                               }

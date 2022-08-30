@@ -158,9 +158,8 @@ class _UpdateExtraExpenseState extends State<UpdateExtraExpense> {
                         )).then((value) {
                           if(value){
                             Navigator.pop(context);
-                            Navigator.pop(context);
                             // Navigator.pop(context);
-                            // Utils.showSuccess(context, "Added Successfully");
+                             Utils.showSuccess(context, "Updated Successfully");
                           }
                         });
                       }

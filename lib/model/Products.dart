@@ -33,7 +33,9 @@ class Products {
     this.isFavourite,
     this.storeName,
     this.orderCount,
-    this.totalQuantityOrdered
+    this.totalQuantityOrdered,
+    this.allergic_description,
+    this.isVeg
     // this.additionalItems,
     // this.baseSections,
     // this.orderItems,
@@ -60,6 +62,8 @@ class Products {
   List<dynamic> ingredients;
   int orderCount;
   double totalQuantityOrdered;
+  String allergic_description;
+  dynamic isVeg;
   // List<dynamic> additionalItems;
   // List<dynamic> baseSections;
   // List<dynamic> orderItems;
@@ -84,7 +88,9 @@ class Products {
     productSizes: json["productSizes"],
     ingredients: json["ingredients"],//json["ingredients"] == null ? null : List<dynamic>.from(json["ingredients"].map((x) => Ingredient.fromJson(x))),
     orderCount: json["orderCount"],
-    totalQuantityOrdered: json["totalQuantityOrdered"]
+    totalQuantityOrdered: json["totalQuantityOrdered"],
+    allergic_description: json["allergic_description"],
+    isVeg: json["isVeg"]
     //productSizes: List<ProductSize>.from(json["productSizes"].map((x) => ProductSize.fromJson(x))),
     // additionalItems: List<dynamic>.from(json["additionalItems"].map((x) => x)),
     // baseSections: List<dynamic>.from(json["baseSections"].map((x) => x)),
@@ -113,7 +119,8 @@ class Products {
     categoryId: json["categoryId"] == null ? null : json["categoryId"],
     subCategoryId: json["subCategoryId"] == null ? null : json["subCategoryId"],
     productSizes: json["productSizes"],
-
+      allergic_description: json["allergic_description"],
+      isVeg: json["isVeg"]
     //productSizes: json["productSizes"] == null ? null : List<ProductSizes>.from(json["productSizes"].map((x) => ProductSizes.fromJson(x))),
   );
   Map<String, dynamic> toJson() => {
@@ -166,6 +173,7 @@ class ProductSizes {
     sizeId: json["sizeId"] == null ? null : json["sizeId"],
     discountId: json["discountId"],
     discountedPrice: json["discountedPrice"] == null ? null : json["discountedPrice"],
+
   );
 
   Map<String, dynamic> toJson() => {

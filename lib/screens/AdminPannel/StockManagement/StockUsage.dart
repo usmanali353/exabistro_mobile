@@ -42,28 +42,15 @@ class _StockUsageState extends State<StockUsage> {
   }
   @override
   void initState() {
-    // TODO: implement initState
-    Utils.check_connectivity().then((value) {
-      if(value){
-        SharedPreferences.getInstance().then((value) {
-          setState(() {
-            this.token = value.getString("token");
-          });
-        });
-      }else{
-        Utils.showError(context, "Please Check Internet Connection");
-      }
-    });
-    Utils.check_connectivity().then((result){
-      if(result){
+    SharedPreferences.getInstance().then((value) {
+      setState(() {
+        this.token = value.getString("token");
         networksOperation.getPurchaseAndUsageofItem(context, token,widget.stockItems.id,1).then((value) {
           setState(() {
             this.stockItemUsageList = value;
           });
         });
-      }else{
-        Utils.showError(context, "Network Error");
-      }
+      });
     });
     super.initState();
 

@@ -670,7 +670,7 @@ class _AddProductIngredientState extends State<AddPurhaseOrder> {
                             }
                           });
                           Navigator.pop(context);
-                          Navigator.of(context).pop();
+                          Utils.showSuccess(context, "Purchase Order Created Successfully");
                         }
                       });
                       //Navigator.pop(context,productInDeals);

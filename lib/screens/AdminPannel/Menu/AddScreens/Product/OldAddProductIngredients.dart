@@ -511,7 +511,7 @@ class _AddProductIngredientState extends State<AddProductIngredient> {
                             }
                           });
                           Navigator.pop(context);
-                          Navigator.of(context).pop();
+                          Navigator.pop(context);
                         }
                       });
                       //Navigator.pop(context,productInDeals);

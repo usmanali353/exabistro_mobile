@@ -329,8 +329,7 @@ class _AddReservationsState extends State<UpdateReservations> {
                           networksOperation.updateReservation(context, token, reservation_data).then((value){
                             if(value){
                               Navigator.pop(context);
-                              Navigator.of(context).pop();
-                              Utils.showSuccess(context, "Successfully Update");
+                              Utils.showSuccess(context, "reservation Updated Successfully");
 
                             }else
                               Utils.showError(context, "Please Try Again");

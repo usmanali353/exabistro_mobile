@@ -30,14 +30,13 @@ class addProduct extends StatefulWidget {
 class _add_CategoryState extends ResumableState<addProduct> {
   String token;
   File _image;
-  var picked_image;
+  var picked_image,selectedFoodType=true;
   var responseJson;
   List<ProductSize> sizeWithPrice=[]; List<Widget> chips=[];
-  TextEditingController name,storeId,description;
+  TextEditingController name,storeId,description,allergicDescription;
   var storeName,storeIdIndex;
   List storeNameList=[],storeList=[];
   List<Sizes> sizes=[];
-
 //  _add_CategoryState(this.token);
 
   @override
@@ -45,7 +44,7 @@ class _add_CategoryState extends ResumableState<addProduct> {
     this.name=TextEditingController();
     this.storeId=TextEditingController();
     this.description=TextEditingController();
-
+    this.allergicDescription=TextEditingController();
     SharedPreferences.getInstance().then((value) {
       setState(() {
         this.token = value.getString("token");
@@ -76,7 +75,6 @@ class _add_CategoryState extends ResumableState<addProduct> {
     //
     // }
 
-    Navigator.pop(context,'Refresh');
     Navigator.pop(context,'Refresh');
     super.onResume();
   }
@@ -149,6 +147,38 @@ class _add_CategoryState extends ResumableState<addProduct> {
                     textInputAction: TextInputAction.next,
                   ),
                 ),
+                SwitchListTile(
+                  title: selectedFoodType?Text("Veg"):Text("Non-Veg"),
+                  value: selectedFoodType,
+                  onChanged: (value){
+                    setState(() {
+                      selectedFoodType=value;
+                    });
+
+                  },
+
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: allergicDescription,
+                    style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: yellowColor, width: 1.0)
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
+                      ),
+                      labelText: "Allergic Description",
+                      labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
+
+                    ),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -211,6 +241,8 @@ class _add_CategoryState extends ResumableState<addProduct> {
                             // storeList[storeIdIndex]['id'],
                             picked_image,
                             widget.storeId,
+                            allergicDescription.text,
+                            selectedFoodType
                           )));
                           }else{
                             Utils.showError(context, "Please Add Sizes Configuration First");

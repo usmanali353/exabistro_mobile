@@ -874,7 +874,7 @@ class _MainScreenState extends State<HomePage>{
                                                 width: MediaQuery.of(context).size.width /5,
                                                 height: MediaQuery.of(context).size.height / 25,
                                                 child: Center(
-                                                  child: Text('\$'+semiProducts[index].productSizes[0]['price'].toString(),
+                                                  child: Text(semiProducts[index].productSizes!=null&&semiProducts[index].productSizes.length>0?'\$'+semiProducts[index].productSizes[0]['price'].toString():"",
                                                     style: TextStyle(
                                                         color: BackgroundColor,
                                                         fontSize: 15,
@@ -901,7 +901,7 @@ class _MainScreenState extends State<HomePage>{
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(0),
-                                        child: Text("[${semiProducts[index].productSizes[0]['size']['name']}]",
+                                        child: Text(semiProducts[index].productSizes!=null&&semiProducts[index].productSizes.length>0?"[${semiProducts[index].productSizes[0]['size']['name']}]":"",
                                           maxLines: 2,
                                           style: TextStyle(
                                               color: PrimaryColor,

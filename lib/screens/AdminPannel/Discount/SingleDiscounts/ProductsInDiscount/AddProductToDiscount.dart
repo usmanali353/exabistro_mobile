@@ -316,9 +316,7 @@ class _AddToopingsState extends State<AddProductDiscount> {
                   networksOperation.assignDiscountToProduct(context, widget.token, discountProducts).then((response){
                     if(response){
                       Navigator.pop(context);
-                      Navigator.of(context).pop();
-                      Utils.showSuccess(context, "Successfully Added");
-
+                      Utils.showSuccess(context, "products Added in Discounts");
                     }else{
                       Utils.showError(context, "Error Occur");
                     }

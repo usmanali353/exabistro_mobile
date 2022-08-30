@@ -271,9 +271,8 @@ class _AddPriorityState extends State<UpdateVoucher> {
                           print(data);
                           networksOperation.updateVoucher(context, token, data).then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
-                              Utils.showSuccess(context, "Successfully Update");
+                              Utils.showSuccess(context, "Voucher Successfully Updated");
                             }
                           });
                         }else{

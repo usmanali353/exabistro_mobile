@@ -248,7 +248,7 @@ class _add_CategoryState extends State<AddSemiFinishIngredient> {
                           )).then((value) {
                             if(value)
                              Navigator.pop(context);
-                            Navigator.of(context).pop();
+                            Utils.showSuccess(context, "Added Successfully");
                           });
 
                         }else{

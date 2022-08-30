@@ -260,9 +260,8 @@ class _AddPriorityState extends State<UpdateTax> {
                           networksOperation.updateTax(context, token, data)
                               .then((value){
                             if(value!=null){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
-                              Utils.showSuccess(context, "Successfully Updated");
+                              Utils.showSuccess(context, "Tax Successfully Updated");
                             }
                           });
                         }else{

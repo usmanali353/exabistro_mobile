@@ -252,7 +252,7 @@ class _add_CategoryState extends State<UpdateSingleSemiFinishInProduct> {
                           )).then((value) {
                             if(value)
                               Navigator.pop(context);
-                            Navigator.of(context).pop();
+                            Utils.showSuccess(context, "Updated Successfully");
                           });
 
                         }else{

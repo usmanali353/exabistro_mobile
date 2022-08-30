@@ -7,7 +7,6 @@ import 'package:capsianfood/model/Products.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Additional_details.dart';
 import '../../Cart/MyCartScreen.dart';
@@ -28,7 +27,8 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage>{
   var categoryId,subCategoryId,totalItems;
   String categoryName;
- List<Products> productlist=[];
+ List<Products> productlist=[],filteredProducts=[];
+ List<bool> _selected=[];
   var token,userId;
   bool isListVisible=false;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -44,8 +44,6 @@ class _ProductPageState extends State<ProductPage>{
       SharedPreferences.getInstance().then((value) {
         setState(() {
           this.userId = value.getString("userId");
-
-          print("ggu"+value.getString("userId"));
           this.token = value.getString("token");
           this.userId = value.getString("userId");
           print(widget.storeId);
@@ -55,6 +53,7 @@ class _ProductPageState extends State<ProductPage>{
               setState(() {
                 isListVisible=true;
                 productlist = value;
+                filteredProducts = value;
               });
             });
           }
@@ -64,6 +63,7 @@ class _ProductPageState extends State<ProductPage>{
               setState(() {
                 isListVisible=true;
                 productlist = value;
+                filteredProducts = value;
               });
             });
           }
@@ -152,6 +152,7 @@ class _ProductPageState extends State<ProductPage>{
                       setState(() {
                         isListVisible=true;
                         productlist = value;
+                        filteredProducts = value;
                       });
                     });
                   }
@@ -161,6 +162,7 @@ class _ProductPageState extends State<ProductPage>{
                       setState(() {
                         isListVisible=true;
                         productlist = value;
+                        filteredProducts = value;
                       });
                     });
                   }
@@ -180,118 +182,246 @@ class _ProductPageState extends State<ProductPage>{
             ),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: isListVisible==true&&productlist!=null&&productlist!=null&&productlist.length>0? new Container(
+            child: Container(
               //decoration: new BoxDecoration(color: Colors.black.withOpacity(0.3)),
-             child: ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:productlist == null ? 0:productlist.length, itemBuilder: (context,int index){
-               return Column(
-                 children: <Widget>[
-               Card(
-                 elevation:6,
-                 child: Container(
-                   //height: 90,
-                        padding: EdgeInsets.only(top: 8),
-                        width: MediaQuery.of(context).size.width * 0.98,
-                   decoration: BoxDecoration(
-                       // color: BackgroundColor,
-                       // borderRadius: BorderRadius.only(
-                       //   bottomRight: Radius.circular(15),
-                       //   topLeft: Radius.circular(15),
-                       // ),
-                       // border: Border.all(color: yellowColor, width: 2)
+             child: Column(
+               children: [
+                 Padding(
+                   padding: const EdgeInsets.all(3.0),
+                   child: Container(
+                     height: 50,
+                     //color: Colors.black38,
+                     child: Center(
+                       child: _buildChips(),
+                     ),
                    ),
-                        child: ListTile(
-                          title: Text(productlist[index].name!=null?productlist[index].name:"",maxLines: 2,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: yellowColor),),
-                          leading: Image.network(productlist[index].image!=null?productlist[index].image:'http://www.4motiondarlington.org/wp-content/uploads/2013/06/No-image-found.jpg',fit: BoxFit.fill,height: 50,width: 50,),
-                          subtitle: Text(productlist[index].description!=null?productlist[index].description:"",maxLines: 2,style: TextStyle(fontWeight: FontWeight.bold,color: PrimaryColor),),
-                          trailing: Column(
-                            children: [
-                              InkWell(
-                                child: Icon(productlist[index].isFavourite==true?Icons.favorite:Icons.favorite_border,size: 25,color: yellowColor,),
-                                onTap: () {
-                                  print(productlist[index].isFavourite);
-                                  SharedPreferences.getInstance().then((value) {
-                                  networksOperation.addProductFavourite(context, token, productlist[index].id, int.parse(value.getString("userId"))).then((value) {
-                                    if(value){
-                                      WidgetsBinding.instance
-                                          .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                    }
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-                                  });
-                                  });
-                                },),
-                              // LikeButton(
-                              //   size: 30,
-                              //   circleColor:
-                              //   CircleColor(start: Colors.red, end: Colors.red),
-                              //   bubblesColor: BubblesColor(
-                              //     dotPrimaryColor: Colors.red,
-                              //     dotSecondaryColor: Colors.red,
-                              //   ),
-                              //   likeBuilder: (bool isLiked) {
-                              //     return FaIcon(
-                              //         FontAwesomeIcons.solidHeart,
-                              //         color: productlist[index].isFavourite ? Colors.red : Colors.grey,
-                              //         size: 25
-                              //     );
-                              //   },
-                              // ),
-                              InkWell(
-                                  child: Icon(Icons.add_shopping_cart,size: 30,color: yellowColor,),
-                              onTap: () {
-                                    print(productlist[index]);
-                                 Navigator.push(context, MaterialPageRoute(builder: (context) => AdditionalDetail(productlist[index].id,productlist[index],null),));
-                              },),
+                 ),
+                 Expanded(
+                   child:isListVisible==true&&filteredProducts!=null&&filteredProducts.length>0? ListView.builder(padding: EdgeInsets.all(4), scrollDirection: Axis.vertical, itemCount:productlist == null ? 0:productlist.length, itemBuilder: (context,int index){
+                     return Column(
+                       children: <Widget>[
+                     Card(
+                       elevation:6,
+                       child: Container(
+                         //height: 90,
+                              padding: EdgeInsets.only(top: 8),
+                              width: MediaQuery.of(context).size.width * 0.98,
+                         decoration: BoxDecoration(
+                             // color: BackgroundColor,
+                             // borderRadius: BorderRadius.only(
+                             //   bottomRight: Radius.circular(15),
+                             //   topLeft: Radius.circular(15),
+                             // ),
+                             // border: Border.all(color: yellowColor, width: 2)
+                         ),
+                              child: ListTile(
+                                title: Text(filteredProducts[index].name!=null?filteredProducts[index].name:"",maxLines: 2,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: yellowColor),),
+                                leading: Image.network(filteredProducts[index].image!=null?filteredProducts[index].image:'http://www.4motiondarlington.org/wp-content/uploads/2013/06/No-image-found.jpg',fit: BoxFit.fill,height: 50,width: 50,),
+                                subtitle: Row(
+                                  children: [
+                                    Text("Type: ",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: yellowColor),),
+                                    Text(filteredProducts[index].isVeg!=null&&filteredProducts[index].isVeg?"Veg":"Non-Veg",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: blueColor),),
 
-                            ],
-                          ),
-                         onTap: () {
-                            print(productlist[index].description);
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => StoreHomePage(token,stor),));
-                           Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetails(token,productlist[index],widget.storeId),));
-                           //Navigator.push(context, MaterialPageRoute(builder: (context) => Detail_page(categoryId,productlist[index].id,productlist[index],productlist[index].name,productlist[index].description,productlist[index].image),));
-                         },
-                        ),
-                      ),
-               ),
-                 ],
-               );
-             })
-            ):isListVisible==false?Center(
-          child: SpinKitSpinningLines(
-            lineWidth: 5,
-            color: yellowColor,
-            size: 100.0,
-          ),
-        ):isListVisible==true&&productlist!=null&&productlist.length==0?Center(
-    child: Container(
-      width: 300,
-      height: 300,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage("assets/noDataFound.png")
-          )
-      ),
-    ),
-    ):
-    Container(
-    width: 300,
-    height: 300,
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    fit: BoxFit.cover,
-    image: AssetImage("assets/noDataFound.png")
-    )
-    ),
-    ),
+                                  ],
+                                ),
+                                trailing: Column(
+                                  children: [
+                                    InkWell(
+                                      child: Icon(filteredProducts[index].isFavourite==true?Icons.favorite:Icons.favorite_border,size: 25,color: yellowColor,),
+                                      onTap: () {
+                                        SharedPreferences.getInstance().then((value) {
+                                        networksOperation.addProductFavourite(context, token, filteredProducts[index].id, int.parse(value.getString("userId"))).then((value) {
+                                          if(value){
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                          }
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+                                        });
+                                        });
+                                      },),
+                                    // LikeButton(
+                                    //   size: 30,
+                                    //   circleColor:
+                                    //   CircleColor(start: Colors.red, end: Colors.red),
+                                    //   bubblesColor: BubblesColor(
+                                    //     dotPrimaryColor: Colors.red,
+                                    //     dotSecondaryColor: Colors.red,
+                                    //   ),
+                                    //   likeBuilder: (bool isLiked) {
+                                    //     return FaIcon(
+                                    //         FontAwesomeIcons.solidHeart,
+                                    //         color: productlist[index].isFavourite ? Colors.red : Colors.grey,
+                                    //         size: 25
+                                    //     );
+                                    //   },
+                                    // ),
+                                    InkWell(
+                                        child: Icon(Icons.add_shopping_cart,size: 30,color: yellowColor,),
+                                    onTap: () {
+                                          print(filteredProducts[index]);
+                                       Navigator.push(context, MaterialPageRoute(builder: (context) => AdditionalDetail(filteredProducts[index].id,filteredProducts[index],null),));
+                                    },),
 
-          )
+                                  ],
+                                ),
+                               onTap: () {
+                                  print(filteredProducts[index].description);
+                                  //Navigator.push(context, MaterialPageRoute(builder: (context) => StoreHomePage(token,stor),));
+                                 Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetails(token,filteredProducts[index],widget.storeId),));
+                                 //Navigator.push(context, MaterialPageRoute(builder: (context) => Detail_page(categoryId,productlist[index].id,productlist[index],productlist[index].name,productlist[index].description,productlist[index].image),));
+                               },
+                              ),
+                            ),
+                     ),
+                       ],
+                     );
+                   }):isListVisible==false?Center(
+                     child: SpinKitSpinningLines(
+                       lineWidth: 5,
+                       color: yellowColor,
+                       size: 100.0,
+                     ),
+                   ):isListVisible==true&&filteredProducts!=null&&filteredProducts.length==0?Center(
+                     child: Container(
+                       width: 300,
+                       height: 300,
+                       decoration: BoxDecoration(
+                           image: DecorationImage(
+                               fit: BoxFit.cover,
+                               image: AssetImage("assets/noDataFound.png")
+                           )
+                       ),
+                     ),
+                   ):
+                   Container(
+                     width: 300,
+                     height: 300,
+                     decoration: BoxDecoration(
+                         image: DecorationImage(
+                             fit: BoxFit.cover,
+                             image: AssetImage("assets/noDataFound.png")
+                         )
+                     ),
+                   ),
+
+                 ),
+
+               ],
+             )
+            )
         ),
 
-
+        )
     );
 
+  }
+  Widget _buildChips() {
+    List<Widget> chips = new List();
+    List<String> foodTypes=["Veg","Non-Veg"];
+    for (int i = 0; i < 2; i++) {
+      _selected.add(false);
+      FilterChip filterChip = FilterChip(
+        selected: _selected[i],
+        label: Text(foodTypes[i], style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        // avatar: FlutterLogo(),
+        elevation: 10,
+        pressElevation: 5,
+        //shadowColor: Colors.teal,
+        backgroundColor: yellowColor,
+        selectedColor: PrimaryColor,
+        onSelected: (bool selected) {
+          setState(() {
+            for(int j=0;j<_selected.length;j++){
+              if(_selected[j]){
+                _selected[j]=false;
+              }
+            }
+            _selected[i] = selected;
+            if(_selected[i]){
+              isListVisible=false;
+              if(i==0){
+                if(widget.subCategoryId==0){
+                  networksOperation.getProductbyCategoryCustomer(context, categoryId,widget.storeId,"",int.parse(userId)).then((
+                      value) {
+                    setState(() {
+                      filteredProducts.clear();
+                      isListVisible=true;
+                      for(int i=0;i<value.length;i++){
+                        if(value[i]!=null&&value[i].isVeg){
+                          filteredProducts.add(value[i]);
+                        }
+                      }
+
+                    });
+                  });
+                }
+                else{
+                  networksOperation.getProductCustomer(context, categoryId, subCategoryId,widget.storeId,"",int.parse(userId)).then((
+                      value) {
+                    setState(() {
+                      filteredProducts.clear();
+                      isListVisible=true;
+                      for(int i=0;i<value.length;i++){
+                        if(value[i].isVeg!=null&&value[i].isVeg){
+                          filteredProducts.add(value[i]);
+                        }
+                      }
+                    });
+                  });
+                }
+              }else{
+                if(widget.subCategoryId==0){
+                  networksOperation.getProductbyCategoryCustomer(context, categoryId,widget.storeId,"",int.parse(userId)).then((
+                      value) {
+                    setState(() {
+                      filteredProducts.clear();
+                      isListVisible=true;
+                      for(int i=0;i<value.length;i++){
+                        if(value[i]==null||!value[i].isVeg){
+                          filteredProducts.add(value[i]);
+                        }
+                      }
+
+                    });
+                  });
+                }
+                else{
+                  networksOperation.getProductCustomer(context, categoryId, subCategoryId,widget.storeId,"",int.parse(userId)).then((
+                      value) {
+                    setState(() {
+                      filteredProducts.clear();
+                      isListVisible=true;
+                      for(int i=0;i<value.length;i++){
+                        if(value[i].isVeg==null||!value[i].isVeg){
+                          filteredProducts.add(value[i]);
+                        }
+                      }
+                    });
+                  });
+                }
+              }
+
+            }else{
+              WidgetsBinding.instance
+                  .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+            }
+
+          });
+        },
+      );
+
+      chips.add(Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: filterChip
+      ));
+    }
+
+    return ListView(
+      // This next line does the trick.
+      scrollDirection: Axis.horizontal,
+      children: chips,
+    );
   }
 }
 

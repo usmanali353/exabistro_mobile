@@ -159,7 +159,6 @@ class _add_CategoryState extends State<update_SubCategory> {
                         if(result){
                           networksOperation.updateSubcategory(context, token,widget.categoryId ,widget.subCategoryDetails.id, name.text, picked_image,false).then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                             //  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => subCa(),));
                               Utils.showSuccess(context, "Updated Successfully");

@@ -187,6 +187,42 @@ class _ExampleState extends State<FoodDetails> {
                         ),
                         Divider(),
                         Padding(
+                          padding: const EdgeInsets.only(left: 25, right: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BorderedText(
+                                strokeWidth: 7.0,
+                                strokeColor: PrimaryColor,
+                                child: new
+                                Text("Allergic Description",
+                                  style: GoogleFonts.cinzel(
+                                    textStyle: TextStyle(
+                                      color: yellowColor,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Divider(),
+                        Container(
+                          //height: expandText ? 145 : 65,
+                            margin: EdgeInsets.only(
+                                left: 30, right: 30, top: 2),
+                            child: Text(
+                              widget.productDetails.allergic_description!=null? widget.productDetails.allergic_description:"",maxLines: 4,
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                        ),
+                        Divider(),
+                        Padding(
                           padding: const EdgeInsets.only(
                               left: 25, right: 25, top: 5),
                           child: Row(

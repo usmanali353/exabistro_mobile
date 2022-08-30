@@ -108,7 +108,6 @@ class _add_SizesState extends State<update_Sizes> {
                         if(result){
                           networksOperation.updateSizes(context, token,widget.sizeDetails.id,widget.sizeDetails.storeId, name.text).then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                              Utils.showSuccess(context, "Update Successfully");
                             }

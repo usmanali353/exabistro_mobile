@@ -13,13 +13,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:translator/translator.dart';
 import 'package:http/http.dart' as http;
 
 class Utils{
    static String baseUrl(){
      //return "http://192.236.147.77:9000/api/";
-     return "http://173.212.235.106:8500/api/";
+     return "http://173.212.235.106:1200/api/";
      //return "http://172.28.52.13:45455/api/";
    }
    static String ReviewBaseUrl(){
@@ -58,8 +57,8 @@ class Utils{
    }
 
    static Future<bool> check_connectivity () async{
-     bool result = await DataConnectionChecker().hasConnection;
-     return result;
+    // bool result = await DataConnectionChecker().hasConnection;
+     return true;
    }
    static dynamic myEncode(dynamic item){
      if(item is DateTime)
@@ -112,12 +111,6 @@ class Utils{
      }
 
      return utf8.decode(base64Url.decode(output));
-   }
-
-   static Future<String> translate(String input)async{
-     final translator=GoogleTranslator();
-     var trans=await translator.translate(input,to:"en");
-    return trans.text;
    }
    static Future<File> getImage() async {
      var image = await ImagePicker.pickImage(source: ImageSource.gallery);

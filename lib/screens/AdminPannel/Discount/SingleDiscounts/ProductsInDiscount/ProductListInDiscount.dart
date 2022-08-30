@@ -42,28 +42,16 @@ class _DiscountItemsListState extends ResumableState<ProductListInDiscount> {
   void initState() {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-    Utils.check_connectivity().then((value) {
-      if(value){
-        SharedPreferences.getInstance().then((value) {
-          setState(() {
-            this.token = value.getString("token");
-            // networksOperation.getAllDiscount(context, token)
-            //     .then((value) {
-            //   setState(() {
-            //     this.productList = value;
-            //   });
-            // });
-          });
-        });
-        ///this is only validation for add product
-        networksOperation.getAllProducts(context, widget.storeId).then((value) {
-          setState(() {
-            additionals = value;
-          });
-        });
-      }else{
-        Utils.showError(context, "Please Check Internet Connection");
-      }
+    SharedPreferences.getInstance().then((value) {
+      setState(() {
+        this.token = value.getString("token");
+        // networksOperation.getAllDiscount(context, token)
+        //     .then((value) {
+        //   setState(() {
+        //     this.productList = value;
+        //   });
+        // });
+      });
     });
 
 
@@ -130,10 +118,7 @@ class _DiscountItemsListState extends ResumableState<ProductListInDiscount> {
         onPressed: (){
 
           //Navigator.push(context, MaterialPageRoute(builder: (context)=> AddProductToDeals(discountId: widget.discountId,storeId: widget.storeId,token: token,)));
-          if(additionals.length>0)
             push(context, MaterialPageRoute(builder: (context)=> AddProductDiscount(discountId: widget.discountId,storeId: widget.storeId,token: token,)));
-          else
-            Utils.showError(context, "Products are loading ");
           //Navigator.push(context, MaterialPageRoute(builder: (context)=> AddMultiProduct(token)));
           //Navigator.push(context, MaterialPageRoute(builder: (context)=> AddProductToDiscount(token,widget.discountId)));
         },

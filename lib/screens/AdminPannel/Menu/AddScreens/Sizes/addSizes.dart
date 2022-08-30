@@ -179,7 +179,6 @@ class _add_SizesState extends State<add_Sizes> {
         networksOperation.addSizes(context, token,jsonDecode(data["syncData"])["name"],jsonDecode(data["syncData"])["StoreId"]).then((value){
           if(value){
             Utils.deleteOfflineData("addSizes");
-            Navigator.of(context).pop();
             Navigator.pop(context);
             Utils.showSuccess(context, "Added Successfully");
             // Navigator.pop(context);

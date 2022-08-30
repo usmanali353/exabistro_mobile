@@ -515,7 +515,7 @@ class _AddProductIngredientState extends State<AddProductSemiFinish> {
                             }
                           });
                           Navigator.pop(context);
-                          Navigator.of(context).pop();
+                          Utils.showSuccess(context, "Added Successfully");
                         }
                       });
                       //Navigator.pop(context,productInDeals);
@@ -538,8 +538,6 @@ class _AddProductIngredientState extends State<AddProductSemiFinish> {
                   ),
                 ],
               )
-
-
             ],
           )
       ),

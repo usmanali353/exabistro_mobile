@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 
 
 class ProductDetails extends StatefulWidget{
-  var token,categoryId,subCategoryId,productId,productName,productDescription,image,storeId;
+  var token,categoryId,subCategoryId,productId,productName,productDescription,image,storeId,allergicDescription,isVeg;
 
-  ProductDetails(this.token, this.categoryId, this.subCategoryId,this.productId,this.productName,this.productDescription,this.image,this.storeId);
+  ProductDetails(this.token, this.categoryId, this.subCategoryId,this.productId,this.productName,this.productDescription,this.image,this.storeId,this.allergicDescription,this.isVeg);
 
   @override
   State<StatefulWidget> createState() {
@@ -32,7 +32,7 @@ class ProductDetailsState extends State<ProductDetails>{
   @override
   void initState() {
     print(widget.storeId);
-    print(storeId);
+    print(widget.isVeg);
     Utils.check_connectivity().then((result){
       if(result){
         networksOperation.getSizes(context,storeId).then((response){
@@ -115,7 +115,7 @@ class ProductDetailsState extends State<ProductDetails>{
             List<Map> entries = [];
 
             for(int i=0;i<cards.length;i++){
-              if(priceTECs[i].text!=null) {
+              if(priceTECs[i].text.isNotEmpty) {
                 price = double.parse(priceTECs[i].text);
               }
               if(selected_size!=null&&selected_size.length>0){
@@ -137,7 +137,8 @@ class ProductDetailsState extends State<ProductDetails>{
                "productSizes":entries,
                "image": image,
                "IsVisible":true,
-
+               "allergic_description":widget.allergicDescription,
+               "isVeg": widget.isVeg
              };
               print("Product json "+product.toString());
 
@@ -145,8 +146,6 @@ class ProductDetailsState extends State<ProductDetails>{
                   .then((response){
                 if(response){
                   Navigator.pop(context,'Refresh');
-                  Navigator.pop(context,'Refresh');
-                  Utils.showSuccess(context, "Added Successfully");
                 }
               });
 
@@ -161,18 +160,14 @@ class ProductDetailsState extends State<ProductDetails>{
                "productSizes":entries,
                "image": image,
                "IsVisible":true,
-
+               "allergic_description":widget.allergicDescription,
+               "isVeg": widget.isVeg
              };
              // networksOperation.updateProduct(context, token, categoryId.toString(), subCategoryId.toString(), productId, productName, productDescription, storeId.toString(), image)
              networksOperation.updateProduct(context, token, product)
                  .then((response){
                if(response){
-                 Navigator.pop(context,'Refresh');
-                 Navigator.pop(context,'Refresh');
-                  Navigator.of(context).pop();
-                 // Navigator.pop(context);
-                 // Navigator.pop(context);
-                 Utils.showSuccess(context, "Successfully Update");
+                 Navigator.pop(context);
                }else{
                  Utils.showError(context, "Please Try Agian");
                }

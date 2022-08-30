@@ -154,10 +154,9 @@ class _AddTablesState extends State<AddTables> {
                        };
                        networksOperation.addTable(context, token, table_data).then((value) {
                          if(value){
-                           Navigator.pop(context);
                             Navigator.pop(context);
                            // Navigator.pop(context);
-                          // Utils.showSuccess(context, "Added Successfully");
+                           Utils.showSuccess(context, "Table Added Successfully");
                           }
                        });
                      }

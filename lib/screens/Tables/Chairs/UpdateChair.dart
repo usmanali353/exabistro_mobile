@@ -106,7 +106,8 @@ class _AddTablesState extends State<UpdateChairs> {
                         };
                         networksOperation.updateChairs(context, token, chairData).then((value) {
                           if(value){
-                            Utils.showSuccess(context, "Updated Successfully");
+                            Navigator.pop(context);
+                            Utils.showSuccess(context, "Chair Updated Successfully");
                           }
                         });
                       }

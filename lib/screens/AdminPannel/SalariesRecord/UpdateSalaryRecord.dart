@@ -223,7 +223,7 @@ class _UpdateSalaryExpenseState extends State<UpdateSalaryExpense> {
                         )).then((value) {
                           if(value){
                             Navigator.pop(context);
-                            Navigator.pop(context);
+                            Utils.showSuccess(context, "Salary Expenses Updated Successfully");
                             // Navigator.pop(context);
                             // Utils.showSuccess(context, "Added Successfully");
                           }

@@ -105,7 +105,6 @@ class _UpddatePredefinedReasonsState extends State<UpddatePredefinedReasons> {
                             ))
                                 .then((value){
                               if(value){
-                                Navigator.of(context).pop();
                                 Navigator.pop(context);
                                 Utils.showSuccess(context, "Successfully Added");
                               }

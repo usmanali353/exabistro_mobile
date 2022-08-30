@@ -142,9 +142,8 @@ class _add_SizesState extends State<UpdateStockRecovery> {
                               createdOn: DateTime.now(),
                             )).then((value) {
                               if(value){
-                                Navigator.of(context).pop();
                                 Navigator.pop(context);
-                                Utils.showSuccess(context, "Successfully Added");
+                                Utils.showSuccess(context, "Request Updated Successfully");
                               }else{
                                 Utils.showError(context, "Please Try Again");
                               }

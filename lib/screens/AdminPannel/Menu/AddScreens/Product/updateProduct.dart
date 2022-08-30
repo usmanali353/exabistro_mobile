@@ -5,6 +5,7 @@ import 'package:capsianfood/Utils/Utils.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/model/Products.dart';
 import 'package:flutter/material.dart';
+import 'package:need_resume/need_resume.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'AddProductDetails.dart';
 
@@ -22,28 +23,37 @@ class UpdateProduct extends StatefulWidget {
   }
 }
 
-class _add_CategoryState extends State<UpdateProduct> {
+class _add_CategoryState extends ResumableState<UpdateProduct> {
   String token;
   File _image;
-  var picked_image;
+  var picked_image,selectedFoodType=false;
   var responseJson;
-  TextEditingController name,storeId,description;
+  TextEditingController name,storeId,description,allergicDescription;
   var storeName,storeIdIndex;
   List storeNameList=[],storeList=[];
-
 //  _add_CategoryState(this.token);
-
+@override
+  void onResume() {
+  Navigator.pop(context,"Refresh");
+    super.onResume();
+  }
   @override
   void initState(){
     this.name=TextEditingController();
     this.storeId=TextEditingController();
     this.description=TextEditingController();
-
+    this.allergicDescription=TextEditingController();
     SharedPreferences.getInstance().then((value) {
       setState(() {
         this.token = value.getString("token");
         name.text = widget.productDetails.name;
         description.text = widget.productDetails.description;
+        if(widget.productDetails.allergic_description!=null){
+          allergicDescription.text=widget.productDetails.allergic_description;
+        }
+        if(widget.productDetails.isVeg!=null){
+          selectedFoodType=widget.productDetails.isVeg;
+        }
       });
       if(widget.productDetails.image!=null)
       Utils.urlToFile(context, widget.productDetails.image).then((value){
@@ -131,6 +141,74 @@ class _add_CategoryState extends State<UpdateProduct> {
                     textInputAction: TextInputAction.next,
                   ),
                 ),
+                SwitchListTile(
+                  title: selectedFoodType?Text("Veg"):Text("Non-Veg"),
+                  value: selectedFoodType,
+                  onChanged: (value){
+                    setState(() {
+                      selectedFoodType=value;
+                    });
+
+                  },
+
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: DropdownButtonFormField<String>(
+                //     decoration: InputDecoration(
+                //       labelText: "Food Type",
+                //       alignLabelWithHint: true,
+                //       labelStyle: TextStyle(fontWeight: FontWeight.bold,fontSize: 16, color: yellowColor),
+                //       enabledBorder: OutlineInputBorder(
+                //       ),
+                //       focusedBorder:  OutlineInputBorder(
+                //         borderSide: BorderSide(color:
+                //         yellowColor),
+                //       ),
+                //     ),
+                //     validator: (value) => value == null
+                //         ? 'Please fill this field' : null,
+                //     value: selectedFoodType,
+                //     onChanged: (value) {
+                //       setState(() {
+                //         selectedFoodType = value;
+                //       });
+                //     },
+                //     items: foodTypes.map((value) {
+                //       return  DropdownMenuItem<String>(
+                //         value: value,
+                //         child: Row(
+                //           children: <Widget>[
+                //             Text(
+                //               value,
+                //               style:  TextStyle(color: yellowColor,fontSize: 15, fontWeight: FontWeight.bold),
+                //             ),
+                //           ],
+                //         ),
+                //       );
+                //     }).toList(),
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: allergicDescription,
+                    style: TextStyle(color: yellowColor,fontWeight: FontWeight.bold),
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: yellowColor, width: 1.0)
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xFF172a3a), width: 1.0)
+                      ),
+                      labelText: "Allergic Description",
+                      labelStyle: TextStyle(color: yellowColor, fontWeight: FontWeight.bold),
+
+                    ),
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -181,15 +259,16 @@ class _add_CategoryState extends State<UpdateProduct> {
 
                       Utils.check_connectivity().then((result){
                         if(result){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetails(token,widget.categoryId,
+                          push(context, MaterialPageRoute(builder: (context) => ProductDetails(token,widget.categoryId,
                               widget.subCategoryId,
                               widget.productDetails.id,
                               name.text,
                               description.text,
                               //storeList[storeIdIndex]['id'],
-
                               picked_image,
                             widget.storeId,
+                              allergicDescription.text,
+                              selectedFoodType
                           )));
                         }else{
                           Utils.showError(context, "Check your Internet Connection");

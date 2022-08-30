@@ -189,7 +189,7 @@
 //                                               child: Column(
 //                                                 children: [
 //                                                   Stack(
-//                                                     overflow: Overflow.visible,
+//                                                     clipBehavior: Clip.none,
 //                                                     children: <Widget>[
 //                                                       // Positioned(
 //                                                       //   top: -14,

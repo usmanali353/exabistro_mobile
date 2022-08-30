@@ -101,9 +101,8 @@ class _AddExtraExpenseState extends State<AddHoliday> {
                         networksOperation.addHoliday(context, token, widget.userId,paidDate).then((value) {
                           if(value){
                             Navigator.pop(context);
-                            Navigator.pop(context);
                             // Navigator.pop(context);
-                            // Utils.showSuccess(context, "Added Successfully");
+                             Utils.showSuccess(context, "Added Successfully");
                           }
                         });
                       }

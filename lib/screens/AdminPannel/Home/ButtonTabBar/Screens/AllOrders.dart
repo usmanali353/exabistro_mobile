@@ -179,7 +179,7 @@ class _PastOrdersState extends State<AllOrders> {
 //                                 child:Padding(
 //                                   padding: const EdgeInsets.all(0),
 //                                   child: Stack(
-//                                     overflow: Overflow.visible,
+//                                     clipBehavior: Clip.none,
 //                                     children: <Widget>[
 //                                       Positioned(
 //                                         top: -20,

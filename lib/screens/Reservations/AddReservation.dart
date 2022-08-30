@@ -319,10 +319,7 @@ class _AddReservationsState extends State<AddReservations> {
                           networksOperation.addReservation(context, token, reservation_data).then((value){
                             if(value!=null){
                               Navigator.pop(context);
-                              // Navigator.pop(context);
-                              Navigator.of(context).pop();
-                              Utils.showSuccess(context, "Successfully Added");
-
+                              Utils.showSuccess(context, "reservation Added Successfully");
                             }
                           });
                         },

@@ -346,9 +346,8 @@ class _add_SizesState extends State<UpdateToppings> {
                                  if(result){
                                    networksOperation.updateAdditionalItems(context, widget.token,data).then((value) {
                                      if(value){
-                                       Navigator.of(context).pop();
                                        Navigator.pop(context);
-                                       Utils.showSuccess(context, "Successfully Update");
+                                       Utils.showSuccess(context, "Successfully Updated");
                                      }else{
                                        Utils.showError(context, "Please Try Again");
                                      }

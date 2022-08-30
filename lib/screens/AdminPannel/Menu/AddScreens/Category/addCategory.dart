@@ -222,7 +222,6 @@ class _add_CategoryState extends State<add_Category> {
                                  networksOperation.addCategory(context, token,
                                     addCategory).then((value){
                                    if(value){
-                                     Navigator.of(context).pop();
                                      Navigator.pop(context);
                                      Utils.showSuccess(context, "Added Successfully");
                                    }

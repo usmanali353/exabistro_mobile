@@ -20,7 +20,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../StoreHomePage.dart';
 import '../MostFavouritesTabs/ForMobile/Screens/GetTrendingByCustomer.dart';
@@ -73,7 +75,7 @@ class _MainScreenState extends State<NewHomePage>{
 
   @override
   void initState() {
-    _getCurrentLocation();
+
     _searchQuery =TextEditingController();
     this.editingController=TextEditingController();
     items.addAll(duplicateItems);
@@ -82,7 +84,7 @@ class _MainScreenState extends State<NewHomePage>{
      // if(value){
         WidgetsBinding.instance
             .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
-        _getCurrentLocation();
+        //_getCurrentLocation();
         SharedPreferences.getInstance().then((value) {
           setState(() {
             this.token = value.getString("token");
@@ -101,70 +103,143 @@ class _MainScreenState extends State<NewHomePage>{
   }
 
   _getCurrentLocation() async {
-    await _geolocator.isLocationServiceEnabled().then((value) {
-      if(!value){
+    bool isServiceEnabled = await _geolocator.isLocationServiceEnabled();
+    PermissionStatus locationAlwaysStatus = await Permission.locationAlways.status;
+    PermissionStatus locationWhileInUseStatus = await Permission.locationWhenInUse.status;
+    PermissionStatus locationStatus = await Permission.location.status;
+   if(isServiceEnabled){
+     if(locationWhileInUseStatus.isGranted||locationAlwaysStatus.isGranted||locationStatus.isGranted){
+       Utils.check_connectivity().then((value) async{
+         if(value){
+           networksOperation.getAllCity(context).then((value) {
+             setState(() {
+               cities.clear();
+               this.cities = value;
+             });
+           });
+          Position position= await _geolocator.getCurrentPosition();
+           setState(() {
+             var storeData={
+               "Latitude": position.latitude,
+               // 32.5711,
+               "Longitude": position.longitude,
+               //74.074,
+               "IsProduct":false
 
-      }
-    });
-    Utils.check_connectivity().then((value) async{
-      if(value){
-        await _geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-            .then((Position position) async {
-          setState(() {
-            var storeData={
-              "Latitude": position.latitude,
-              // 32.5711,
-              "Longitude": position.longitude,
-              //74.074,
-              "IsProduct":false
+             };
+             networksOperation.getAllStore(context,storeData).then((stores){
+               setState(() {
+                 if(stores!=null&&stores.length>0) {
+                   for(int i=0;i<stores.length;i++){
+                     if(stores[i].isVisible){
+                       storesList.add(stores[i]);
+                     }
+                   }
+                   //  this.storesList = storesList;
+                 }else
+                   Utils.showError(context, "No Data Found");
+               });
 
-            };
-            networksOperation.getAllStore(context,storeData).then((stores){
-              setState(() {
-                if(stores!=null&&stores.length>0) {
-                  for(int i=0;i<stores.length;i++){
-                    if(stores[i].isVisible){
-                      storesList.add(stores[i]);
-                    }
+             });
+             _currentPosition = position;
+             print(position);
+           });
+         }
+         else{
+           var storeData={
+             //"Latitude": position.latitude,
+             // 32.5711,
+             //"Longitude": position.longitude,
+             //74.074,
+             "IsProduct":false
 
-                  }
-                  //  this.storesList = storesList;
-                }else
-                  Utils.showError(context, "No Data Found");
-              });
+           };
+           networksOperation.getAllStore(context,storeData).then((stores){
+             setState(() {
+               if(stores!=null&&stores.length>0) {
+                 for(int i=0;i<stores.length;i++){
+                   if(stores[i].isVisible){
+                     storesList.add(stores[i]);
+                   }
 
-            });
-            _currentPosition = position;
-            print(position);
-          });
-        }).catchError((e) {
-        });
-      }else{
-        var storeData={
-          //"Latitude": position.latitude,
-          // 32.5711,
-          //"Longitude": position.longitude,
-          //74.074,
-          "IsProduct":false
+                 }
+                 //  this.storesList = storesList;
+               }else
+                 Utils.showError(context, "No Data Found");
+             });
 
-        };
-        networksOperation.getAllStore(context,storeData).then((stores){
-          setState(() {
-            if(stores!=null&&stores.length>0) {
-              for(int i=0;i<stores.length;i++){
-                if(stores[i].isVisible){
-                  storesList.add(stores[i]);
-                }
+           });
+         }
+       });
+     }else{
+       PermissionStatus status =await Permission.location.request();
+       if(status.isGranted){
+         Utils.check_connectivity().then((value) async{
+           if(value){
+             await _geolocator.getCurrentPosition()
+                 .then((Position position) async {
+               setState(() {
+                 var storeData={
+                   "Latitude": position.latitude,
+                   // 32.5711,
+                   "Longitude": position.longitude,
+                   //74.074,
+                   "IsProduct":false
 
-              }
-              //  this.storesList = storesList;
-            }else
-              Utils.showError(context, "No Data Found");
-          });
+                 };
+                 networksOperation.getAllStore(context,storeData).then((stores){
+                   setState(() {
+                     if(stores!=null&&stores.length>0) {
+                       for(int i=0;i<stores.length;i++){
+                         if(stores[i].isVisible){
+                           storesList.add(stores[i]);
+                         }
 
-        });
-      }
-    });
+                       }
+                       //  this.storesList = storesList;
+                     }else
+                       Utils.showError(context, "No Data Found");
+                   });
+
+                 });
+                 _currentPosition = position;
+                 print(position);
+               });
+             }).catchError((e) {
+             });
+           }
+           else{
+             var storeData={
+               //"Latitude": position.latitude,
+               // 32.5711,
+               //"Longitude": position.longitude,
+               //74.074,
+               "IsProduct":false
+
+             };
+             networksOperation.getAllStore(context,storeData).then((stores){
+               setState(() {
+                 if(stores!=null&&stores.length>0) {
+                   for(int i=0;i<stores.length;i++){
+                     if(stores[i].isVisible){
+                       storesList.add(stores[i]);
+                     }
+
+                   }
+                   //  this.storesList = storesList;
+                 }else
+                   Utils.showError(context, "No Data Found");
+               });
+
+             });
+           }
+         });
+       }
+     }
+   }else{
+     Utils.showError(context,"Enable Location Services to View Near By Restaurants");
+   }
+
 
   }
   String getStoreName(int id){
@@ -598,7 +673,8 @@ class _MainScreenState extends State<NewHomePage>{
         key: _refreshIndicatorKey,
         onRefresh: (){
           return Utils.check_connectivity().then((result){
-            //if(result){
+           // if(result){
+            _getCurrentLocation();
               networksOperation.getDiscountList(context, token,1004)
                   .then((value) {
                 setState(() {
@@ -612,14 +688,7 @@ class _MainScreenState extends State<NewHomePage>{
                   this.productList = value;
                 });
               });
-              networksOperation.getAllCity(context).then((value) {
-                setState(() {
-                  cities.clear();
-                  this.cities = value;
-                });
-              });
-              _getCurrentLocation();
-            // }else{
+             // }else{
             //   Utils.showError(context, "Networks Error");
             // }
           });
@@ -1330,7 +1399,7 @@ class _MainScreenState extends State<NewHomePage>{
                 //color: Colors.white60,
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/newnotfounds.jpg'),
+                    image: AssetImage('assets/newnotfounds.png'),
                   )
               ),
             ),

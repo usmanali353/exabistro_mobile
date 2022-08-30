@@ -165,7 +165,6 @@ class _UpdateComplaintTypeState extends State<UpdateComplaintType> {
                           ))
                               .then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                               Utils.showSuccess(context, "Successfully Updated");
                             }

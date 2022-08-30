@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:capsianfood/CardPayment.dart';
 import 'package:capsianfood/Utils/Utils.dart';
-import 'package:background_fetch/background_fetch.dart';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/networks/network_operations.dart';
 import 'package:flutter/cupertino.dart';

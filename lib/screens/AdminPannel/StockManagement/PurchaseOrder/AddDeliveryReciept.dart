@@ -211,11 +211,10 @@ class AddDeliveryReceiptState extends State<AddDeliveryReceipt> {
                             )).then((value) {
                               if(value){
                                // networksOperation.updatePurchaseOrderDelivery(context, token, widget.purchaseItemId, DateTime.now().toString().substring(0,10));
-                                Navigator.of(context).pop();
                                 Navigator.pop(context);
                                 Utils.showSuccess(context, "Successfully Added");
                               }else{
-                                Utils.showError(context, "Please Try Again");
+                                Navigator.pop(context);
                               }
                             });
 

@@ -310,7 +310,6 @@ class _AddAdditionalsState extends State<AddAdditionals> {
                         if(result){
                           networksOperation.addAdditionalItems(context, widget.token, data).then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                               Utils.showSuccess(context, "Successfully Added");
                             }

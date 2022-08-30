@@ -942,9 +942,8 @@ class _SignUpScreenState extends State<UpdateEmployee> {
       print("Update Employee Data "+employee_data.toString());
       networksOperation.updateEmployees(context, token,employee_data).then((value) {
         if(value){
-          Navigator.of(context).pop();
           Navigator.pop(context);
-          Navigator.pop(context);
+          Utils.showSuccess(context,"Employee Updated");
         }
       });
     }

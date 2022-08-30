@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:capsianfood/components/constants.dart';
 import 'package:capsianfood/networks/network_operations.dart';
+import 'package:capsianfood/screens/DeliveryBoyPannel/Home/DeliveryItemsList.dart';
 import 'package:capsianfood/screens/WelcomeScreens/SplashScreen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -37,24 +39,15 @@ import 'package:geolocator/geolocator.dart';
 //     );
 //   }
 // }
-
+void startCallback(){
+  FlutterForegroundTask.setTaskHandler(LocationTaskHandler());
+}
 
 void main() async{
   FirebaseMessaging _firebaseMessaging;
-  final Geolocator _geolocator = Geolocator();
-  Position _currentPosition;
   var delegate = await LocalizationDelegate.create(
       fallbackLocale: 'en_US',
       supportedLocales: ['en_US', 'es','ur', 'ar']);
-    await _geolocator.isLocationServiceEnabled().then((value) {
-      if(!value){
-        _geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high).then((Position position) async {
-          _currentPosition = position;
-        }).catchError((e) {
-          print(e);
-        });
-      }
-    });
 
   _firebaseMessaging= FirebaseMessaging();
   _firebaseMessaging.getToken().then((value) {

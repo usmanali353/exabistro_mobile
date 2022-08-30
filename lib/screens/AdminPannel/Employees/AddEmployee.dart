@@ -905,8 +905,8 @@ class _SignUpScreenState extends State<AddEmployee> {
       print(jsonEncode(employee_data));
       networksOperation.addEmployees(context, employee_data).then((value) {
         if(value){
-          Navigator.of(context).pop();
           Navigator.pop(context);
+          Utils.showSuccess(context,"Employee Added");
         }
       });
     }

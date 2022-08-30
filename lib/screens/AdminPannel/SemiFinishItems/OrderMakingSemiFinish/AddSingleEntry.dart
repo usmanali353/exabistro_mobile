@@ -230,7 +230,7 @@ class _add_CategoryState extends State<AddOrderMakingSingle> {
                           )).then((value) {
                             if(value)
                               Navigator.pop(context);
-                            Navigator.of(context).pop();
+                              Utils.showSuccess(context, "Added Successfully");
                           });
 
                         }else{

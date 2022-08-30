@@ -598,9 +598,7 @@ class _SplashScreenState extends State<UpdateStore> {
       networksOperation.updateStore(context, token, storeData).then((value) {
         if(value!=null){
           Navigator.pop(context);
-          Navigator.of(context).pop();
           Utils.showSuccess(context, "Successfully Updated");
-
         }else{
           Utils.showError(context, "Not Added");
         }

@@ -87,7 +87,7 @@ class _StocksListPageState extends State<StocksList>{
         setState(() {
           isListVisible=true;
           itemBrandList = value;
-          print(itemBrandList);
+          print("Item Brands"+itemBrandList.length.toString());
         });
       });
       networksOperation.getVendorList(context,token,widget.storeId).then((value) {
@@ -104,6 +104,8 @@ class _StocksListPageState extends State<StocksList>{
     });
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
     super.initState();
   }
   @override
@@ -117,7 +119,6 @@ class _StocksListPageState extends State<StocksList>{
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
@@ -143,7 +144,7 @@ class _StocksListPageState extends State<StocksList>{
                         ),
                         Padding(
                           padding: const EdgeInsets.all(6.0),
-                          child: isListVisible==true&&itemBrandList.length>0? Container(
+                          child: itemBrandList.length>0? Container(
                             height: 200,
                             width: MediaQuery.of(context).size.width,
                             child: ListView.builder(
@@ -165,34 +166,7 @@ class _StocksListPageState extends State<StocksList>{
                                     ),
                                   );
                                 }),
-                          ):isListVisible==false?Center(
-                            child: SpinKitSpinningLines(
-                              lineWidth: 5,
-                              color: yellowColor,
-                              size: 100.0,
-                            ),
-                          ):isListVisible==true&&itemBrandList.length==0?Center(
-                            child: Container(
-                              width: 300,
-                              height: 300,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage("assets/noDataFound.png")
-                                  )
-                              ),
-                            ),
-                          ):
-                          Container(
-                            width: 300,
-                            height: 300,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage("assets/noDataFound.png")
-                                )
-                            ),
-                          ),
+                          ):Container()
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

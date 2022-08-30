@@ -574,7 +574,7 @@ class _AddSemiFinishStockState extends State<AddSemiFinishStock> {
                               });
                               Navigator.pop(context);
                               Navigator.pop(context);
-                              Navigator.of(context).pop();
+                              Utils.showSuccess(context,"SemiFinished Item Added Successfully");
                             }
                           });
                         }
@@ -586,6 +586,7 @@ class _AddSemiFinishStockState extends State<AddSemiFinishStock> {
                             totalQuantity:  double.parse(widget.quantity),
                             storeId: widget.storeId,
                             unit: widget.unit,
+                            price: widget.price,
                             semiFinishedItemIngredients: list
                         )).then((value){
                           if(value){
@@ -605,7 +606,8 @@ class _AddSemiFinishStockState extends State<AddSemiFinishStock> {
                             });
                             Navigator.pop(context);
                             Navigator.pop(context);
-                            Navigator.of(context).pop();
+                            Utils.showSuccess(context,"SemiFinished Item Updated Successfully");
+
                           }
                         });
                       }

@@ -121,7 +121,6 @@ class _AddComplaintTypeState extends State<AddComplaintType> {
                           ))
                               .then((value){
                             if(value){
-                              Navigator.of(context).pop();
                               Navigator.pop(context);
                               Utils.showSuccess(context, "Successfully Added");
                             }

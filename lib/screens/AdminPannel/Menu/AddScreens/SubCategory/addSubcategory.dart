@@ -151,7 +151,6 @@ class _add_SubcategoryState extends State<add_Subcategory> {
                               // Navigator.of(context).pop();
                               // Navigator.pop(context);
                               Navigator.pop(context,'Refresh');
-                              Navigator.pop(context,'Refresh');
                              // Navigator.pop(context,'Refresh');
                               Utils.showSuccess(context, "Added Successfully");
 
