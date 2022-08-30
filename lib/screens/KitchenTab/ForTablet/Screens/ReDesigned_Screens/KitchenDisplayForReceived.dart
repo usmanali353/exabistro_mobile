@@ -151,7 +151,6 @@ class _KitchenDisplayForReadyState extends State<KitchenDisplayForReceived> {
                               Card(
                                 elevation:8,
                                 child: Container(
-                                  width: 200,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     border: Border.all(color: yellowColor, width: 2),

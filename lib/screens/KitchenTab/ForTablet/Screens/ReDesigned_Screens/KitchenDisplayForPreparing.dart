@@ -121,7 +121,7 @@ class _KitchenDisplayForReadyState extends State<KitchenDisplayForPreparing> wit
               networksOperation.getCategories(context,widget.storeId).then((value) {
                 setState(() {
                   this.categoryList = value;
-                  print(categoryList);
+                  print("Length of Categories List: "+categoryList.length.toString());
                 });
               });
             }else{
@@ -168,7 +168,6 @@ class _KitchenDisplayForReadyState extends State<KitchenDisplayForPreparing> wit
                               Card(
                                 elevation:8,
                                 child: Container(
-                                  width: 200,
                                   height: 50,
                                   decoration: BoxDecoration(
                                     border: Border.all(color: yellowColor, width: 2),
@@ -526,9 +525,9 @@ class _KitchenDisplayForReadyState extends State<KitchenDisplayForPreparing> wit
                                                 actionExtentRatio: 0.20,
                                                 secondaryActions: <Widget>[
                                                   IconSlideAction(
-                                                    icon: Icons.adjust,
-                                                    color: PrimaryColor,
-                                                    caption: 'Prepare',
+                                                    icon:orderList[index]['orderItems'][i]['orderItemStatus']==0? Icons.adjust:Icons.done_all,
+                                                    color:orderList[index]['orderItems'][i]['orderItemStatus']==0? PrimaryColor:Colors.green,
+                                                    caption:orderList[index]['orderItems'][i]['orderItemStatus']==0? 'Prepare':"Done",
                                                     onTap: () async {
                                                       if(orderList[index]['orderItems'][i]['orderItemStatus']==0){
                                                         WidgetsBinding.instance
@@ -539,18 +538,7 @@ class _KitchenDisplayForReadyState extends State<KitchenDisplayForPreparing> wit
                                                             Utils.showSuccess(context, "Preparing");
                                                           }
                                                         });
-                                                      }else{
-                                                        Utils.showError(context,"This Item is already Preparing");
                                                       }
-                                                      //print(barn_lists[index]);
-                                                      //Navigator.push(context,MaterialPageRoute(builder: (context)=>update_Sizes(sizes[index])));
-                                                    },
-                                                  ),
-                                                  IconSlideAction(
-                                                    icon: Icons.done_all,
-                                                    color: Colors.green,
-                                                    caption: 'Done',
-                                                    onTap: () async {
                                                       if(orderList[index]['orderItems'][i]['orderItemStatus']==1){
                                                         WidgetsBinding.instance
                                                             .addPostFrameCallback((_) => _refreshIndicatorKey.currentState.show());
@@ -892,12 +880,12 @@ class _KitchenDisplayForReadyState extends State<KitchenDisplayForPreparing> wit
 
                                     ///CART ITEMS
                                   ),
-                                  Expanded(
+                                    Expanded(
                                     child: Container(
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Expanded(
+                                          orderList[index]["orderItems"].where((ot)=>ot['orderItemStatus']==0||ot['orderItemStatus']==1).toList().length==0?  Expanded(
                                             child: Padding(
                                               padding: const EdgeInsets.all(8.0),
                                               child: Card(
@@ -933,7 +921,7 @@ class _KitchenDisplayForReadyState extends State<KitchenDisplayForPreparing> wit
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                          ):Container(),
                                           // Expanded(
                                           //   child: Padding(
                                           //     padding: const EdgeInsets.all(8.0),
